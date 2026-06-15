@@ -1,0 +1,20 @@
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Dependências / build (não usados no site estático, mas por segurança)
+node_modules/
+dist/
+.cache/
+
+# Backend Python (o app vai versionado; ambiente local não)
+backend/__pycache__/
+backend/*.pyc
+backend/.env
+.venv/
+venv/
+
+# Uploads recebidos pelo backend de portabilidade (NUNCA versionar — contêm PII/LGPD)
+backend/uploads/
+uploads/

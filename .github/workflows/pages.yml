@@ -1,0 +1,58 @@
+name: Deploy site (GitHub Pages)
+
+# Publica o site estático i9c a cada push na main.
+# O backend (FastAPI) fica versionado, mas NÃO é publicado no Pages.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante um deploy por vez
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Montar pasta de publicação (_site)
+        run: |
+          mkdir -p _site
+          # copia tudo, exceto o que não deve ir ao ar
+          rsync -a ./ _site/ \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'backend' \
+            --exclude 'node_modules' \
+            --exclude 'README.md'
+          # impede indexação acidental de diretórios e remove artefatos
+          find _site -name '.DS_Store' -delete || true
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload do artefato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
