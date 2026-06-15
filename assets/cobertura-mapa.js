@@ -113,11 +113,63 @@
       if (status) status.innerHTML = "Não foi possível carregar o mapa agora. Tente recarregar a página ou fale pelo <a href='https://wa.me/558008000900' style='color:#136BA2;font-weight:600'>0800 800 0900</a>.";
     });
 
-  // ---- Busca por endereço/cidade ----
+  // ---- Busca por endereço / rua / CEP (somente Brasil, pt-BR) ----
   if (L.Control && L.Control.Geocoder) {
-    L.Control.geocoder({ defaultMarkGeocode: false, placeholder: "Buscar cidade ou endereço…" })
+    // Nominatim restrito ao Brasil e em português — entende "av", "rua", "travessa", etc.
+    var nominatim = L.Control.Geocoder.nominatim({
+      geocodingQueryParams: {
+        countrycodes: "br",
+        "accept-language": "pt-BR",
+        limit: 8,
+        addressdetails: 1
+      }
+    });
+
+    // Geocoder customizado: detecta CEP (com ou sem máscara) e resolve via ViaCEP antes de localizar.
+    var geocoderBR = {
+      geocode: function (query, cb, context) {
+        var digits = (query || "").replace(/\D/g, "");
+        // CEP brasileiro = 8 dígitos (ex.: 80240060 ou 80.240-060)
+        if (/^\d{8}$/.test(digits)) {
+          fetch("https://viacep.com.br/ws/" + digits + "/json/")
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              if (d.erro) { nominatim.geocode(query, cb, context); return; }
+              // monta o endereço a partir do CEP e geocodifica no Nominatim (BR)
+              var endereco = [d.logradouro, d.bairro, d.localidade, d.uf, "Brasil"].filter(Boolean).join(", ");
+              nominatim.geocode(endereco, function (results) {
+                if (results && results.length) { cb.call(context, results); return; }
+                // fallback: só cidade/UF (CEP de cidades pequenas pode não ter logradouro)
+                var cidadeUf = [d.localidade, d.uf, "Brasil"].filter(Boolean).join(", ");
+                nominatim.geocode(cidadeUf, cb, context);
+              }, context);
+            })
+            .catch(function () { nominatim.geocode(query, cb, context); });
+          return;
+        }
+        // endereço/rua/cidade normal
+        nominatim.geocode(query, cb, context);
+      },
+      // sem autocomplete (respeita o limite de uso do Nominatim; busca no Enter/lupa)
+      suggest: function (query, cb, context) { cb.call(context, []); },
+      reverse: function (location, scale, cb, context) {
+        return nominatim.reverse(location, scale, cb, context);
+      }
+    };
+
+    L.Control.geocoder({
+      defaultMarkGeocode: false,
+      geocoder: geocoderBR,
+      placeholder: "Buscar cidade, rua, av., travessa ou CEP…",
+      errorMessage: "Endereço ou CEP não encontrado no Brasil."
+    })
       .on("markgeocode", function (e) {
-        map.fitBounds(e.geocode.bbox);
+        var g = e.geocode;
+        if (g.bbox) {
+          map.fitBounds(g.bbox, { maxZoom: 16 }); // evita zoom excessivo em ruas
+        } else if (g.center) {
+          map.setView(g.center, 15);
+        }
       })
       .addTo(map);
   }
