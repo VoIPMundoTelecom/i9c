@@ -80,7 +80,7 @@ do site funciona normalmente.
 - **WhatsApp**: widget flutuante (popup) → `wa.me/558008000900`.
 - **Chat Bitrix24**: script oficial carregado ao final de cada página.
 - **Recarga**: parceiro `ivm.pagtel.com.br/ivm/recarga`.
-- **Área do cliente**: `arealogada.i9c.net.br`.
+- **Área do cliente**: `app.i9c.net.br`.
 
 ## Pendências / próximos passos
 
