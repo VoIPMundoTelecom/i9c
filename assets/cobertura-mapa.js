@@ -11,7 +11,7 @@
    ============================================================ */
 (function () {
   "use strict";
-  var DADOS_URL = "assets/municipios.json";
+  var DADOS_URL = "/assets/municipios.json";
 
   var map = L.map("map", { scrollWheelZoom: true }).setView([-14.235, -51.9253], 4);
 
