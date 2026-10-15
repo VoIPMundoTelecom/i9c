@@ -79,7 +79,7 @@ do site funciona normalmente.
 
 - **WhatsApp**: widget flutuante (popup) → `wa.me/558008000900`.
 - **Chat Bitrix24**: script oficial carregado ao final de cada página.
-- **Recarga**: parceiro `ivm.pagtel.com.br/ivm/recarga`.
+- **Recarga**: na área do cliente (`app.i9c.net.br`, menu Recargas) — número validado por SMS, boleto gerado na conta, crédito após compensação.
 - **Área do cliente**: `app.i9c.net.br`.
 
 ## Pendências / próximos passos
