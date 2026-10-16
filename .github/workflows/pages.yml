@@ -34,7 +34,8 @@ jobs:
             --exclude '.github' \
             --exclude 'backend' \
             --exclude 'node_modules' \
-            --exclude 'README.md'
+            --exclude 'README.md' \
+            --exclude 'docs'
           # impede indexação acidental de diretórios e remove artefatos
           find _site -name '.DS_Store' -delete || true
 
