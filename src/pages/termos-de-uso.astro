@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import Legal from '../components/Legal.astro';
+import { EMPRESA } from '../data/empresa';
+
+const atualizado = '16/10/2026';
+// RASCUNHO para revisão jurídica (Laura). Termos do SITE — o serviço móvel é regido pelo contrato e pela regulamentação da ANATEL.
+---
+
+<Base
+  title="Termos de Uso | i9c"
+  description="Regras de uso do site i9c.net.br: informações de planos e preços, formulários, conteúdos e responsabilidades."
+  canonical="https://i9c.net.br/termos-de-uso.html"
+>
+  <Legal eyebrow="Termos" title="Termos de Uso" updated={atualizado}>
+    <p>
+      Estes Termos regulam o uso do site <strong>i9c.net.br</strong>, mantido pela <strong>{EMPRESA.razaoSocial}</strong>
+      (CNPJ {EMPRESA.cnpj}), responsável pela marca i9c. Ao navegar no site, você concorda com eles.
+    </p>
+    <div class="box">
+      <p style="margin:0">
+        Estes Termos tratam do <strong>site</strong>. A prestação do serviço móvel (SMP) é regida pelo seu
+        <strong>contrato</strong>, pelo plano contratado e pela regulamentação da <strong>ANATEL</strong>.
+      </p>
+    </div>
+
+    <h2>1. O site</h2>
+    <p>
+      O site apresenta a i9c, seus planos, cobertura e canais de atendimento, e permite solicitar portabilidade e
+      acessar a área do cliente (<a href={EMPRESA.areaCliente}>app.i9c.net.br</a>), que tem regras próprias de acesso.
+    </p>
+
+    <h2>2. Planos, preços e cobertura</h2>
+    <ul>
+      <li>Preços, franquias e benefícios exibidos valem para novas contratações na data da consulta e podem mudar sem aviso prévio no site. Valem as condições confirmadas no momento da contratação.</li>
+      <li>Benefícios como apps sem descontar da franquia seguem as regras de cada plano, informadas junto aos cards de planos.</li>
+      <li>A cobertura e a tecnologia (5G, 4G) variam por localidade, aparelho e condições da rede. O mapa de cobertura é uma referência e não garante sinal em um ponto específico.</li>
+    </ul>
+
+    <h2>3. Formulários e informações enviadas</h2>
+    <ul>
+      <li>Você é responsável pela veracidade dos dados e documentos enviados, inclusive na portabilidade. Só envie dados e documentos de linhas das quais seja titular ou representante autorizado.</li>
+      <li>O envio de uma solicitação não garante a contratação ou a portabilidade: ambas dependem de análise e das regras da regulamentação.</li>
+      <li>O tratamento desses dados segue a <a href="/politica-de-privacidade.html">Política de Privacidade</a>.</li>
+    </ul>
+
+    <h2>4. Uso permitido</h2>
+    <p>Não é permitido usar o site para:</p>
+    <ul>
+      <li>tentar acessar áreas restritas, sistemas ou dados de terceiros;</li>
+      <li>enviar conteúdo falso, ilícito ou que se passe por outra pessoa;</li>
+      <li>sobrecarregar o site ou usar robôs para coletar seu conteúdo em massa;</li>
+      <li>qualquer finalidade contrária à lei.</li>
+    </ul>
+
+    <h2>5. Propriedade intelectual</h2>
+    <p>
+      As marcas i9c, Grupo IVM e Voipmundo, logotipos, textos, imagens e o layout do site pertencem à
+      {EMPRESA.razaoSocial} ou a seus licenciantes. É proibido copiá-los ou usá-los sem autorização. Dados de mapas:
+      © colaboradores do OpenStreetMap.
+    </p>
+
+    <h2>6. Links e serviços de terceiros</h2>
+    <p>
+      O site tem links e integrações com serviços de terceiros (como WhatsApp e o chat do atendimento). Cada serviço
+      tem seus próprios termos e políticas, pelos quais a i9c não responde.
+    </p>
+
+    <h2>7. Disponibilidade e responsabilidade</h2>
+    <p>
+      Trabalhamos para manter o site no ar e as informações corretas, mas ele pode passar por manutenção, instabilidade
+      ou conter erros pontuais, que corrigimos assim que identificados. Nada nestes Termos limita os seus direitos como
+      consumidor previstos no Código de Defesa do Consumidor.
+    </p>
+
+    <h2>8. Atendimento</h2>
+    <p>
+      Dúvidas sobre estes Termos: <strong>{EMPRESA.telefone}</strong> ou <a href={EMPRESA.whatsapp} target="_blank" rel="noopener">WhatsApp</a>.
+      Se não tiver o seu pedido resolvido, você pode registrar reclamação na ANATEL pelo telefone <strong>1331</strong>.
+    </p>
+
+    <h2>9. Alterações e foro</h2>
+    <p>
+      Estes Termos podem ser atualizados; a data no topo indica a versão vigente. Aplica-se a lei brasileira.
+      Para consumidores, o foro é o do domicílio do consumidor; nos demais casos, o foro da comarca de Curitiba/PR.
+    </p>
+  </Legal>
+</Base>

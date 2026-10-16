@@ -1,0 +1,47 @@
+---
+/** Moldura das páginas jurídicas (Política de Privacidade, Termos de Uso). */
+interface Props {
+  eyebrow: string;
+  title: string;
+  updated: string;
+}
+const { eyebrow, title, updated } = Astro.props;
+---
+
+<section class="bg-cinza-50 border-b border-cinza-200">
+  <div class="max-w-3xl mx-auto px-5 lg:px-8 py-12 lg:py-16">
+    <nav class="text-sm text-cinza mb-6" aria-label="Você está em">
+      <a href="/" class="hover:text-i9c-azul">Início</a> <span aria-hidden="true">›</span>
+      <span class="text-ivm-azul font-semibold">{title}</span>
+    </nav>
+    <div class="font-mono text-xs font-semibold tracking-[0.18em] uppercase text-laranja-dark">{eyebrow}</div>
+    <h1 class="font-display font-bold text-4xl lg:text-5xl tracking-tightest text-ivm-azul mt-3">{title}</h1>
+    <p class="text-sm text-cinza mt-4">Atualizada em <time>{updated}</time></p>
+  </div>
+</section>
+
+<article class="legal max-w-3xl mx-auto px-5 lg:px-8 py-12 lg:py-16">
+  <slot />
+</article>
+
+<style is:global>
+  .legal h2 { font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-weight: 700; font-size: 1.4rem; color: #1E2C5C; margin: 2.4rem 0 .8rem; letter-spacing: -0.01em; }
+  .legal h3 { font-weight: 600; color: #1E2C5C; margin: 1.4rem 0 .4rem; }
+  .legal p, .legal li { color: #5c5a59; line-height: 1.7; }
+  .legal p { margin: 0 0 1rem; }
+  .legal ul { list-style: disc; padding-left: 1.3rem; margin: 0 0 1rem; }
+  .legal li { margin-bottom: .35rem; }
+  .legal a { color: #136BA2; text-decoration: underline; text-underline-offset: 3px; }
+  .legal strong { color: #1E2C5C; }
+  .legal table { width: 100%; border-collapse: collapse; margin: 0 0 1.2rem; font-size: .95rem; }
+  .legal th, .legal td { text-align: left; vertical-align: top; padding: .6rem .7rem; border: 1px solid #E8E8E7; color: #5c5a59; }
+  .legal th { background: #F4F4F3; color: #1E2C5C; font-weight: 600; }
+  @media (max-width: 640px) {
+    .legal table, .legal tbody, .legal tr, .legal td { display: block; width: 100%; }
+    .legal thead { display: none; }
+    .legal tr { border: 1px solid #E8E8E7; border-radius: 12px; padding: .4rem .2rem; margin-bottom: .9rem; }
+    .legal td { border: 0; padding: .35rem .7rem; }
+    .legal td::before { content: attr(data-label); display: block; font-weight: 600; color: #1E2C5C; font-size: .8rem; }
+  }
+  .legal .box { background: #E7F0F6; border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.2rem; }
+</style>
