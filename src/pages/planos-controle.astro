@@ -1,0 +1,17 @@
+---
+// Gerado a partir do planos-controle.html (site estático). Conteúdo da página em src/partials/planos-controle.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/planos-controle.head.html?raw';
+import body from '../partials/planos-controle.body.html?raw';
+import end from '../partials/planos-controle.end.html?raw';
+
+const title = "Plano controle 5G com ligações ilimitadas, sem fidelidade | i9c";
+const description = "Planos controle i9c de 15GB a 80GB com ligações ilimitadas, WhatsApp grátis e 5G nacional. Valor fixo por mês e sem fidelidade.";
+const canonical = "https://i9c.net.br/planos-controle.html";
+---
+
+<Base title={title} description={description} canonical={canonical} active="planos">
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+  <Fragment slot="end" set:html={end} />
+</Base>

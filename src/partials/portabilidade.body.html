@@ -1,0 +1,227 @@
+<!-- HERO -->
+  <section class="relative grain overflow-hidden bg-white">
+    <div class="hero-blob absolute -top-20 -right-32 w-[600px] h-[600px] rounded-full"></div>
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-12 lg:pt-16 pb-10 relative z-10">
+      <div class="max-w-3xl">
+        <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja rise rise-1">Portabilidade móvel</div>
+        <h1 class="font-display font-bold text-[clamp(2.5rem,7vw,5rem)] leading-[0.95] tracking-tightest mt-3 rise rise-2 text-ivm-azul">
+          Seu número de sempre,<br><span class="text-laranja">na operadora que você queria.</span>
+        </h1>
+        <p class="text-lg text-cinza max-w-2xl mt-6 leading-relaxed rise rise-3">
+          Traga seu número de outra operadora para a i9c e aproveite 5G, ligações ilimitadas e planos sem fidelidade. É gratuito, e você não fica sem sinal. Dúvidas? Fale com a gente pelo <a href="tel:08008000900" class="text-i9c-azul font-semibold hover:underline">0800 800 0900</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASSOS -->
+  <section class="py-14 bg-cinza-50 border-y border-cinza-200">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja mb-3">Como funciona</div>
+      <h2 class="font-display font-bold text-3xl lg:text-4xl tracking-tightest text-ivm-azul mb-10">Quatro passos e seu número é i9c</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div><div class="font-mono text-xs font-semibold uppercase tracking-wider text-laranja">Passo 01</div><div class="border-t-2 border-i9c-azul/20 mt-2 pt-3"><div class="font-display font-bold text-lg text-ivm-azul">Preencha o formulário</div><p class="text-sm text-cinza mt-1">Informe seus dados e o número que você quer trazer para a i9c.</p></div></div>
+        <div><div class="font-mono text-xs font-semibold uppercase tracking-wider text-laranja">Passo 02</div><div class="border-t-2 border-i9c-azul/20 mt-2 pt-3"><div class="font-display font-bold text-lg text-ivm-azul">Envie os documentos</div><p class="text-sm text-cinza mt-1">Anexe seu documento com foto e uma conta recente da linha atual.</p></div></div>
+        <div><div class="font-mono text-xs font-semibold uppercase tracking-wider text-laranja">Passo 03</div><div class="border-t-2 border-i9c-azul/20 mt-2 pt-3"><div class="font-display font-bold text-lg text-ivm-azul">A gente cuida da troca</div><p class="text-sm text-cinza mt-1">Solicitamos a portabilidade à sua operadora. Você segue usando a linha normalmente.</p></div></div>
+        <div><div class="font-mono text-xs font-semibold uppercase tracking-wider text-laranja">Passo 04</div><div class="border-t-2 border-i9c-azul/20 mt-2 pt-3"><div class="font-display font-bold text-lg text-ivm-azul">Número ativo na i9c</div><p class="text-sm text-cinza mt-1">Em até 3 dias úteis você é avisado e já fala pela i9c, com o mesmo número.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-5 lg:px-8">
+      <div class="text-center mb-10">
+        <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja">Solicitar portabilidade</div>
+        <h2 class="font-display font-bold text-4xl lg:text-5xl tracking-tightest text-ivm-azul mt-3">Traga seu número agora</h2>
+        <p class="text-cinza mt-4">Campos com <span class="text-laranja font-semibold">*</span> são obrigatórios. Seus dados são usados apenas para processar a portabilidade.</p>
+      </div>
+
+      <form id="port-form" class="bg-white border-2 border-cinza-200 rounded-3xl p-6 lg:p-8 shadow-xl shadow-ivm-azul/5" novalidate>
+        <!-- honeypot anti-bot -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+        <!-- Tipo de pessoa -->
+        <div class="mb-6">
+          <span class="block text-xs font-semibold uppercase tracking-wider font-mono text-cinza mb-2">Tipo de pessoa <span class="text-laranja">*</span></span>
+          <div class="inline-flex gap-2 p-1.5 bg-cinza-100 rounded-full border border-cinza-200">
+            <label class="cursor-pointer"><input type="radio" name="tipo_pessoa" value="PF" class="peer sr-only" checked><span class="px-5 py-2 rounded-full text-sm font-semibold inline-block transition-colors peer-checked:bg-i9c-azul peer-checked:text-white text-ivm-azul">Pessoa Física</span></label>
+            <label class="cursor-pointer"><input type="radio" name="tipo_pessoa" value="PJ" class="peer sr-only"><span class="px-5 py-2 rounded-full text-sm font-semibold inline-block transition-colors peer-checked:bg-i9c-azul peer-checked:text-white text-ivm-azul">Pessoa Jurídica</span></label>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="lbl" for="nome">Nome completo <span class="text-laranja">*</span></label>
+            <input id="nome" name="nome" class="inp" required>
+          </div>
+          <div>
+            <label class="lbl" for="documento"><span data-pf>CPF</span><span data-pj class="hidden">CNPJ</span> <span class="text-laranja">*</span></label>
+            <input id="documento" name="documento" data-mask="cpfCnpj" inputmode="numeric" class="inp" required>
+            <p class="err" data-err="documento"></p>
+          </div>
+          <div>
+            <label class="lbl" for="email">E-mail <span class="text-laranja">*</span></label>
+            <input id="email" name="email" type="email" class="inp" required>
+            <p class="err" data-err="email"></p>
+          </div>
+          <div>
+            <label class="lbl" for="telefone_contato">Telefone para contato <span class="text-laranja">*</span></label>
+            <input id="telefone_contato" name="telefone_contato" data-mask="fone" inputmode="numeric" placeholder="(00) 00000-0000" class="inp" required>
+          </div>
+          <div>
+            <label class="lbl" for="numero_portar">Número que vai portar <span class="text-laranja">*</span></label>
+            <input id="numero_portar" name="numero_portar" data-mask="fone" inputmode="numeric" placeholder="(DDD) número" class="inp" required>
+          </div>
+          <div>
+            <label class="lbl" for="operadora_atual">Operadora atual <span class="text-laranja">*</span></label>
+            <select id="operadora_atual" name="operadora_atual" class="inp" required>
+              <option value="">Selecione…</option>
+              <option>Vivo</option><option>Claro</option><option>TIM</option><option>Oi</option><option>Algar</option><option>Sercomtel</option><option>Outra</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <label class="lbl" for="endereco">Endereço completo <span class="text-laranja">*</span></label>
+          <input id="endereco" name="endereco" class="inp" required>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5 mt-5">
+          <div>
+            <label class="lbl" for="complemento_bairro">Complemento / bairro <span class="text-laranja">*</span></label>
+            <input id="complemento_bairro" name="complemento_bairro" class="inp" required>
+          </div>
+          <div>
+            <label class="lbl" for="cep">CEP <span class="text-laranja">*</span></label>
+            <input id="cep" name="cep" data-mask="cep" inputmode="numeric" placeholder="00000-000" class="inp" required>
+          </div>
+          <div>
+            <label class="lbl" for="cidade">Cidade <span class="text-laranja">*</span></label>
+            <input id="cidade" name="cidade" class="inp" required>
+          </div>
+          <div>
+            <label class="lbl" for="estado">Estado <span class="text-laranja">*</span></label>
+            <select id="estado" name="estado" class="inp" required>
+              <option value="">UF…</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-5 max-w-[200px]">
+          <label class="lbl" for="qtd_linhas">Quantidade de linhas <span class="text-laranja">*</span></label>
+          <input id="qtd_linhas" name="qtd_linhas" type="number" min="1" value="1" class="inp" required>
+        </div>
+
+        <!-- Uploads -->
+        <div class="mt-6 space-y-4">
+          <div>
+            <label class="lbl" for="doc_identidade">Documento com foto do titular <span class="text-laranja">*</span></label>
+            <input id="doc_identidade" name="doc_identidade" type="file" accept=".jpg,.jpeg,.png,.pdf" class="file-inp" required>
+            <p class="hint">JPG, PNG ou PDF · até 5 MB.</p>
+          </div>
+          <div>
+            <label class="lbl" for="doc_titular">Conta/fatura recente da linha <span class="text-laranja">*</span></label>
+            <input id="doc_titular" name="doc_titular" type="file" accept=".jpg,.jpeg,.png,.pdf" class="file-inp" required>
+            <p class="hint">Conta em nome do titular · JPG, PNG ou PDF · até 5 MB.</p>
+          </div>
+          <div>
+            <label class="lbl" for="arquivo_numeros">Várias linhas? Anexe a lista de números</label>
+            <input id="arquivo_numeros" name="arquivo_numeros" type="file" accept=".csv,.xlsx,.pdf" class="file-inp">
+            <p class="hint">Opcional · CSV, XLSX ou PDF, para portabilidade de múltiplos números.</p>
+          </div>
+        </div>
+
+        <!-- LGPD -->
+        <label class="flex items-start gap-3 mt-6 cursor-pointer">
+          <input id="consent" name="consent" type="checkbox" class="mt-1 w-4 h-4 accent-i9c-azul shrink-0" required>
+          <span class="text-sm text-cinza leading-relaxed">Autorizo a i9c a tratar os meus dados pessoais para processar esta solicitação de portabilidade, conforme a Lei Geral de Proteção de Dados (LGPD). <span class="text-laranja">*</span></span>
+        </label>
+        <p class="err" data-err="consent"></p>
+
+        <button type="submit" class="w-full bg-i9c-azul text-white font-semibold py-4 rounded-full hover:bg-i9c-azulDark transition-colors mt-7">Enviar solicitação de portabilidade</button>
+        <div id="form-msg" class="hidden mt-4 rounded-xl border px-4 py-3 text-sm leading-relaxed"></div>
+      </form>
+    </div>
+  </section>
+
+  <style>
+    .lbl { display:block; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; font-family:'Space Grotesk',sans-serif; color:#716F6E; margin-bottom:.4rem; }
+    .inp { width:100%; border:2px solid #E8E8E7; border-radius:.85rem; padding:.7rem .9rem; color:#1E2C5C; background:#fff; }
+    .inp:focus { outline:none; border-color:#136BA2; }
+    .file-inp { width:100%; font-size:.85rem; color:#716F6E; }
+    .file-inp::file-selector-button { margin-right:.75rem; border:2px solid #E8E8E7; background:#F4F4F3; color:#1E2C5C; font-weight:600; padding:.5rem .9rem; border-radius:9999px; cursor:pointer; }
+    .hint { font-size:.72rem; color:#716F6E; opacity:.8; margin-top:.35rem; }
+    .err { font-size:.75rem; color:#C8541E; margin-top:.35rem; min-height:0; }
+    .inp.invalid { border-color:#C8541E; }
+  </style>
+
+  <script>
+    (function(){
+      // >>> Endpoint do backend FastAPI (ajuste se necessário)
+      var ENDPOINT = "/api/portabilidade";
+
+      var form = document.getElementById('port-form');
+      var msg  = document.getElementById('form-msg');
+
+      // Alterna rótulo CPF/CNPJ conforme tipo de pessoa
+      function syncTipo(){
+        var pj = form.querySelector('input[name=tipo_pessoa]:checked').value === 'PJ';
+        form.querySelectorAll('[data-pf]').forEach(function(e){ e.classList.toggle('hidden', pj); });
+        form.querySelectorAll('[data-pj]').forEach(function(e){ e.classList.toggle('hidden', !pj); });
+      }
+      form.querySelectorAll('input[name=tipo_pessoa]').forEach(function(r){ r.addEventListener('change', syncTipo); });
+      syncTipo();
+
+      function showErr(name, text){
+        var el = form.querySelector('[data-err="'+name+'"]');
+        if (el) el.textContent = text || '';
+        var inp = form.querySelector('[name="'+name+'"]');
+        if (inp) inp.classList.toggle('invalid', !!text);
+      }
+      function tone(ok, text){
+        msg.className = 'mt-4 rounded-xl border px-4 py-3 text-sm leading-relaxed ' +
+          (ok ? 'bg-i9c-azulSoft border-i9c-azul/20 text-ivm-azul' : 'bg-laranja-soft border-laranja/20 text-laranja-dark');
+        msg.innerHTML = text; msg.classList.remove('hidden');
+        msg.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if (form.website.value) return; // honeypot
+
+        var ok = true;
+        ['documento','email','consent'].forEach(function(n){ showErr(n, ''); });
+
+        if (!window.i9cValida.cpfCnpj(form.documento.value)) {
+          showErr('documento', 'Documento inválido. Confira os dígitos.'); ok = false;
+        }
+        if (!window.i9cValida.email(form.email.value)) {
+          showErr('email', 'E-mail inválido.'); ok = false;
+        }
+        if (!form.consent.checked) {
+          showErr('consent', 'É necessário autorizar o tratamento dos dados.'); ok = false;
+        }
+        // checa obrigatórios nativos
+        if (ok && !form.checkValidity()) { form.reportValidity(); ok = false; }
+        if (!ok) { tone(false, 'Confira os campos destacados e tente novamente.'); return; }
+
+        var fd = new FormData(form);
+        tone(true, 'Enviando sua solicitação…');
+        fetch(ENDPOINT, { method:'POST', body: fd })
+          .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {ok:r.ok, j:j}; }); })
+          .then(function(res){
+            if (res.ok) {
+              form.reset(); syncTipo();
+              tone(true, '<strong>Solicitação recebida!</strong> Em breve nossa equipe entra em contato para concluir a portabilidade. Você também pode falar pelo <a href="tel:08008000900" class="font-semibold underline">0800 800 0900</a>.');
+            } else {
+              tone(false, (res.j && res.j.detail) ? res.j.detail : 'Não foi possível enviar agora. Tente novamente ou fale pelo 0800 800 0900.');
+            }
+          })
+          .catch(function(){
+            tone(false, 'Falha de conexão com o servidor. Verifique sua internet ou fale pelo <a href="tel:08008000900" class="font-semibold underline">0800 800 0900</a>.');
+          });
+      });
+    })();
+  </script>

@@ -1,8 +1,32 @@
 # Site i9c — Operadora Móvel (Grupo IVM)
 
-Site institucional/comercial da **i9c**, construído fielmente sobre o protótipo
-de referência (`i9c-prototipo.html`): **Tailwind CSS (via CDN)** + paleta oficial
-**Manual de Identidade Visual Grupo IVM v4.0**, com os logos reais da marca.
+Site institucional/comercial da **i9c**. Desde 16/10/2026 é um projeto **Astro** com **Tailwind compilado**
+(antes: 10 HTMLs estáticos com Tailwind via CDN). As URLs continuam as mesmas (`/planos-black.html` etc.).
+
+## Desenvolvimento
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # gera dist/ (é o que vai para o GitHub Pages)
+```
+
+## Estrutura
+
+| Caminho | O quê |
+|---|---|
+| `src/layouts/Base.astro` | `<head>`, consentimento LGPD + GTM (`GTM-WPL6WQS`), Bitrix24 e o esqueleto de todas as páginas |
+| `src/components/Header.astro` | Barra superior + menu (desktop e **mobile**) — um só para o site todo |
+| `src/components/Footer.astro`, `WhatsApp.astro`, `CookieBanner.astro` | Rodapé, widget do WhatsApp e aviso de cookies únicos |
+| `src/pages/<pagina>.astro` | Uma por página; título, descrição, canonical e item ativo do menu |
+| `src/partials/<pagina>.body.html` | **Conteúdo** de cada página (editar aqui) |
+| `src/partials/<pagina>.head.html` / `.end.html` | JSON-LD/CSS e scripts próprios da página |
+| `src/styles/global.css` | CSS próprio + acessibilidade (foco, reduced-motion) |
+| `tailwind.config.cjs` | Cores e fontes da marca (era o config inline) |
+| `public/` | Logos, favicons, `assets/` (JS, `municipios.json`), `robots.txt`, `sitemap.xml` |
+| `docs/audit/` | Auditoria de layout (não vai para o ar) |
+
+Deploy: `.github/workflows/pages.yml` roda `npm ci && npm run build` e publica `dist/` a cada push na `main`.
 
 ## Páginas
 

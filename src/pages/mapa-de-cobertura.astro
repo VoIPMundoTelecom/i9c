@@ -1,0 +1,17 @@
+---
+// Gerado a partir do mapa-de-cobertura.html (site estático). Conteúdo da página em src/partials/mapa-de-cobertura.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/mapa-de-cobertura.head.html?raw';
+import body from '../partials/mapa-de-cobertura.body.html?raw';
+import end from '../partials/mapa-de-cobertura.end.html?raw';
+
+const title = "Mapa de cobertura · i9c";
+const description = "Consulte a cobertura móvel da i9c pelo CEP — 5G, 4G e voz com alcance nacional.";
+const canonical = "https://i9c.net.br/mapa-de-cobertura.html";
+---
+
+<Base title={title} description={description} canonical={canonical} active="cobertura">
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+  <Fragment slot="end" set:html={end} />
+</Base>

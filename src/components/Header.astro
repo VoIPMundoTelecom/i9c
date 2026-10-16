@@ -1,0 +1,91 @@
+---
+/**
+ * Barra superior + header com menu mobile.
+ * Antes: o <nav> era `hidden md:flex` e não havia botão de menu (abaixo de 768px não tinha navegação).
+ * O seletor de idioma (PT/EN/ES) saiu: EN/ES não existiam.
+ */
+interface Props {
+  active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
+}
+const { active } = Astro.props;
+
+const links = [
+  { id: 'planos', href: '/#planos', label: 'Planos' },
+  { id: 'cobertura', href: '/mapa-de-cobertura.html', label: 'Cobertura' },
+  { id: 'portabilidade', href: '/portabilidade.html', label: 'Portabilidade' },
+  { id: 'recarga', href: '/recargas.html', label: 'Recarga' },
+  { id: 'faq', href: '/perguntas-frequentes.html', label: 'FAQ' },
+];
+const AREA_CLIENTE = 'https://app.i9c.net.br/';
+---
+
+<!-- TOP UTILITY BAR -->
+<div class="bg-cinza-100 border-b border-cinza-200 text-xs hidden sm:block">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-9 flex items-center gap-5">
+    <a href={AREA_CLIENTE} class="text-cinza hover:text-i9c-azul inline-flex items-center gap-1.5 font-medium py-2">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Sua conta
+    </a>
+    <a href="/recargas.html" class="text-cinza hover:text-i9c-azul inline-flex items-center gap-1.5 font-medium py-2">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7h20v10H2z"/><path d="M2 11h20"/></svg>
+      Recarga online
+    </a>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-cinza-200">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 h-16 flex items-center justify-between gap-3">
+    <a href="/" class="flex items-center gap-3" aria-label="i9c · Operadora Móvel · Página inicial">
+      <img src="/i9c-logo.png" alt="i9c" width="80" height="40" class="h-10 w-auto shrink-0" />
+      <span class="hidden sm:block font-mono text-[10px] tracking-[0.25em] text-cinza uppercase border-l border-cinza-200 pl-3 leading-tight">Operadora<br />Móvel</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-cinza" aria-label="Principal">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class={l.id === active ? 'text-i9c-azul font-semibold' : 'hover:text-i9c-azul transition-colors'}
+          aria-current={l.id === active ? 'page' : undefined}
+        >{l.label}</a>
+      ))}
+    </nav>
+    <div class="flex items-center gap-1">
+      <a href="/#planos" class="inline-flex items-center gap-1.5 bg-i9c-azul text-white text-sm font-semibold px-4 py-2.5 rounded-full hover:bg-i9c-azulDark transition-colors">
+        Contratar
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <button
+        type="button"
+        class="md:hidden inline-grid place-items-center w-11 h-11 rounded-full text-ivm-azul hover:bg-cinza-100"
+        aria-label="Abrir menu" aria-expanded="false" aria-controls="i9c-mnav" data-mnav-toggle
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu mobile -->
+  <nav id="i9c-mnav" class="md:hidden hidden border-t border-cinza-200 bg-white" aria-label="Menu">
+    <div class="max-w-7xl mx-auto px-5 py-2 flex flex-col">
+      {links.map((l) => (
+        <a href={l.href} class={`py-3 border-b border-cinza-100 text-base ${l.id === active ? 'text-i9c-azul font-semibold' : 'text-ivm-azul'}`}>{l.label}</a>
+      ))}
+      <a href={AREA_CLIENTE} class="py-3 text-base text-ivm-azul">Sua conta</a>
+    </div>
+  </nav>
+</header>
+
+<script is:inline>
+  (function () {
+    var b = document.querySelector('[data-mnav-toggle]'), m = document.getElementById('i9c-mnav');
+    if (!b || !m) return;
+    function set(open) {
+      m.classList.toggle('hidden', !open);
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      b.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    }
+    b.addEventListener('click', function () { set(m.classList.contains('hidden')); });
+    m.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !m.classList.contains('hidden')) { set(false); b.focus(); } });
+  })();
+</script>

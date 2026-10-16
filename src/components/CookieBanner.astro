@@ -1,0 +1,39 @@
+---
+/**
+ * Banner de cookies (LGPD).
+ * Antes: reaparecia em toda página (a escolha era gravada mas nunca lida) e não controlava nada.
+ * Agora: escondido por padrão; só aparece sem escolha salva; "Aceitar" libera o GTM (Base.astro).
+ */
+---
+
+<div id="cookie-banner" hidden class="fixed bottom-0 inset-x-0 z-50 bg-white border-t-2 border-i9c-azul shadow-[0_-12px_40px_-12px_rgba(30,44,92,0.25)]" role="region" aria-label="Aviso de cookies">
+  <div class="max-w-7xl mx-auto px-5 lg:px-8 py-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+    <p class="text-sm text-cinza leading-relaxed max-w-3xl">
+      <span class="font-display font-bold text-ivm-azul">Valorizamos sua privacidade.</span>
+      Usamos cookies para medir o uso do site e melhorar sua experiência. Você decide.
+      <a href="/politica-de-privacidade.html" class="text-i9c-azul underline hover:no-underline">Saiba mais</a>.
+    </p>
+    <div class="flex gap-3 shrink-0">
+      <button type="button" data-consent="reject" class="px-5 py-2.5 rounded-full border-2 border-cinza-200 text-ivm-azul font-semibold text-sm hover:border-ivm-azul transition-colors">Só necessários</button>
+      <button type="button" data-consent="accept" class="px-5 py-2.5 rounded-full bg-i9c-azul text-white font-semibold text-sm hover:bg-i9c-azulDark transition-colors">Aceitar todos</button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById('cookie-banner');
+    if (!el) return;
+    var saved = null;
+    try { saved = localStorage.getItem('i9c_cookies'); } catch (e) {}
+    if (!saved) el.hidden = false;
+    el.querySelectorAll('[data-consent]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var v = b.getAttribute('data-consent');
+        try { localStorage.setItem('i9c_cookies', v); } catch (e) {}
+        el.hidden = true;
+        if (v === 'accept' && window.__i9cGrant) window.__i9cGrant();
+      });
+    });
+  })();
+</script>

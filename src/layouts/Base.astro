@@ -1,0 +1,105 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsApp from '../components/WhatsApp.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import organization from '../partials/_organization.head.html?raw';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
+}
+const { title, description, canonical, active } = Astro.props;
+
+// Mesmo container do GTM da Voipmundo (decisão de 16/10/2026).
+const GTM_ID = 'GTM-WPL6WQS';
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="i9c" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="pt_BR" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <meta name="theme-color" content="#136BA2" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <Fragment set:html={organization} />
+    <slot name="head" />
+
+    <!-- Consentimento (LGPD) + GTM: nada de medição antes do "Aceitar todos" -->
+    <script is:inline define:vars={{ gtmId: GTM_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied' });
+      function loadGTM() {
+        if (!gtmId || window.__gtmLoaded) return;
+        window.__gtmLoaded = true;
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
+          j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', gtmId);
+      }
+      window.__i9cGrant = function () {
+        gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
+        loadGTM();
+      };
+      try { if (localStorage.getItem('i9c_cookies') === 'accept') window.__i9cGrant(); } catch (e) {}
+    </script>
+  </head>
+
+  <body class="bg-white antialiased overflow-x-hidden">
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <WhatsApp />
+    <CookieBanner />
+    <Header active={active} />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    <slot name="end" />
+
+    <script is:inline>
+      function toggleWhatsApp() {
+        var popup = document.getElementById('wa-popup');
+        if (popup) popup.classList.toggle('hidden');
+      }
+      document.addEventListener('click', function (e) {
+        var popup = document.getElementById('wa-popup');
+        if (!popup || popup.classList.contains('hidden')) return;
+        if (e.target.closest('#wa-popup') || e.target.closest('[onclick*="toggleWhatsApp"]')) return;
+        popup.classList.add('hidden');
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { var p = document.getElementById('wa-popup'); if (p) p.classList.add('hidden'); }
+      });
+    </script>
+
+    <!-- Bitrix24 — chat widget oficial -->
+    <script is:inline>
+      (function (w, d, u) {
+        var s = d.createElement('script'); s.async = true; s.src = u + '?' + (Date.now() / 60000 | 0);
+        var h = d.getElementsByTagName('script')[0]; h.parentNode.insertBefore(s, h);
+      })(window, document, 'https://cdn.bitrix24.com.br/b25756911/crm/site_button/loader_4_4suya7.js');
+    </script>
+  </body>
+</html>
