@@ -1,0 +1,17 @@
+---
+// Gerado a partir do perguntas-frequentes.html (site estático). Conteúdo da página em src/partials/perguntas-frequentes.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/perguntas-frequentes.head.html?raw';
+import body from '../partials/perguntas-frequentes.body.html?raw';
+import end from '../partials/perguntas-frequentes.end.html?raw';
+
+const title = "Perguntas frequentes · i9c";
+const description = "Tire suas dúvidas sobre planos, cobertura 5G, portabilidade, chip, recarga e suporte da i9c.";
+const canonical = "https://i9c.net.br/perguntas-frequentes.html";
+---
+
+<Base title={title} description={description} canonical={canonical} active="faq">
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+  <Fragment slot="end" set:html={end} />
+</Base>

@@ -1,0 +1,17 @@
+---
+// Gerado a partir do planos-empresas.html (site estático). Conteúdo da página em src/partials/planos-empresas.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/planos-empresas.head.html?raw';
+import body from '../partials/planos-empresas.body.html?raw';
+import end from '../partials/planos-empresas.end.html?raw';
+
+const title = "Plano corporativo de celular com gestão de linhas | i9c";
+const description = "Linhas móveis para empresas e órgãos públicos de 3GB a 160GB, com gestão de voz e dados, Outlook e Waze grátis. 5G nacional e sem fidelidade.";
+const canonical = "https://i9c.net.br/planos-empresas.html";
+---
+
+<Base title={title} description={description} canonical={canonical} active="planos">
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+  <Fragment slot="end" set:html={end} />
+</Base>

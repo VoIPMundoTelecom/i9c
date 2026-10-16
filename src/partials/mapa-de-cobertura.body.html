@@ -1,0 +1,60 @@
+<!-- HERO COBERTURA -->
+  <section class="relative grain overflow-hidden bg-white border-b border-cinza-200">
+    <div class="hero-blob absolute -top-20 -right-32 w-[600px] h-[600px] rounded-full"></div>
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-12 lg:pt-14 pb-10 relative z-10">
+      <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja rise rise-1">Mapa de cobertura</div>
+      <h1 class="font-display font-bold text-[clamp(2.5rem,7vw,5rem)] leading-[0.95] tracking-tightest mt-3 rise rise-2 text-ivm-azul">
+        Onde você está,<br><span class="text-laranja">a i9c também está.</span>
+      </h1>
+      <p class="text-lg text-cinza max-w-2xl mt-6 leading-relaxed rise rise-3">
+        Cada ponto no mapa é uma localidade atendida pela nossa rede. Use a busca para encontrar sua cidade e confira a tecnologia disponível — 5G, 4G, 3G ou 2G.
+      </p>
+      <!-- Legenda de tecnologias -->
+      <div class="flex flex-wrap items-center gap-2 mt-6 rise rise-4">
+        <span class="text-xs font-mono uppercase tracking-wider text-cinza mr-1">Tecnologias:</span>
+        <span class="px-2.5 py-1 rounded-md text-xs font-semibold font-mono bg-i9c-azulSoft text-i9c-azul">5G</span>
+        <span class="px-2.5 py-1 rounded-md text-xs font-semibold font-mono bg-laranja/10 text-laranja-dark">4G</span>
+        <span class="px-2.5 py-1 rounded-md text-xs font-semibold font-mono bg-cinza-100 text-cinza">3G</span>
+        <span class="px-2.5 py-1 rounded-md text-xs font-semibold font-mono bg-cinza-100 text-cinza">2G</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAPA -->
+  <section class="bg-cinza-50">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 py-8 lg:py-10">
+      <div class="rounded-3xl overflow-hidden border-2 border-cinza-200 shadow-xl shadow-ivm-azul/5 bg-white">
+        <div id="map" class="w-full" style="height:min(72vh,640px);"></div>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4">
+        <p id="map-status" class="text-sm text-cinza">Carregando pontos de cobertura…</p>
+        <p class="text-xs text-cinza/70">Dica: use a lupa no mapa para buscar por cidade ou endereço.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA A REDE -->
+  <section class="bg-ivm-azul text-white py-20 relative overflow-hidden">
+    <svg class="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E8672A" stroke-width="0.5"/></pattern></defs>
+      <rect width="100%" height="100%" fill="url(#grid)"/>
+    </svg>
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 relative">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja">Como nossa rede funciona</div>
+          <h2 class="font-display font-bold text-4xl lg:text-5xl tracking-tightest leading-[0.95] mt-3">Sinal de operadora grande, jeito de operadora boa.</h2>
+          <p class="text-white/75 text-lg mt-6 max-w-md">A i9c entrega conectividade móvel com alcance nacional, usando infraestrutura de rede de alta capacidade — com atendimento direto e sem burocracia. Você fala e navega com qualidade, e quando precisar de ajuda encontra gente de verdade do outro lado.</p>
+          <div class="flex flex-wrap gap-3 mt-8">
+            <a href="/portabilidade.html" class="inline-flex items-center gap-2 bg-white text-ivm-azul font-semibold px-6 py-3.5 rounded-full hover:bg-laranja-dark hover:text-white transition-colors">Trazer meu número</a>
+            <a href="/#planos" class="inline-flex items-center gap-2 border-2 border-white/30 text-white font-semibold px-6 py-3.5 rounded-full hover:bg-white/10 transition-colors">Ver planos</a>
+          </div>
+        </div>
+        <div class="bg-white/5 border border-white/15 rounded-3xl p-7">
+          <div class="font-display font-bold text-xl">Não achou sua cidade no mapa?</div>
+          <p class="text-white/70 mt-2 text-sm leading-relaxed">A cobertura está sempre em expansão. Se a sua região ainda não aparece, fale com a gente — registramos seu interesse e avisamos quando chegar.</p>
+          <a href="https://wa.me/558008000900" target="_blank" rel="noopener" class="mt-5 inline-flex items-center justify-center gap-2 bg-laranja-dark text-white font-semibold px-6 py-3 rounded-full hover:bg-i9c-azulDark transition-colors">Ligar 0800 800 0900</a>
+        </div>
+      </div>
+    </div>
+  </section>

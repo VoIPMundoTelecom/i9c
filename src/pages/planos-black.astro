@@ -1,0 +1,17 @@
+---
+// Gerado a partir do planos-black.html (site estático). Conteúdo da página em src/partials/planos-black.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/planos-black.head.html?raw';
+import body from '../partials/planos-black.body.html?raw';
+import end from '../partials/planos-black.end.html?raw';
+
+const title = "Plano Black Individual 5G de 1GB a 50GB, sem fidelidade | i9c";
+const description = "Planos Black Individual i9c de 1GB a 50GB com ligações e SMS ilimitados, WhatsApp, Instagram e Facebook grátis e roaming nacional. Sem fidelidade.";
+const canonical = "https://i9c.net.br/planos-black.html";
+---
+
+<Base title={title} description={description} canonical={canonical} active="planos">
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+  <Fragment slot="end" set:html={end} />
+</Base>

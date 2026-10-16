@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+import Legal from '../components/Legal.astro';
+import { EMPRESA, DPO } from '../data/empresa';
+
+const atualizado = '16/10/2026';
+// RASCUNHO para revisão jurídica (Laura). Itens a confirmar marcados com TODO_ no código.
+---
+
+<Base
+  title="Política de Privacidade | i9c"
+  description="Como a i9c (IVM Telecomunicação) coleta, usa, compartilha e protege seus dados pessoais no site, conforme a LGPD."
+  canonical="https://i9c.net.br/politica-de-privacidade.html"
+>
+  <Legal eyebrow="Privacidade" title="Política de Privacidade" updated={atualizado}>
+    <p>
+      Esta Política explica como a <strong>{EMPRESA.razaoSocial}</strong> (CNPJ {EMPRESA.cnpj}), responsável pela
+      marca <strong>i9c</strong>, trata os dados pessoais de quem usa o site <strong>i9c.net.br</strong>, em conformidade
+      com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, “LGPD”).
+    </p>
+    <div class="box">
+      <p style="margin:0">
+        <strong>Resumo:</strong> só coletamos o que é necessário para atender o seu pedido; medição de uso do site só
+        depois do seu “Aceitar todos”; não vendemos seus dados; você pode pedir acesso, correção ou exclusão a qualquer momento.
+      </p>
+    </div>
+
+    <h2>1. Quem é o controlador</h2>
+    <p>
+      {EMPRESA.razaoSocial}, CNPJ {EMPRESA.cnpj}, com sede na {EMPRESA.endereco}. Os dados tratados pela área do
+      cliente (<a href={EMPRESA.areaCliente}>app.i9c.net.br</a>) e pelo contrato do serviço móvel seguem também os
+      termos do seu contrato de prestação de serviço.
+    </p>
+
+    <h2>2. Quais dados coletamos e para quê</h2>
+    <table>
+      <thead><tr><th>Onde</th><th>Dados</th><th>Finalidade</th><th>Base legal (LGPD)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td data-label="Onde">Solicitação de portabilidade</td>
+          <td data-label="Dados">Nome ou razão social, CPF/CNPJ, e-mail, telefone de contato, endereço, número(s) a portar, operadora atual, quantidade de linhas, documento de identidade e documento do titular (imagem/PDF) e, para empresas, lista de números</td>
+          <td data-label="Finalidade">Analisar e executar o pedido de portabilidade e a contratação; contato sobre o pedido</td>
+          <td data-label="Base legal">Procedimentos preliminares e execução de contrato (art. 7º, V); consentimento registrado no formulário (art. 7º, I); obrigação regulatória (art. 7º, II)</td>
+        </tr>
+        <tr>
+          <td data-label="Onde">WhatsApp, telefone e chat do site</td>
+          <td data-label="Dados">Nome, número de telefone e o conteúdo da conversa</td>
+          <td data-label="Finalidade">Atender dúvidas, vendas e suporte</td>
+          <td data-label="Base legal">Procedimentos preliminares/execução de contrato (art. 7º, V) e legítimo interesse (art. 7º, IX)</td>
+        </tr>
+        <tr>
+          <td data-label="Onde">Navegação (cookies de medição)</td>
+          <td data-label="Dados">Páginas visitadas, origem do acesso, tipo de dispositivo e navegador, identificadores de cookie</td>
+          <td data-label="Finalidade">Medir audiência e desempenho do site e de campanhas</td>
+          <td data-label="Base legal">Consentimento (art. 7º, I) — só após “Aceitar todos”</td>
+        </tr>
+        <tr>
+          <td data-label="Onde">Funcionamento do site</td>
+          <td data-label="Dados">Endereço IP e dados técnicos da requisição; sua escolha no aviso de cookies (guardada no seu navegador)</td>
+          <td data-label="Finalidade">Entregar as páginas, segurança e lembrar a sua escolha</td>
+          <td data-label="Base legal">Legítimo interesse (art. 7º, IX)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Não solicitamos dados sensíveis pelo site. Os documentos enviados na portabilidade são usados apenas para conferir a titularidade da linha.</p>
+
+    <h2>3. Cookies e medição</h2>
+    <p>
+      Usamos o <strong>Google Tag Manager</strong> e ferramentas de medição do Google somente depois que você clica em
+      “Aceitar todos” no aviso de cookies. Com “Só necessários”, nenhum cookie de medição é ativado. Sua escolha fica
+      salva no seu navegador; para mudar, limpe os dados do site no navegador e o aviso aparecerá de novo.
+    </p>
+
+    <h2>4. Com quem compartilhamos</h2>
+    <p>Não vendemos dados pessoais. Compartilhamos apenas o necessário com:</p>
+    <ul>
+      <li><strong>Operadora de rede parceira (MVNO) e entidade administradora da portabilidade numérica</strong>, para ativar a linha e executar a portabilidade;</li>
+      <li><strong>Sua operadora atual</strong>, no processo de portabilidade;</li>
+      <li><strong>Fornecedores de tecnologia</strong>: Google (Tag Manager/medição e fontes do site), Bitrix24 (chat e CRM), WhatsApp/Meta (mensagens), OpenStreetMap (mapas do mapa de cobertura) e provedores de hospedagem;</li>
+      <li><strong>Autoridades</strong> (inclusive ANATEL e Judiciário), quando exigido por lei ou ordem judicial.</li>
+    </ul>
+    <p>
+      Alguns desses fornecedores podem processar dados fora do Brasil. Nesses casos, a transferência segue as hipóteses do
+      art. 33 da LGPD.
+    </p>
+
+    <h2>5. Por quanto tempo guardamos</h2>
+    <p>
+      Pelo tempo necessário para cumprir a finalidade (por exemplo, concluir a portabilidade e manter o contrato) e,
+      depois, pelos prazos exigidos por lei ou pela regulamentação de telecomunicações, ou para defesa em processos.
+      Encerrados esses prazos, os dados são eliminados ou anonimizados.
+      <!-- TODO_RETENCAO: se houver prazo interno definido para documentos de portabilidade não concluída, citar aqui. -->
+    </p>
+
+    <h2>6. Segurança</h2>
+    <p>
+      Os dados trafegam por conexão criptografada (HTTPS). Os documentos da portabilidade ficam em área restrita,
+      fora do site público, com acesso limitado à equipe responsável. Nenhum sistema é 100% invulnerável; se ocorrer
+      um incidente com risco relevante, comunicaremos você e a ANPD, como prevê a LGPD.
+    </p>
+
+    <h2>7. Seus direitos</h2>
+    <p>Você pode, a qualquer momento, pedir:</p>
+    <ul>
+      <li>confirmação de que tratamos seus dados e acesso a eles;</li>
+      <li>correção de dados incompletos, inexatos ou desatualizados;</li>
+      <li>anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desconformidade;</li>
+      <li>portabilidade dos dados a outro fornecedor;</li>
+      <li>eliminação dos dados tratados com base no consentimento e revogação do consentimento;</li>
+      <li>informação sobre com quem compartilhamos seus dados.</li>
+    </ul>
+    <p>Alguns dados podem ser mantidos mesmo após o pedido, quando a lei ou a regulamentação exigirem.</p>
+
+    <h2>8. Encarregado (DPO) e contato</h2>
+    {DPO.nome ? (
+      <p>
+        Encarregado pelo tratamento de dados: <strong>{DPO.nome}</strong> — <a href={`mailto:${DPO.email}`}>{DPO.email}</a>.
+      </p>
+    ) : (
+      <p>
+        Para exercer seus direitos ou tirar dúvidas sobre esta Política, fale com a gente pelo
+        <strong> {EMPRESA.telefone}</strong> ou pelo <a href={EMPRESA.whatsapp} target="_blank" rel="noopener">WhatsApp</a>,
+        informando que o assunto é <strong>privacidade de dados</strong>.
+      </p>
+    )}
+    <p>Você também pode apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).</p>
+
+    <h2>9. Alterações</h2>
+    <p>Podemos atualizar esta Política. A data no topo indica a versão vigente; mudanças relevantes serão destacadas no site.</p>
+  </Legal>
+</Base>

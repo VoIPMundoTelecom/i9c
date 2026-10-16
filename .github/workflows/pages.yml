@@ -1,6 +1,6 @@
 name: Deploy site (GitHub Pages)
 
-# Publica o site estático i9c a cada push na main.
+# Builda o site i9c (Astro) e publica o dist/ a cada push na main.
 # O backend (FastAPI) fica versionado, mas NÃO é publicado no Pages.
 
 on:
@@ -25,19 +25,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Montar pasta de publicação (_site)
-        run: |
-          mkdir -p _site
-          # copia tudo, exceto o que não deve ir ao ar
-          rsync -a ./ _site/ \
-            --exclude '.git' \
-            --exclude '.github' \
-            --exclude 'backend' \
-            --exclude 'node_modules' \
-            --exclude 'README.md' \
-            --exclude 'docs'
-          # impede indexação acidental de diretórios e remove artefatos
-          find _site -name '.DS_Store' -delete || true
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build (Astro + Tailwind compilado)
+        run: npm run build
 
       - name: Configurar Pages
         uses: actions/configure-pages@v5
@@ -45,7 +43,7 @@ jobs:
       - name: Upload do artefato
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: dist
 
   deploy:
     needs: build
