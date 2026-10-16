@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /recargas.html
 
 Sitemap: https://i9c.net.br/sitemap.xml
