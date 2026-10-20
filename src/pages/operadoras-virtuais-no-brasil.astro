@@ -1,0 +1,15 @@
+---
+// Artigo (conteudo/artigos-1). Conteúdo da página em src/partials/operadoras-virtuais-no-brasil.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/operadoras-virtuais-no-brasil.head.html?raw';
+import body from '../partials/operadoras-virtuais-no-brasil.body.html?raw';
+
+const title = "Operadoras virtuais no Brasil: como funcionam · i9c";
+const description = "O que é uma operadora virtual (MVNO), como funcionam sinal, número e atendimento, e por que a i9c é uma: autorizada pela Anatel, sem fidelidade e com portabilidade online.";
+const canonical = "https://i9c.net.br/operadoras-virtuais-no-brasil.html";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+</Base>
