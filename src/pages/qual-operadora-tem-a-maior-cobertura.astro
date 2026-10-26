@@ -1,0 +1,15 @@
+---
+// Artigo (conteudo/i9c-maior-cobertura, segunda par 26/10). Conteúdo em src/partials/qual-operadora-tem-a-maior-cobertura.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/qual-operadora-tem-a-maior-cobertura.head.html?raw';
+import body from '../partials/qual-operadora-tem-a-maior-cobertura.body.html?raw';
+
+const title = "Qual operadora tem a maior cobertura? Como conferir · i9c";
+const description = "A maior cobertura é a que pega bem onde você está. Veja por que o sinal muda de um lugar para outro e confira no mapa da i9c antes de trocar de operadora.";
+const canonical = "https://i9c.net.br/qual-operadora-tem-a-maior-cobertura.html";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+</Base>
