@@ -9,10 +9,13 @@ import organization from '../partials/_organization.head.html?raw';
 interface Props {
   title: string;
   description: string;
-  canonical: string;
+  /** vazio = sem canonical e sem og:url (404 e manutenção respondem em qualquer URL) */
+  canonical?: string;
   active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
+  /** true = <meta robots noindex> */
+  noindex?: boolean;
 }
-const { title, description, canonical, active } = Astro.props;
+const { title, description, canonical, active, noindex = false } = Astro.props;
 
 // Mesmo container do GTM da Voipmundo (decisão de 16/10/2026).
 const GTM_ID = 'GTM-WPL6WQS';
@@ -25,14 +28,15 @@ const GTM_ID = 'GTM-WPL6WQS';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <!-- Google Search Console (conta marketing@grupoivm.com.br) -->
     <meta name="google-site-verification" content="e89soBTv-h7gCjONFsTHJecGi0oSu6-Cn8c76oDUYAU" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="i9c" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:locale" content="pt_BR" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
