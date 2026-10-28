@@ -14,8 +14,10 @@ interface Props {
   active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
   /** true = <meta robots noindex> */
   noindex?: boolean;
+  /** true = página leve (404/manutenção): sem o chat do Bitrix24 (o CTA de contato já é o WhatsApp) e fontes sem bloquear a renderização */
+  leve?: boolean;
 }
-const { title, description, canonical, active, noindex = false } = Astro.props;
+const { title, description, canonical, active, noindex = false, leve = false } = Astro.props;
 
 // Mesmo container do GTM da Voipmundo (decisão de 16/10/2026).
 const GTM_ID = 'GTM-WPL6WQS';
@@ -45,7 +47,14 @@ const GTM_ID = 'GTM-WPL6WQS';
     <meta name="theme-color" content="#136BA2" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+    {!leve ? (
+      <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+    ) : (
+      <Fragment>
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+        <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" /></noscript>
+      </Fragment>
+    )}
 
     <Fragment set:html={organization} />
     <slot name="head" />
@@ -101,11 +110,11 @@ const GTM_ID = 'GTM-WPL6WQS';
     </script>
 
     <!-- Bitrix24 — chat widget oficial -->
-    <script is:inline>
+    {!leve && <script is:inline>
       (function (w, d, u) {
         var s = d.createElement('script'); s.async = true; s.src = u + '?' + (Date.now() / 60000 | 0);
         var h = d.getElementsByTagName('script')[0]; h.parentNode.insertBefore(s, h);
       })(window, document, 'https://cdn.bitrix24.com.br/b25756911/crm/site_button/loader_4_4suya7.js');
-    </script>
+    </script>}
   </body>
 </html>
