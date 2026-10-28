@@ -37,9 +37,9 @@
 <article class="plan-card relative bg-i9c-azul text-white rounded-3xl p-7 flex flex-col">
 <div class="absolute -top-3 left-7 bg-laranja-dark text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider font-mono">Mais escolhido</div>
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest num">100<span class="text-2xl opacity-70">GB</span></span><span class="text-xs opacity-70 font-mono uppercase tracking-wider">+3 linhas</span></div>
-<div class="mt-6 pb-6 border-b border-white/20"><div class="text-xs opacity-70 font-semibold font-mono uppercase tracking-wider">a partir de</div><div class="font-display font-bold text-3xl tracking-tightest num">R$ 239,99<span class="text-base opacity-70 font-medium">/mês</span></div></div>
+<div class="mt-6 pb-6 border-b border-white/20"><div class="text-xs opacity-70 font-semibold font-mono uppercase tracking-wider">a partir de</div><div class="font-display font-bold text-3xl tracking-tightest num">{{plano:familia-100gb:preco-card}}<span class="text-base opacity-70 font-medium">/mês</span></div></div>
 <ul class="mt-5 space-y-2.5 text-sm opacity-95 flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Ligações ilimitadas</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Apps grátis</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 5G nacional</li></ul>
-<a class="mt-6 inline-flex items-center justify-center bg-laranja-dark text-white font-semibold py-3 rounded-full hover:bg-i9c-azulDark transition-colors" data-lead="contratar" href="https://wa.me/558008000900?text=Ol%C3%A1%21%20Quero%20contratar%20o%20plano%20Fam%C3%ADlia%20100GB%20%C2%B7%20%2B3%20linhas%20da%20i9c." rel="noopener" target="_blank">Contratar</a>
+<a class="mt-6 inline-flex items-center justify-center bg-laranja-dark text-white font-semibold py-3 rounded-full hover:bg-i9c-azulDark transition-colors" data-lead="contratar" href="{{plano:familia-100gb:contratar}}" rel="noopener" target="_blank">Contratar</a>
 </article>
 <article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col">
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest num text-ivm-azul">230<span class="text-2xl text-cinza">GB</span></span><span class="text-xs text-cinza font-mono uppercase tracking-wider">+5 linhas</span></div>
@@ -82,8 +82,8 @@
 <label class="text-xs text-white/60 font-semibold uppercase tracking-wider font-mono">Plano de interesse</label>
 <select class="w-full mt-1 bg-transparent border-b border-white/20 text-white py-2 focus:outline-none focus:border-laranja">
 <option class="bg-ivm-azul">Black 10GB · R$ 41,99</option>
-<option class="bg-ivm-azul">Controle 30GB · R$ 81,99</option>
-<option class="bg-ivm-azul">Família 100GB · R$ 239,99</option>
+<option class="bg-ivm-azul">Controle 30GB · {{plano:controle-30gb:preco}}</option>
+<option class="bg-ivm-azul">Família 100GB · {{plano:familia-100gb:preco}}</option>
 <option class="bg-ivm-azul">Outro</option>
 </select>
 </div>

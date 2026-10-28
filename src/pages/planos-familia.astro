@@ -1,6 +1,7 @@
 ---
 // Gerado a partir do planos-familia.html (site estático). Conteúdo da página em src/partials/planos-familia.*.html
 import Base from '../layouts/Base.astro';
+import { aplicarPlanos } from '../data/planos';
 import head from '../partials/planos-familia.head.html?raw';
 import body from '../partials/planos-familia.body.html?raw';
 import end from '../partials/planos-familia.end.html?raw';
@@ -11,7 +12,7 @@ const canonical = "https://i9c.net.br/planos-familia.html";
 ---
 
 <Base title={title} description={description} canonical={canonical} active="planos">
-  <Fragment slot="head" set:html={head} />
-  <Fragment set:html={body} />
+  <Fragment slot="head" set:html={aplicarPlanos(head)} />
+  <Fragment set:html={aplicarPlanos(body)} />
   <Fragment slot="end" set:html={end} />
 </Base>
