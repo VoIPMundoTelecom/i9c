@@ -26,9 +26,9 @@
 </article>
 <article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col">
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest num text-ivm-azul">1<span class="text-2xl text-cinza">GB</span></span><span class="text-xs text-cinza font-mono uppercase tracking-wider">30 dias</span></div>
-<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">a partir de</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">R$ 15,99</div></div>
+<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">a partir de</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">{{plano:prepago-1gb:preco-card}}</div></div>
 <ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> WhatsApp texto</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Facebook (sem messenger)</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Instagram (sem direct)</li></ul>
-<a class="mt-6 inline-flex items-center justify-center bg-ivm-azul text-white font-semibold py-3 rounded-full hover:bg-i9c-azul transition-colors" data-lead="contratar" href="https://wa.me/558008000900?text=Ol%C3%A1%21%20Quero%20contratar%20o%20plano%20Pr%C3%A9-pago%201GB%20%C2%B7%2030%20dias%20da%20i9c." rel="noopener" target="_blank">Contratar</a>
+<a class="mt-6 inline-flex items-center justify-center bg-ivm-azul text-white font-semibold py-3 rounded-full hover:bg-i9c-azul transition-colors" data-lead="contratar" href="{{plano:prepago-1gb:contratar}}" rel="noopener" target="_blank">Contratar</a>
 </article>
 <article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col">
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest num text-ivm-azul">10<span class="text-2xl text-cinza">GB</span></span><span class="text-xs text-cinza font-mono uppercase tracking-wider">7 dias</span></div>
@@ -81,8 +81,8 @@
 <label class="text-xs text-white/60 font-semibold uppercase tracking-wider font-mono">Plano de interesse</label>
 <select class="w-full mt-1 bg-transparent border-b border-white/20 text-white py-2 focus:outline-none focus:border-laranja">
 <option class="bg-ivm-azul">Black 10GB · R$ 41,99</option>
-<option class="bg-ivm-azul">Controle 30GB · R$ 81,99</option>
-<option class="bg-ivm-azul">Família 100GB · R$ 239,99</option>
+<option class="bg-ivm-azul">Controle 30GB · {{plano:controle-30gb:preco}}</option>
+<option class="bg-ivm-azul">Família 100GB · {{plano:familia-100gb:preco}}</option>
 <option class="bg-ivm-azul">Outro</option>
 </select>
 </div>

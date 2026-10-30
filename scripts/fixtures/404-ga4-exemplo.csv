@@ -1,0 +1,12 @@
+# ----------------------------------------
+# DADOS FICTÍCIOS para teste do scripts/relatorio-404.mjs (formato de export do GA4 Explorar)
+# Evento: pagina_404 · Dimensão: pagina_quebrada · Métrica: Contagem de eventos
+# ----------------------------------------
+pagina_quebrada,Contagem de eventos
+/planos-controle,40
+/planos-pre-pag.html,36
+/planos-familia-antigo.html,21
+/promo-chip-2024.html,11
+/recarga-online/,8
+/planos-pre-pag.html?utm_source=email&email=fulana%40exemplo.com,4
+/portabilidade.html,2

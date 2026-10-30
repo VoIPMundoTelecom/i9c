@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test:404": "node --test scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs",
+    "relatorio:404": "node scripts/relatorio-404.mjs"
   },
   "dependencies": {
     "astro": "^5.18.2"

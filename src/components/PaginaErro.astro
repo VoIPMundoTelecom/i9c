@@ -1,0 +1,183 @@
+---
+/**
+ * Corpo da 404 e da página de manutenção: busca, 3 planos, WhatsApp e links rápidos.
+ * Eventos (dataLayer, só com consentimento: localStorage i9c_cookies = 'accept'):
+ *   pagina_404       { pagina_quebrada, referrer_host, tipo_pagina }   (só na 404)
+ *   cta_404_plano    { plano, pagina_quebrada, tipo_pagina }
+ *   cta_404_whatsapp { pagina_quebrada, tipo_pagina }
+ * Nenhum dado além de location.pathname e do host do referrer (sem query string nem hash).
+ *
+ * Estilo próprio (<style> escopado) em vez de utilitários do Tailwind de propósito: classe
+ * nova no Tailwind muda o CSS compartilhado e, com ele, o HTML de todas as páginas.
+ */
+import { EMPRESA } from '../data/empresa';
+import { PLANOS, formatarPreco } from '../data/planos';
+import { PLANOS_PAGINA_ERRO, LINKS_RAPIDOS, contratarHref } from '../data/pagina-erro';
+
+interface Props {
+  tipo: '404' | 'manutencao';
+  eyebrow: string;
+  titulo: string;
+  texto: string;
+  /** mensagem do WhatsApp; no cliente ganha ": <origin + pathname>" */
+  msgWhatsapp: string;
+}
+const { tipo, eyebrow, titulo, texto, msgWhatsapp } = Astro.props;
+const dominio = Astro.site?.host ?? 'i9c.net.br';
+const medium = tipo === '404' ? '404' : 'manutencao';
+const waBase = `${EMPRESA.whatsapp}?text=`;
+---
+
+<div data-pagina-erro data-tipo={tipo} data-msg={msgWhatsapp} data-wa={waBase}>
+  <section class="perro-topo">
+    <div class="perro-wrap">
+      <p class="perro-eyebrow font-mono">{eyebrow}</p>
+      <h1 class="font-display">{titulo}</h1>
+      <p class="perro-lead">{texto}</p>
+
+      <form class="perro-busca" action="https://www.google.com/search" method="get" role="search">
+        <label for="perro-q">Buscar no site</label>
+        <div class="perro-busca__campo">
+          <input id="perro-q" name="q" type="search" autocomplete="off" placeholder="Ex.: portabilidade, recarga" />
+          <input type="hidden" name="as_sitesearch" value={dominio} />
+          <button type="submit">Buscar</button>
+        </div>
+      </form>
+
+      <h2 class="font-display">Aproveita e escolhe seu plano</h2>
+      <div class="perro-grid">
+        {PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
+          const p = PLANOS[id];
+          return (
+            <article class="perro-card" data-plano-card={id}>
+              <h3 class="font-display"><a href={p.pagina}>{p.nome}</a></h3>
+              <div class="perro-card__preco">
+                <div class="perro-card__rotulo font-mono">{p.rotuloPreco}</div>
+                <div class="perro-card__valor font-display num"><span data-preco>{formatarPreco(p.preco)}</span>{p.sufixo && <span class="perro-card__sufixo">{p.sufixo}</span>}</div>
+              </div>
+              <p class="perro-card__beneficio">{beneficio}</p>
+              <a href={contratarHref(id, medium)} target="_blank" rel="noopener" data-cta-plano={id} class="perro-btn perro-btn--laranja">Contratar agora</a>
+            </article>
+          );
+        })}
+      </div>
+
+      <div class="perro-zap">
+        <p>Ficou com dúvida? Chama a gente no WhatsApp que a gente te ajuda a escolher.</p>
+        <a href={waBase + encodeURIComponent(msgWhatsapp)} target="_blank" rel="noopener" data-cta-whatsapp class="perro-btn perro-btn--branco">Falar no WhatsApp</a>
+      </div>
+
+      <ul class="perro-selos" aria-label="Sobre a i9c">
+        <li>Sem fidelidade</li>
+        <li>Pagamento por Pix ou boleto</li>
+      </ul>
+    </div>
+  </section>
+
+  <nav class="perro-links" aria-label="Links rápidos">
+    <div class="perro-wrap">
+      <h3 class="font-display">Ou vá direto para</h3>
+      <ul>
+        {LINKS_RAPIDOS.map((l) => <li><a href={l.href}>{l.titulo}</a></li>)}
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<script>
+  declare global {
+    interface Window { dataLayer?: unknown[] }
+  }
+  const consentiu = () => {
+    try { return localStorage.getItem('i9c_cookies') === 'accept'; } catch { return false; }
+  };
+  const root = document.querySelector<HTMLElement>('[data-pagina-erro]');
+  if (root) {
+    const { tipo = '404', msg = '', wa = '' } = root.dataset;
+    const pagina = location.pathname.slice(0, 200);
+
+    // WhatsApp com a URL quebrada (origin + pathname; nunca query string nem hash)
+    const zap = root.querySelector<HTMLAnchorElement>('[data-cta-whatsapp]');
+    if (zap && wa) zap.href = wa + encodeURIComponent(`${msg}: ${location.origin}${location.pathname}`);
+
+    const push = (dados: Record<string, string>) => {
+      if (!consentiu()) return false;
+      (window.dataLayer = window.dataLayer || []).push({ ...dados, pagina_quebrada: pagina, tipo_pagina: tipo });
+      return true;
+    };
+
+    if (tipo === '404') {
+      let referrerHost = '';
+      try { referrerHost = document.referrer ? new URL(document.referrer).host : ''; } catch { /* referrer inválido */ }
+      const ev = { event: 'pagina_404', referrer_host: referrerHost };
+      // sem consentimento ainda: dispara se a pessoa aceitar no banner desta mesma visita
+      if (!push(ev)) {
+        const aoAceitar = (e: Event) => {
+          if (!(e.target as Element | null)?.closest?.('[data-consent="accept"]')) return;
+          push(ev);
+          document.removeEventListener('click', aoAceitar);
+        };
+        document.addEventListener('click', aoAceitar);
+      }
+    }
+
+    root.addEventListener('click', (e) => {
+      const a = (e.target as Element | null)?.closest?.('a');
+      if (!a) return;
+      if (a.dataset.ctaPlano) push({ event: 'cta_404_plano', plano: a.dataset.ctaPlano });
+      else if (a.hasAttribute('data-cta-whatsapp')) push({ event: 'cta_404_whatsapp' });
+    });
+  }
+</script>
+
+<style>
+  /* cores do tailwind.config.cjs: ivm.azul #1E2C5C · i9c.azul #136BA2 · laranja.dark #BD4C18 · cinza #716F6E */
+  .perro-wrap { max-width: 80rem; margin: 0 auto; padding: 0 1.25rem; }
+  @media (min-width: 1024px) { .perro-wrap { padding: 0 2rem; } }
+
+  .perro-topo { background: #1E2C5C; color: #fff; padding: 3rem 0 2.5rem; }
+  .perro-eyebrow { margin: 0; font-size: .75rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #FCEEE3; }
+  .perro-topo h1 { margin: .75rem 0 0; font-weight: 700; font-size: clamp(2.1rem, 7vw, 3rem); line-height: 1.05; letter-spacing: -0.03em; max-width: 42rem; }
+  .perro-lead { margin: 1rem 0 0; font-size: 1.125rem; color: rgba(255, 255, 255, .82); max-width: 36rem; }
+
+  .perro-busca { margin-top: 1.75rem; max-width: 32rem; }
+  .perro-busca label { display: block; font-size: .875rem; color: rgba(255, 255, 255, .82); margin-bottom: .5rem; }
+  .perro-busca__campo { display: flex; gap: .5rem; }
+  .perro-busca input[type='search'] { flex: 1; min-width: 0; height: 3rem; padding: 0 1rem; border: 0; border-radius: 999px; background: #fff; color: #1E2C5C; font: inherit; }
+  .perro-busca input::placeholder { color: #716F6E; }
+  .perro-busca button { height: 3rem; padding: 0 1.25rem; border-radius: 999px; border: 2px solid rgba(255, 255, 255, .45); background: transparent; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  .perro-busca button:hover { background: #fff; color: #1E2C5C; }
+
+  .perro-topo h2 { margin: 3rem 0 0; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.03em; }
+  .perro-grid { margin-top: 1.25rem; display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  @media (min-width: 768px) { .perro-grid { grid-template-columns: repeat(3, 1fr); } }
+  .perro-card { background: #fff; color: #1E2C5C; border-radius: 1.5rem; padding: 1.5rem; display: flex; flex-direction: column; }
+  .perro-card h3 { margin: 0; font-size: 1.25rem; font-weight: 700; }
+  .perro-card h3 a { color: inherit; text-decoration: none; }
+  .perro-card h3 a:hover { color: #136BA2; }
+  .perro-card__preco { margin-top: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #E8E8E7; }
+  .perro-card__rotulo { font-size: .75rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: #716F6E; }
+  .perro-card__valor { font-size: 2.25rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
+  .perro-card__sufixo { font-family: 'Inter', system-ui, sans-serif; font-size: 1rem; font-weight: 500; letter-spacing: 0; color: #716F6E; }
+  .perro-card__beneficio { margin: 1rem 0 0; color: #716F6E; flex: 1; }
+
+  .perro-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: .75rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none; }
+  .perro-btn--laranja { margin-top: 1.25rem; background: #BD4C18; color: #fff; }
+  .perro-btn--laranja:hover { background: #0E5483; }
+  .perro-btn--branco { background: #fff; color: #1E2C5C; flex: 0 0 auto; }
+  .perro-btn--branco:hover { background: #E7F0F6; }
+
+  .perro-zap { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; border: 1px solid rgba(255, 255, 255, .22); border-radius: 1.5rem; padding: 1.25rem; }
+  @media (min-width: 640px) { .perro-zap { flex-direction: row; align-items: center; justify-content: space-between; } }
+  .perro-zap p { margin: 0; color: rgba(255, 255, 255, .88); }
+
+  .perro-selos { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: .875rem; color: rgba(255, 255, 255, .82); }
+  .perro-selos li::before { content: '✓ '; color: #FCEEE3; }
+
+  .perro-links { background: #fff; padding: 2.5rem 0; }
+  .perro-links h3 { margin: 0; font-size: 1.125rem; font-weight: 700; color: #1E2C5C; }
+  .perro-links ul { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+  @media (min-width: 768px) { .perro-links ul { grid-template-columns: repeat(4, 1fr); } }
+  .perro-links a { display: flex; align-items: center; min-height: 3rem; padding: 0 1rem; border-radius: 1rem; border: 2px solid #E8E8E7; color: #1E2C5C; font-weight: 600; text-decoration: none; }
+  .perro-links a:hover { border-color: #136BA2; color: #136BA2; }
+</style>

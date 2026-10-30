@@ -1,0 +1,21 @@
+---
+// Gera dist/404.html (build.format 'file'); o GitHub Pages serve esse arquivo com status 404.
+// noindex, sem canonical e fora do public/sitemap.xml.
+import Base from '../layouts/Base.astro';
+import PaginaErro from '../components/PaginaErro.astro';
+---
+
+<Base
+  title="Página não encontrada | i9c"
+  description="Essa página saiu do ar. Veja os planos pré-pago, controle e família da i9c ou fale com a gente no WhatsApp."
+  noindex
+  leve
+>
+  <PaginaErro
+    tipo="404"
+    eyebrow="Erro 404"
+    titulo="Essa página saiu do ar — mas a sua linha nova não"
+    texto="O link que você abriu mudou de lugar ou não existe mais. Busca aqui embaixo ou escolhe um plano."
+    msgWhatsapp="Vim pelo site (página não encontrada)"
+  />
+</Base>

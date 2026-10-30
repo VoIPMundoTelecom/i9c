@@ -1,0 +1,21 @@
+---
+// Gera dist/manutencao.html. Publicada mas sem link no site; noindex e fora do sitemap.
+// Como ligar: docs/seo/404-e-manutencao.md.
+import Base from '../layouts/Base.astro';
+import PaginaErro from '../components/PaginaErro.astro';
+---
+
+<Base
+  title="Site em manutenção | i9c"
+  description="O site da i9c está em manutenção. O atendimento segue normal pelo WhatsApp."
+  noindex
+  leve
+>
+  <PaginaErro
+    tipo="manutencao"
+    eyebrow="Manutenção"
+    titulo="O site tá em manutenção. A sua linha, não."
+    texto="Algumas páginas podem ficar fora do ar por alguns minutos. Dá para contratar ou falar com a gente agora mesmo."
+    msgWhatsapp="Vim pelo site (página em manutenção)"
+  />
+</Base>
