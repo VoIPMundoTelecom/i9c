@@ -7,7 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "test:404": "node --test scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs",
-    "relatorio:404": "node scripts/relatorio-404.mjs"
+    "relatorio:404": "node scripts/relatorio-404.mjs",
+    "test:cliente-cego": "node --test scripts/cliente-cego.test.mjs",
+    "test:i18n": "node --test scripts/i18n.test.mjs"
   },
   "dependencies": {
     "astro": "^5.18.2"

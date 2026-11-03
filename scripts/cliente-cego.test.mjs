@@ -41,6 +41,17 @@ const EXCECOES = [
     arquivo: /^portabilidade\.html$/,
     trecho: /Operadora atual \* Selecione… Vivo Claro TIM Oi Algar Sercomtel Outra/,
   })),
+  // Mesmo formulário nas versões en/es (src/i18n/rotas.ts: portabilidade).
+  ...['Vivo', 'Claro', 'TIM', 'Oi', 'Algar'].map((termo) => ({
+    termo,
+    arquivo: /^en\/number-portability\.html$/,
+    trecho: /Current carrier \* Select… Vivo Claro TIM Oi Algar Sercomtel Other/,
+  })),
+  ...['Vivo', 'Claro', 'TIM', 'Oi', 'Algar'].map((termo) => ({
+    termo,
+    arquivo: /^es\/portabilidad-numerica\.html$/,
+    trecho: /Operadora actual \* Selecciona… Vivo Claro TIM Oi Algar Sercomtel Otra/,
+  })),
   {
     // Texto jurídico (LGPD, art. 9º): a política lista os fornecedores que tratam
     // dados (Google, Meta, OpenStreetMap...). Bitrix24 aqui é o CRM/chat, não a
@@ -80,6 +91,15 @@ const usadas = new Set();
 
 test('dist/ existe (rode npm run build antes)', () => {
   assert.ok(existsSync(DIST), `não achei ${DIST}`);
+});
+
+test('a varredura inclui as versões en/ e es/ (cliente cego vale em todo idioma)', () => {
+  const rels = [...arquivos(DIST)].map((p) => relative(DIST, p));
+  for (const idioma of ['en', 'es']) {
+    assert.ok(rels.some((r) => r === `${idioma}/index.html`), `${idioma}/index.html não foi varrido`);
+    assert.ok(rels.filter((r) => r.startsWith(`${idioma}/`)).length >= 10, `poucas páginas em ${idioma}/`);
+  }
+  assert.ok(rels.includes('sitemap-en.xml') && rels.includes('sitemap-es.xml'), 'sitemaps en/es fora da varredura');
 });
 
 test('nenhum termo de operadora/fornecedor no texto público do dist/', () => {
