@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test:404": "node --test scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs",
+    "test": "node --test scripts/contratar.test.mjs scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs scripts/cliente-cego.test.mjs",
+    "test:404":"node --test scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs",
     "test:contratar": "node --test scripts/contratar.test.mjs",
     "check:de-para": "node scripts/de-para-givm.mjs",
     "relatorio:404": "node scripts/relatorio-404.mjs"
