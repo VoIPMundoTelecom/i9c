@@ -3,7 +3,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
-import { CONTRATAR, CONTRATAR_URL, contratarUrl, consultorUrl } from '../src/data/planos.ts';
+import {
+  CONTRATAR, CONTRATAR_URL, CODIGO_GIVM, PRECO_CONTRATAR, contratarUrl, consultorUrl, formularioUrl, formatarPreco,
+} from '../src/data/planos.ts';
 
 const DIST = new URL('../dist/', import.meta.url);
 const SRC = new URL('../src/', import.meta.url);
@@ -14,11 +16,40 @@ const attr = (tag, nome) => tag.match(new RegExp(`${nome}="([^"]*)"`))?.[1];
 
 const botoes = (html) => [...html.matchAll(/<a [^>]*data-lead="contratar"[^>]*>/g)].map((m) => m[0]);
 
-test('formulário: ?plano=<id>; WhatsApp (provisório): o plano vai no texto', () => {
+test('formulário: ?plano=<código do givm>; WhatsApp (provisório): o plano vai no texto', () => {
   for (const [id, nome] of Object.entries(CONTRATAR)) {
     const u = new URL(contratarUrl(id));
     if (CONTRATAR_URL.startsWith('https://wa.me/')) assert.ok(u.searchParams.get('text').includes(nome), id);
-    else assert.equal(u.searchParams.get('plano'), id);
+    else assert.equal(u.searchParams.get('plano'), CODIGO_GIVM[id]);
+  }
+});
+
+test('de-para: um código por plano, no formato do givm (I9C-<n>), sem repetir', () => {
+  assert.deepEqual(Object.keys(CODIGO_GIVM).sort(), Object.keys(CONTRATAR).sort());
+  const preenchidos = Object.values(CODIGO_GIVM).filter(Boolean);
+  for (const c of preenchidos) assert.match(c, /^I9C-\d+$/);
+  assert.equal(new Set(preenchidos).size, preenchidos.length, 'código do givm repetido');
+  if (!CONTRATAR_URL.startsWith('https://wa.me/')) assert.equal(preenchidos.length, Object.keys(CONTRATAR).length);
+});
+
+test('formulário sem código no de-para não monta link (trava antes de ligar o formulário)', () => {
+  const base = 'https://contratar.i9c.net.br/';
+  for (const id of Object.keys(CONTRATAR)) {
+    if (CODIGO_GIVM[id]) assert.equal(formularioUrl(base, id), `${base}?plano=${CODIGO_GIVM[id]}`);
+    else assert.throws(() => formularioUrl(base, id), /De-para incompleto/);
+  }
+});
+
+test('preço de cada card (pt) = PRECO_CONTRATAR (value do begin_checkout)', () => {
+  const precoNoTexto = (s) => [...s.matchAll(/R\$(?:&nbsp;|\s| )*(\d+,\d{2})/g)].at(-1)?.[1];
+  for (const p of PAGINAS.filter((f) => f.startsWith('planos-') || f === 'index.html')) {
+    const html = ler(p);
+    let ini = 0;
+    for (const m of html.matchAll(/<a [^>]*data-lead="contratar" data-plano="([^"]+)"[^>]*>/g)) {
+      const id = m[1];
+      assert.equal(`R$ ${precoNoTexto(html.slice(ini, m.index))}`, formatarPreco(PRECO_CONTRATAR[id]), `${p}: preço de ${id}`);
+      ini = m.index + m[0].length;
+    }
   }
 });
 
@@ -64,6 +95,8 @@ test('begin_checkout disparado no clique, só com consentimento', () => {
   assert.match(js, /a\[data-lead="contratar"\]/);
   assert.match(js, /i9c_cookies/);
   assert.match(js, /currency: 'BRL'/);
+  assert.match(js, /value: precos\[id\]/);
+  for (const id of Object.keys(CONTRATAR)) assert.ok(PRECO_CONTRATAR[id] > 0, `${id} sem value`);
 });
 
 test('nenhum link de "Quero contratar" digitado fora de src/data/planos.ts', () => {

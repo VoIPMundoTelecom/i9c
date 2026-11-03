@@ -16,9 +16,10 @@ import { EMPRESA } from './empresa.ts'; // com extensão: os testes (node --test
 
 /**
  * Destino de todos os botões "Contratar" (cards, home, 404 e topo do site).
- * [bloqueado: URL do formulário de contratação + liberação do Fabricio] — quando o formulário
- * estiver no ar, trocar só esta linha pela URL dele, ex.: 'https://i9c.net.br/contratar.html'.
- * Enquanto for o WhatsApp, o plano vai no texto da mensagem em vez de ?plano=<id>.
+ * [bloqueado: liberação do Fabricio] — formulário = 'https://contratar.i9c.net.br/' (o plano vai
+ * em ?plano=<código do givm>, ver CODIGO_GIVM). Só trocar esta linha depois do OK e com o de-para
+ * completo: com algum código vazio o build quebra.
+ * Enquanto for o WhatsApp, o plano vai no texto da mensagem.
  */
 export const CONTRATAR_URL: string = EMPRESA.whatsapp;
 
@@ -48,15 +49,50 @@ export const CONTRATAR = {
 
 export type ContratarId = keyof typeof CONTRATAR;
 
+/**
+ * De-para id do site → código do plano no catálogo do givm (o givm gera <prefixo>-<n>, na i9c "I9C-<n>").
+ * [bloqueado: catálogo i9c da S1 não publicado] — preencher com o que vier de GET /public/i9c/planos
+ * e conferir com `npm run check:de-para`. null = ainda sem código (o formulário não pode ser ligado).
+ */
+export const CODIGO_GIVM: Record<ContratarId, string | null> = {
+  'prepago-whatsapp': null,
+  'prepago-1gb': null,
+  'prepago-10gb': null,
+  'prepago-30gb': null,
+  'black-1gb': null,
+  'black-5gb': null,
+  'black-10gb': null,
+  'black-50gb': null,
+  'controle-15gb': null,
+  'controle-30gb': null,
+  'controle-80gb': null,
+  'familia-15gb': null,
+  'familia-40gb': null,
+  'familia-100gb': null,
+  'familia-230gb': null,
+  'empresas-3gb': null,
+  'empresas-5gb': null,
+  'empresas-15gb': null,
+  'empresas-50gb': null,
+  'empresas-160gb': null,
+};
+
 const viaWhatsapp = () => CONTRATAR_URL.startsWith(EMPRESA.whatsapp);
 const whatsapp = (msg: string) => `${EMPRESA.whatsapp}?text=${encodeURIComponent(msg)}`;
+
+/** Link do formulário para o plano: ?plano=<código do givm>. Sem código no de-para = erro (quebra o build). */
+export function formularioUrl(base: string, id: ContratarId): string {
+  const codigo = CODIGO_GIVM[id];
+  if (!codigo) throw new Error(`De-para incompleto: ${id} sem código do givm em CODIGO_GIVM`);
+  return `${base}?plano=${encodeURIComponent(codigo)}`;
+}
 
 /** Botão "Contratar": sem id = topo do site (formulário sem plano escolhido). */
 export function contratarUrl(id?: string): string {
   if (id !== undefined && !(id in CONTRATAR)) throw new Error(`Plano desconhecido em contratarUrl: ${id}`);
   const nome = id ? CONTRATAR[id as ContratarId] : '';
   if (viaWhatsapp()) return whatsapp(nome ? `Olá! Quero contratar o plano ${nome} da i9c.` : 'Olá! Quero contratar um plano da i9c.');
-  return id ? `${CONTRATAR_URL}?plano=${encodeURIComponent(id)}` : CONTRATAR_URL;
+  return id ? formularioUrl(CONTRATAR_URL, id as ContratarId) : CONTRATAR_URL;
 }
 
 /** "Falar com um consultor": sempre o WhatsApp, mesmo depois do formulário no ar. */
@@ -103,6 +139,34 @@ export const PLANOS = {
 } satisfies Partial<Record<ContratarId, Plano>>;
 
 export type PlanoId = keyof typeof PLANOS;
+
+/**
+ * Preço de cada plano com botão "Contratar" (reais), usado no value do begin_checkout.
+ * Conferido no site no ar em 03/11/2026. Os da 404 vêm de PLANOS; os outros ainda estão escritos
+ * no partial, e o test:contratar falha se o card mostrar valor diferente deste.
+ */
+export const PRECO_CONTRATAR: Record<ContratarId, number> = {
+  'prepago-whatsapp': 13.99,
+  'prepago-1gb': PLANOS['prepago-1gb'].preco,
+  'prepago-10gb': 41.99,
+  'prepago-30gb': 81.99,
+  'black-1gb': 15.99,
+  'black-5gb': 31.99,
+  'black-10gb': 41.99,
+  'black-50gb': 129.99,
+  'controle-15gb': 55.99,
+  'controle-30gb': PLANOS['controle-30gb'].preco,
+  'controle-80gb': 194.99,
+  'familia-15gb': 49.99,
+  'familia-40gb': 79.99,
+  'familia-100gb': PLANOS['familia-100gb'].preco,
+  'familia-230gb': 429.99,
+  'empresas-3gb': 19.99,
+  'empresas-5gb': 35.99,
+  'empresas-15gb': 59.99,
+  'empresas-50gb': 129.99,
+  'empresas-160gb': 390.99,
+};
 
 export const formatarPreco = (v: number) => `R$ ${v.toFixed(2).replace('.', ',')}`;
 
