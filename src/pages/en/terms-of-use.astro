@@ -1,0 +1,92 @@
+---
+import Base from '../../layouts/Base.astro';
+import Legal from '../../components/Legal.astro';
+import { EMPRESA } from '../../data/empresa';
+
+const atualizado = 'October 16, 2026';
+// RASCUNHO para revisão jurídica (Laura). Termos do SITE — o serviço móvel é regido pelo contrato e pela regulamentação da ANATEL.
+// Tradução EN da versão em português; a versão em português prevalece.
+---
+
+<Base
+  title="Terms of Use | i9c"
+  description="Rules for using the i9c.net.br website: plan and price information, forms, content and responsibilities."
+  rota="termos-de-uso"
+>
+  <Legal eyebrow="Terms" title="Terms of Use" updated={atualizado} rota="termos-de-uso">
+    <p>
+      These Terms govern the use of the <strong>i9c.net.br</strong> website, operated by <strong>{EMPRESA.razaoSocial}</strong>
+      (CNPJ {EMPRESA.cnpj}), the company responsible for the i9c brand. By browsing the website, you agree to them.
+    </p>
+    <div class="box">
+      <p style="margin:0">
+        These Terms cover the <strong>website</strong>. The provision of the mobile service (SMP, Brazil's Personal Mobile
+        Service) is governed by your <strong>contract</strong>, by the plan you subscribed to and by the regulations of
+        <strong>ANATEL</strong> (Brazil's telecommunications regulator).
+      </p>
+    </div>
+
+    <h2>1. The website</h2>
+    <p>
+      The website presents i9c, its plans, coverage and customer service channels, and allows you to request number
+      portability and access the customer area (<a href={EMPRESA.areaCliente}>app.i9c.net.br</a>), which has its own
+      access rules.
+    </p>
+
+    <h2>2. Plans, prices and coverage</h2>
+    <ul>
+      <li>Prices, data allowances and benefits shown apply to new subscriptions on the date they are viewed and may change on the website without prior notice. The conditions confirmed at the time of subscription prevail.</li>
+      <li>Benefits such as apps that do not count against the data allowance follow the rules of each plan, shown next to the plan cards.</li>
+      <li>Coverage and technology (5G, 4G) vary by location, device and network conditions. The coverage map is a reference and does not guarantee signal at any specific spot.</li>
+    </ul>
+
+    <h2>3. Forms and information you submit</h2>
+    <ul>
+      <li>You are responsible for the accuracy of the data and documents you submit, including for number portability. Only submit data and documents for lines of which you are the holder or an authorized representative.</li>
+      <li>Submitting a request does not guarantee the subscription or the portability: both depend on review and on the applicable regulations.</li>
+      <li>The processing of this data follows the <a href="/en/privacy-policy.html">Privacy Policy</a>.</li>
+    </ul>
+
+    <h2>4. Permitted use</h2>
+    <p>You may not use the website to:</p>
+    <ul>
+      <li>attempt to access restricted areas, systems or third-party data;</li>
+      <li>submit false or unlawful content, or content that impersonates another person;</li>
+      <li>overload the website or use bots to collect its content in bulk;</li>
+      <li>any purpose contrary to the law.</li>
+    </ul>
+
+    <h2>5. Intellectual property</h2>
+    <p>
+      The i9c, Grupo IVM and Voipmundo trademarks, logos, texts, images and the website layout belong to
+      {EMPRESA.razaoSocial} or its licensors. Copying or using them without authorization is prohibited. Map data:
+      © OpenStreetMap contributors.
+    </p>
+
+    <h2>6. Third-party links and services</h2>
+    <p>
+      The website contains links to and integrations with third-party services (such as WhatsApp and the customer service
+      chat). Each service has its own terms and policies, for which i9c is not responsible.
+    </p>
+
+    <h2>7. Availability and liability</h2>
+    <p>
+      We work to keep the website online and the information accurate, but it may undergo maintenance, experience
+      instability or contain occasional errors, which we correct as soon as they are identified. Nothing in these Terms
+      limits your rights as a consumer under the Brazilian Consumer Protection Code (Código de Defesa do Consumidor).
+    </p>
+
+    <h2>8. Customer service</h2>
+    <p>
+      Questions about these Terms: <strong>{EMPRESA.telefone}</strong> or <a href={EMPRESA.whatsapp} target="_blank" rel="noopener">WhatsApp</a>.
+      If your request is not resolved, you can file a complaint with ANATEL by calling <strong>1331</strong> (in Brazil).
+    </p>
+
+    <h2>9. Changes and jurisdiction</h2>
+    <p>
+      These Terms may be updated; the date at the top shows the version in force. Brazilian law applies.
+      For consumers, the competent court is that of the consumer's domicile; in all other cases, the courts of the
+      judicial district of Curitiba, State of Paraná (PR), Brazil.
+    </p>
+  </Legal>
+</Base>

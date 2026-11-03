@@ -1,0 +1,17 @@
+---
+// Tradução (en) de src/pages/planos-black.astro. Conteúdo em src/partials/en/planos-black.*.html
+import Base from '../../layouts/Base.astro';
+import { aplicarI18n } from '../../i18n/aplicar';
+import head from '../../partials/en/planos-black.head.html?raw';
+import body from '../../partials/en/planos-black.body.html?raw';
+import end from '../../partials/en/planos-black.end.html?raw';
+
+const title = "Black Individual 5G plan, 1GB to 50GB, no contract | i9c";
+const description = "i9c Black Individual plans for mobile lines in Brazil, 1GB to 50GB: unlimited calls and texts, free WhatsApp, Instagram and Facebook. No contract.";
+---
+
+<Base title={title} description={description} rota="planos-black" active="planos">
+  <Fragment slot="head" set:html={aplicarI18n(head)} />
+  <Fragment set:html={aplicarI18n(body)} />
+  <Fragment slot="end" set:html={end} />
+</Base>

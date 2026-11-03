@@ -1,0 +1,134 @@
+---
+import Base from '../../layouts/Base.astro';
+import Legal from '../../components/Legal.astro';
+import { EMPRESA, DPO } from '../../data/empresa';
+
+const atualizado = '16 de octubre de 2026';
+// RASCUNHO para revisão jurídica (Laura). Tradução ES da versão em português; a versão em português prevalece.
+// Itens a confirmar marcados com TODO_ no código.
+---
+
+<Base
+  title="Política de Privacidad | i9c"
+  description="Cómo i9c (IVM Telecomunicação) recopila, usa, comparte y protege sus datos personales en el sitio web, conforme a la LGPD de Brasil."
+  rota="politica-de-privacidade"
+>
+  <Legal eyebrow="Privacidad" title="Política de Privacidad" updated={atualizado} rota="politica-de-privacidade">
+    <p>
+      Esta Política explica cómo <strong>{EMPRESA.razaoSocial}</strong> (CNPJ {EMPRESA.cnpj}), responsable de la
+      marca <strong>i9c</strong>, trata los datos personales de quienes usan el sitio web <strong>i9c.net.br</strong>, de
+      conformidad con la Ley General de Protección de Datos de Brasil (Ley n.º 13.709/2018, “LGPD”).
+    </p>
+    <div class="box">
+      <p style="margin:0">
+        <strong>Resumen:</strong> solo recopilamos lo necesario para atender su solicitud; la medición del uso del sitio
+        solo se activa después de que usted haga clic en “Aceptar todas”; no vendemos sus datos; puede solicitar acceso,
+        corrección o eliminación en cualquier momento.
+      </p>
+    </div>
+
+    <h2>1. Quién es el responsable del tratamiento</h2>
+    <p>
+      {EMPRESA.razaoSocial}, CNPJ {EMPRESA.cnpj}, con domicilio en {EMPRESA.endereco}. Los datos tratados en el área
+      del cliente (<a href={EMPRESA.areaCliente}>app.i9c.net.br</a>) y en el marco del contrato del servicio móvil se
+      rigen también por los términos de su contrato de prestación de servicio.
+    </p>
+
+    <h2>2. Qué datos recopilamos y para qué</h2>
+    <table>
+      <thead><tr><th>Dónde</th><th>Datos</th><th>Finalidad</th><th>Base legal (LGPD)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td data-label="Dónde">Solicitud de portabilidad numérica</td>
+          <td data-label="Datos">Nombre o razón social, CPF/CNPJ (número de identificación fiscal brasileño de persona física/jurídica), correo electrónico, teléfono de contacto, dirección, número(s) a portar, operadora actual, cantidad de líneas, documento de identidad y documento del titular (imagen/PDF) y, para empresas, lista de números</td>
+          <td data-label="Finalidad">Analizar y ejecutar la solicitud de portabilidad y la contratación; contactarle sobre la solicitud</td>
+          <td data-label="Base legal">Procedimientos preliminares y ejecución de contrato (art. 7, V); consentimiento registrado en el formulario (art. 7, I); obligación regulatoria (art. 7, II)</td>
+        </tr>
+        <tr>
+          <td data-label="Dónde">WhatsApp, teléfono y chat del sitio</td>
+          <td data-label="Datos">Nombre, número de teléfono y el contenido de la conversación</td>
+          <td data-label="Finalidad">Atender dudas, ventas y soporte</td>
+          <td data-label="Base legal">Procedimientos preliminares/ejecución de contrato (art. 7, V) e interés legítimo (art. 7, IX)</td>
+        </tr>
+        <tr>
+          <td data-label="Dónde">Navegación (cookies de medición)</td>
+          <td data-label="Datos">Páginas visitadas, origen del acceso, tipo de dispositivo y navegador, identificadores de cookies</td>
+          <td data-label="Finalidad">Medir la audiencia y el rendimiento del sitio y de las campañas</td>
+          <td data-label="Base legal">Consentimiento (art. 7, I) — solo después de “Aceptar todas”</td>
+        </tr>
+        <tr>
+          <td data-label="Dónde">Funcionamiento del sitio</td>
+          <td data-label="Datos">Dirección IP y datos técnicos de la solicitud; su elección en el aviso de cookies (guardada en su navegador)</td>
+          <td data-label="Finalidad">Entregar las páginas, garantizar la seguridad y recordar su elección</td>
+          <td data-label="Base legal">Interés legítimo (art. 7, IX)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>No solicitamos datos sensibles a través del sitio. Los documentos enviados para la portabilidad se usan únicamente para verificar la titularidad de la línea.</p>
+
+    <h2>3. Cookies y medición</h2>
+    <p>
+      Usamos <strong>Google Tag Manager</strong> y herramientas de medición de Google solo después de que usted haga clic en
+      “Aceptar todas” en el aviso de cookies. Con “Solo necesarias”, no se activa ninguna cookie de medición. Su elección
+      queda guardada en su navegador; para cambiarla, borre los datos del sitio en el navegador y el aviso volverá a aparecer.
+    </p>
+
+    <h2>4. Con quién compartimos</h2>
+    <p>No vendemos datos personales. Compartimos solo lo necesario con:</p>
+    <ul>
+      <li><strong>La operadora de red asociada (MVNO) y la entidad administradora de la portabilidad numérica</strong>, para activar la línea y ejecutar la portabilidad;</li>
+      <li><strong>Su operadora actual</strong>, en el proceso de portabilidad;</li>
+      <li><strong>Proveedores de tecnología</strong>: Google (Tag Manager/medición y fuentes del sitio), nuestro proveedor de chat de atención y CRM, WhatsApp/Meta (mensajería), OpenStreetMap (mapas del mapa de cobertura) y proveedores de alojamiento web;</li>
+      <li><strong>Autoridades</strong> (incluidas la ANATEL, el regulador de telecomunicaciones de Brasil, y el Poder Judicial), cuando lo exija la ley o una orden judicial.</li>
+    </ul>
+    <p>
+      Algunos de estos proveedores pueden tratar datos fuera de Brasil. En esos casos, la transferencia se ajusta a los
+      supuestos del art. 33 de la LGPD.
+    </p>
+
+    <h2>5. Durante cuánto tiempo conservamos los datos</h2>
+    <p>
+      Durante el tiempo necesario para cumplir la finalidad (por ejemplo, concluir la portabilidad y mantener el contrato)
+      y, después, durante los plazos exigidos por la ley o por la regulación de telecomunicaciones, o para la defensa en
+      procesos. Vencidos esos plazos, los datos se eliminan o se anonimizan.
+      <!-- TODO_RETENCAO: se houver prazo interno definido para documentos de portabilidade não concluída, citar aqui. -->
+    </p>
+
+    <h2>6. Seguridad</h2>
+    <p>
+      Los datos se transmiten mediante una conexión cifrada (HTTPS). Los documentos de la portabilidad se guardan en un
+      área restringida, fuera del sitio público, con acceso limitado al equipo responsable. Ningún sistema es 100%
+      invulnerable; si ocurre un incidente con riesgo relevante, se lo comunicaremos a usted y a la ANPD (Autoridad
+      Nacional de Protección de Datos de Brasil), como prevé la LGPD.
+    </p>
+
+    <h2>7. Sus derechos</h2>
+    <p>Usted puede solicitar en cualquier momento:</p>
+    <ul>
+      <li>confirmación de que tratamos sus datos y acceso a ellos;</li>
+      <li>corrección de datos incompletos, inexactos o desactualizados;</li>
+      <li>anonimización, bloqueo o eliminación de datos innecesarios o tratados en disconformidad con la ley;</li>
+      <li>portabilidad de los datos a otro proveedor;</li>
+      <li>eliminación de los datos tratados con base en el consentimiento y revocación del consentimiento;</li>
+      <li>información sobre con quién compartimos sus datos.</li>
+    </ul>
+    <p>Algunos datos pueden conservarse incluso después de la solicitud, cuando la ley o la regulación lo exijan.</p>
+
+    <h2>8. Encargado (DPO) y contacto</h2>
+    {DPO.nome ? (
+      <p>
+        Encargado del tratamiento de datos (DPO): <strong>{DPO.nome}</strong> — <a href={`mailto:${DPO.email}`}>{DPO.email}</a>.
+      </p>
+    ) : (
+      <p>
+        Para ejercer sus derechos o resolver dudas sobre esta Política, comuníquese con nosotros al
+        <strong> {EMPRESA.telefone}</strong> o por <a href={EMPRESA.whatsapp} target="_blank" rel="noopener">WhatsApp</a>,
+        indicando que el asunto es <strong>privacidad de datos</strong>.
+      </p>
+    )}
+    <p>También puede presentar una reclamación ante la Autoridad Nacional de Protección de Datos de Brasil (ANPD).</p>
+
+    <h2>9. Cambios</h2>
+    <p>Podemos actualizar esta Política. La fecha que aparece arriba indica la versión vigente; los cambios relevantes se destacarán en el sitio.</p>
+  </Legal>
+</Base>
