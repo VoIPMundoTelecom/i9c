@@ -4,6 +4,8 @@
  * Antes: o <nav> era `hidden md:flex` e não havia botão de menu (abaixo de 768px não tinha navegação).
  * O seletor de idioma (PT/EN/ES) saiu: EN/ES não existiam.
  */
+import { contratarUrl } from '../data/planos';
+
 interface Props {
   active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
 }
@@ -17,8 +19,8 @@ const links = [
   { id: 'faq', href: '/perguntas-frequentes.html', label: 'FAQ' },
 ];
 const AREA_CLIENTE = 'https://app.i9c.net.br/';
-// TODO_FLUXO_CONTRATACAO: trocar pelo fluxo próprio de contratação quando existir.
-const CONTRATAR = 'https://wa.me/558008000900?text=' + encodeURIComponent('Olá! Quero contratar um plano da i9c.');
+// Destino em CONTRATAR_URL (src/data/planos.ts): formulário sem plano escolhido.
+const CONTRATAR = contratarUrl();
 ---
 
 <!-- TOP UTILITY BAR -->

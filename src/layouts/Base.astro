@@ -5,6 +5,10 @@ import Footer from '../components/Footer.astro';
 import WhatsApp from '../components/WhatsApp.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import organization from '../partials/_organization.head.html?raw';
+import { CONTRATAR, PLANOS } from '../data/planos';
+
+/** preço só dos planos que já têm fonte única (PLANOS); os demais vão sem value */
+const PRECOS = Object.fromEntries(Object.entries(PLANOS).map(([id, p]) => [id, p.preco]));
 
 interface Props {
   title: string;
@@ -106,6 +110,26 @@ const GTM_ID = 'GTM-WPL6WQS';
       });
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') { var p = document.getElementById('wa-popup'); if (p) p.classList.add('hidden'); }
+      });
+    </script>
+
+    <!-- GA4 begin_checkout em todo botão "Contratar" (data-lead="contratar"; data-plano = id de CONTRATAR). Só com consentimento. -->
+    <script is:inline define:vars={{ nomes: CONTRATAR, precos: PRECOS }}>
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[data-lead="contratar"]');
+        if (!a) return;
+        try { if (localStorage.getItem('i9c_cookies') !== 'accept') return; } catch (err) { return; }
+        var id = a.getAttribute('data-plano') || '';
+        var ev = { event: 'begin_checkout', plano: id || '(sem plano)' };
+        if (id && nomes[id]) {
+          var item = { item_id: id, item_name: nomes[id], item_brand: 'i9c', quantity: 1 };
+          if (precos[id] != null) item.price = precos[id];
+          ev.ecommerce = { currency: 'BRL', items: [item] };
+          if (precos[id] != null) ev.ecommerce.value = precos[id];
+        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ ecommerce: null });
+        window.dataLayer.push(ev);
       });
     </script>
 
