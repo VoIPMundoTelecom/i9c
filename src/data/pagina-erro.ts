@@ -5,7 +5,7 @@
  * [decisão do Fabricio] confirmar os 3 planos mais vendidos. Para trocar, mude os ids abaixo
  * (o plano precisa existir em PLANOS).
  */
-import { PLANOS, type PlanoId } from './planos';
+import { contratarUrl, type PlanoId } from './planos';
 
 export const PLANOS_PAGINA_ERRO: { id: PlanoId; beneficio: string }[] = [
   { id: 'prepago-1gb', beneficio: 'Recarrega quando quiser, sem fatura e sem fidelidade.' },
@@ -26,7 +26,7 @@ export const LINKS_RAPIDOS = [
  * URLSearchParams para não re-codificar o ?text= do WhatsApp (que já vem codificado).
  */
 export function contratarHref(id: PlanoId, medium = '404') {
-  const [base, hash = ''] = PLANOS[id].contratar.split('#');
+  const [base, hash = ''] = contratarUrl(id).split('#');
   const utm = `utm_source=site&utm_medium=${medium}&utm_campaign=${id}`;
   return `${base}${base.includes('?') ? '&' : '?'}${utm}${hash ? `#${hash}` : ''}`;
 }

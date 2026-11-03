@@ -7,6 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "test:404": "node --test scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs",
+    "test:contratar": "node --test scripts/contratar.test.mjs",
     "relatorio:404": "node scripts/relatorio-404.mjs"
   },
   "dependencies": {
