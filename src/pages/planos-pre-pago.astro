@@ -11,7 +11,7 @@ const description = "Planos pré-pago i9c com WhatsApp, Instagram e Facebook, de
 const canonical = "https://i9c.net.br/planos-pre-pago.html";
 ---
 
-<Base title={title} description={description} canonical={canonical} active="planos">
+<Base title={title} description={description} canonical={canonical} rota="planos-pre-pago" active="planos">
   <Fragment slot="head" set:html={aplicarPlanos(head)} />
   <Fragment set:html={aplicarPlanos(body)} />
   <Fragment slot="end" set:html={end} />

@@ -1,22 +1,38 @@
 ---
-/** Moldura das páginas jurídicas (Política de Privacidade, Termos de Uso). */
+/**
+ * Moldura das páginas jurídicas (Política de Privacidade, Termos de Uso).
+ * Em en/es mostra o aviso de que a versão em português prevalece, com link para ela.
+ */
+import { ROTAS, idiomaDe, linkIdioma, type Rota } from '../i18n/rotas';
+import { ui } from '../i18n/ui';
+
 interface Props {
   eyebrow: string;
   title: string;
   updated: string;
+  /** id em src/i18n/rotas.ts (obrigatório nas traduções: link para a versão em português) */
+  rota?: Rota;
 }
-const { eyebrow, title, updated } = Astro.props;
+const { eyebrow, title, updated, rota } = Astro.props;
+const idioma = idiomaDe(Astro.currentLocale);
+const t = ui(idioma).legal;
 ---
 
 <section class="bg-cinza-50 border-b border-cinza-200">
   <div class="max-w-3xl mx-auto px-5 lg:px-8 py-12 lg:py-16">
-    <nav class="text-sm text-cinza mb-6" aria-label="Você está em">
-      <a href="/" class="hover:text-i9c-azul">Início</a> <span aria-hidden="true">›</span>
+    <nav class="text-sm text-cinza mb-6" aria-label={t.voceEsta}>
+      <a href={linkIdioma('home', idioma)} class="hover:text-i9c-azul">{t.inicio}</a> <span aria-hidden="true">›</span>
       <span class="text-ivm-azul font-semibold">{title}</span>
     </nav>
     <div class="font-mono text-xs font-semibold tracking-[0.18em] uppercase text-laranja-dark">{eyebrow}</div>
     <h1 class="font-display font-bold text-4xl lg:text-5xl tracking-tightest text-ivm-azul mt-3">{title}</h1>
-    <p class="text-sm text-cinza mt-4">Atualizada em <time>{updated}</time></p>
+    <p class="text-sm text-cinza mt-4">{t.atualizada} <time>{updated}</time></p>
+    {idioma !== 'pt-br' && rota && (
+      <div class="mt-6 rounded-2xl border-2 border-laranja bg-laranja-soft px-5 py-4 text-ivm-azul" role="note" data-aviso-traducao>
+        <p class="font-semibold">{t.aviso}</p>
+        <p class="mt-2 text-sm"><a href={ROTAS[rota]['pt-br']} hreflang="pt-BR" lang="pt-BR" class="text-i9c-azul underline underline-offset-2">{t.versaoPt} →</a></p>
+      </div>
+    )}
   </div>
 </section>
 
