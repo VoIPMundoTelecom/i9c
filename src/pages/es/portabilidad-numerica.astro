@@ -1,0 +1,17 @@
+---
+// Tradução (es) de src/pages/portabilidade.astro. Conteúdo em src/partials/es/portabilidade.*.html
+import Base from '../../layouts/Base.astro';
+import { aplicarI18n } from '../../i18n/aplicar';
+import head from '../../partials/es/portabilidade.head.html?raw';
+import body from '../../partials/es/portabilidade.body.html?raw';
+import end from '../../partials/es/portabilidade.end.html?raw';
+
+const title = "Portabilidad numérica: trae tu número a i9c";
+const description = "Trae tu número móvil de Brasil a i9c. Portabilidad numérica gratuita, sin quedarte sin señal y sin permanencia.";
+---
+
+<Base title={title} description={description} rota="portabilidade" active="portabilidade">
+  <Fragment slot="head" set:html={aplicarI18n(head)} />
+  <Fragment set:html={aplicarI18n(body)} />
+  <Fragment slot="end" set:html={end} />
+</Base>

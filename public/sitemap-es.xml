@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Páginas em espanhol. Mesmas URLs de /es/ da tabela src/i18n/rotas.ts (conferido por scripts/i18n.test.mjs). Página de erro fica fora. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://i9c.net.br/es/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://i9c.net.br/es/planes-prepago.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://i9c.net.br/es/planes-control.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://i9c.net.br/es/planes-familiares.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://i9c.net.br/es/planes-black.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://i9c.net.br/es/planes-para-empresas.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://i9c.net.br/es/portabilidad-numerica.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://i9c.net.br/es/politica-de-privacidad.html</loc><changefreq>yearly</changefreq><priority>0.1</priority></url>
+  <url><loc>https://i9c.net.br/es/terminos-de-uso.html</loc><changefreq>yearly</changefreq><priority>0.1</priority></url>
+</urlset>

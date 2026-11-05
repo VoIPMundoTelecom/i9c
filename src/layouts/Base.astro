@@ -5,33 +5,60 @@ import Footer from '../components/Footer.astro';
 import WhatsApp from '../components/WhatsApp.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import organization from '../partials/_organization.head.html?raw';
+import { IDIOMAS, HREFLANG, OG_LOCALE, PAGINA_404, idiomaDe, urlAbsoluta, type Rota } from '../i18n/rotas';
+import { ui } from '../i18n/ui';
 import { CONTRATAR, CODIGO_GIVM, PRECO_CONTRATAR } from '../data/planos';
 
 interface Props {
   title: string;
   description: string;
-  /** vazio = sem canonical e sem og:url (404 e manutenção respondem em qualquer URL) */
+  /** vazio = sem canonical e sem og:url (404 e manutenção respondem em qualquer URL). Com `rota`, sai da tabela. */
   canonical?: string;
+  /** id da página em src/i18n/rotas.ts: liga hreflang (pt-BR, en, es, x-default) e o seletor de idioma */
+  rota?: Rota;
   active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
   /** true = <meta robots noindex> */
   noindex?: boolean;
   /** true = página leve (404/manutenção): sem o chat do Bitrix24 (o CTA de contato já é o WhatsApp) e fontes sem bloquear a renderização */
   leve?: boolean;
+  /** só a 404 da raiz: URL quebrada em /en/ ou /es/ vai para a 404 do idioma */
+  trocaIdioma404?: boolean;
 }
-const { title, description, canonical, active, noindex = false, leve = false } = Astro.props;
+const { title, description, rota, active, noindex = false, leve = false, trocaIdioma404 = false } = Astro.props;
+
+const idioma = idiomaDe(Astro.currentLocale);
+const t = ui(idioma);
+const canonical = Astro.props.canonical ?? (rota ? urlAbsoluta(rota, idioma) : undefined);
 
 // Mesmo container do GTM da Voipmundo (decisão de 16/10/2026).
 const GTM_ID = 'GTM-WPL6WQS';
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang={HREFLANG[idioma]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {trocaIdioma404 && (
+      <script is:inline define:vars={{ destinos: { en: PAGINA_404.en, es: PAGINA_404.es } }}>
+        // GitHub Pages só serve um 404.html: URL quebrada em /en/ ou /es/ abre a página de erro do idioma.
+        // O pathname original (sem query nem hash) vai no sessionStorage para o evento e o WhatsApp de lá.
+        (function () {
+          var m = location.pathname.match(/^\/(en|es)(\/|$)/);
+          if (!m) return;
+          try {
+            sessionStorage.setItem('i9c_404_origem', location.pathname.slice(0, 200));
+            sessionStorage.setItem('i9c_404_ref', document.referrer ? new URL(document.referrer).host : '');
+          } catch (e) {}
+          location.replace(destinos[m[1]]);
+        })();
+      </script>
+    )}
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
+    {rota && IDIOMAS.map((i) => <link rel="alternate" hreflang={HREFLANG[i]} href={urlAbsoluta(rota, i)} />)}
+    {rota && <link rel="alternate" hreflang="x-default" href={urlAbsoluta(rota, 'pt-br')} />}
     {noindex && <meta name="robots" content="noindex, follow" />}
     <!-- Google Search Console (conta marketing@grupoivm.com.br) -->
     <meta name="google-site-verification" content="e89soBTv-h7gCjONFsTHJecGi0oSu6-Cn8c76oDUYAU" />
@@ -40,7 +67,8 @@ const GTM_ID = 'GTM-WPL6WQS';
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale" content={OG_LOCALE[idioma]} />
+    {rota && IDIOMAS.filter((i) => i !== idioma).map((i) => <meta property="og:locale:alternate" content={OG_LOCALE[i]} />)}
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />
@@ -84,14 +112,17 @@ const GTM_ID = 'GTM-WPL6WQS';
   </head>
 
   <body class="bg-white antialiased overflow-x-hidden">
-    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
-    <WhatsApp />
-    <CookieBanner />
-    <Header active={active} />
+    <a href="#conteudo" class="skip-link">{t.pular}</a>
+    <WhatsApp idioma={idioma} />
+    <CookieBanner idioma={idioma} />
+    <Header active={active} idioma={idioma} rota={rota} />
+    {t.avisoBrasil && (
+      <p class="bg-i9c-azulSoft text-ivm-azul text-sm text-center px-5 py-2.5" data-aviso-brasil>{t.avisoBrasil}</p>
+    )}
     <main id="conteudo">
       <slot />
     </main>
-    <Footer />
+    <Footer idioma={idioma} rota={rota} />
     <slot name="end" />
 
     <script is:inline>

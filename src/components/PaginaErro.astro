@@ -12,7 +12,8 @@
  */
 import { EMPRESA } from '../data/empresa';
 import { PLANOS, formatarPreco } from '../data/planos';
-import { PLANOS_PAGINA_ERRO, LINKS_RAPIDOS, contratarHref } from '../data/pagina-erro';
+import { PLANOS_PAGINA_ERRO, PLANOS_ERRO_TRADUZIDOS, TEXTOS_ERRO, contratarHref } from '../data/pagina-erro';
+import { idiomaDe } from '../i18n/rotas';
 
 interface Props {
   tipo: '404' | 'manutencao';
@@ -23,9 +24,19 @@ interface Props {
   msgWhatsapp: string;
 }
 const { tipo, eyebrow, titulo, texto, msgWhatsapp } = Astro.props;
+const idioma = idiomaDe(Astro.currentLocale);
+const tx = TEXTOS_ERRO[idioma];
 const dominio = Astro.site?.host ?? 'i9c.net.br';
 const medium = tipo === '404' ? '404' : 'manutencao';
 const waBase = `${EMPRESA.whatsapp}?text=`;
+
+// Mesmo plano e mesmo preço em todos os idiomas; só os textos mudam.
+const cards = PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
+  const p = PLANOS[id];
+  if (idioma === 'pt-br') return { id, preco: p.preco, nome: p.nome, pagina: p.pagina, rotuloPreco: p.rotuloPreco, sufixo: p.sufixo, beneficio, href: contratarHref(id, medium) };
+  const tr = PLANOS_ERRO_TRADUZIDOS[idioma][id];
+  return { id, preco: p.preco, nome: tr.nome, pagina: tr.pagina, rotuloPreco: tr.rotuloPreco, sufixo: tr.sufixo, beneficio: tr.beneficio, href: contratarHref(id, medium, tr.msg) };
+});
 ---
 
 <div data-pagina-erro data-tipo={tipo} data-msg={msgWhatsapp} data-wa={waBase}>
@@ -36,49 +47,45 @@ const waBase = `${EMPRESA.whatsapp}?text=`;
       <p class="perro-lead">{texto}</p>
 
       <form class="perro-busca" action="https://www.google.com/search" method="get" role="search">
-        <label for="perro-q">Buscar no site</label>
+        <label for="perro-q">{tx.buscarRotulo}</label>
         <div class="perro-busca__campo">
-          <input id="perro-q" name="q" type="search" autocomplete="off" placeholder="Ex.: portabilidade, recarga" />
+          <input id="perro-q" name="q" type="search" autocomplete="off" placeholder={tx.buscarPlaceholder} />
           <input type="hidden" name="as_sitesearch" value={dominio} />
-          <button type="submit">Buscar</button>
+          <button type="submit">{tx.buscar}</button>
         </div>
       </form>
 
-      <h2 class="font-display">Aproveita e escolhe seu plano</h2>
+      <h2 class="font-display">{tx.escolha}</h2>
       <div class="perro-grid">
-        {PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
-          const p = PLANOS[id];
-          return (
-            <article class="perro-card" data-plano-card={id}>
-              <h3 class="font-display"><a href={p.pagina}>{p.nome}</a></h3>
-              <div class="perro-card__preco">
-                <div class="perro-card__rotulo font-mono">{p.rotuloPreco}</div>
-                <div class="perro-card__valor font-display num"><span data-preco>{formatarPreco(p.preco)}</span>{p.sufixo && <span class="perro-card__sufixo">{p.sufixo}</span>}</div>
-              </div>
-              <p class="perro-card__beneficio">{beneficio}</p>
-              <a href={contratarHref(id, medium)} target="_blank" rel="noopener" data-cta-plano={id} data-lead="contratar" data-plano={id} class="perro-btn perro-btn--laranja">Contratar agora</a>
-            </article>
-          );
-        })}
+        {cards.map((c) => (
+          <article class="perro-card" data-plano-card={c.id}>
+            <h3 class="font-display"><a href={c.pagina}>{c.nome}</a></h3>
+            <div class="perro-card__preco">
+              <div class="perro-card__rotulo font-mono">{c.rotuloPreco}</div>
+              <div class="perro-card__valor font-display num"><span data-preco>{formatarPreco(c.preco)}</span>{c.sufixo && <span class="perro-card__sufixo">{c.sufixo}</span>}</div>
+            </div>
+            <p class="perro-card__beneficio">{c.beneficio}</p>
+            <a href={c.href} target="_blank" rel="noopener" data-cta-plano={c.id} data-lead="contratar" data-plano={c.id} class="perro-btn perro-btn--laranja">{tx.contratar}</a>
+          </article>
+        ))}
       </div>
 
       <div class="perro-zap">
-        <p>Ficou com dúvida? Chama a gente no WhatsApp que a gente te ajuda a escolher.</p>
-        <a href={waBase + encodeURIComponent(msgWhatsapp)} target="_blank" rel="noopener" data-cta-whatsapp class="perro-btn perro-btn--branco">Falar no WhatsApp</a>
+        <p>{tx.zapTexto}</p>
+        <a href={waBase + encodeURIComponent(msgWhatsapp)} target="_blank" rel="noopener" data-cta-whatsapp class="perro-btn perro-btn--branco">{tx.zapBotao}</a>
       </div>
 
-      <ul class="perro-selos" aria-label="Sobre a i9c">
-        <li>Sem fidelidade</li>
-        <li>Pagamento por Pix ou boleto</li>
+      <ul class="perro-selos" aria-label={tx.selosAria}>
+        {tx.selos.map((s) => <li>{s}</li>)}
       </ul>
     </div>
   </section>
 
-  <nav class="perro-links" aria-label="Links rápidos">
+  <nav class="perro-links" aria-label={tx.linksAria}>
     <div class="perro-wrap">
-      <h3 class="font-display">Ou vá direto para</h3>
+      <h3 class="font-display">{tx.linksTitulo}</h3>
       <ul>
-        {LINKS_RAPIDOS.map((l) => <li><a href={l.href}>{l.titulo}</a></li>)}
+        {tx.links.map((l) => <li><a href={l.href} hreflang={'pt' in l && l.pt ? 'pt-BR' : undefined}>{l.titulo}</a></li>)}
       </ul>
     </div>
   </nav>
@@ -94,11 +101,20 @@ const waBase = `${EMPRESA.whatsapp}?text=`;
   const root = document.querySelector<HTMLElement>('[data-pagina-erro]');
   if (root) {
     const { tipo = '404', msg = '', wa = '' } = root.dataset;
-    const pagina = location.pathname.slice(0, 200);
+    // Veio da 404 da raiz (URL quebrada em /en/ ou /es/, ver Base.astro): usa o pathname original
+    let origem = '';
+    let refOrigem: string | null = null;
+    try {
+      origem = sessionStorage.getItem('i9c_404_origem') ?? '';
+      refOrigem = sessionStorage.getItem('i9c_404_ref');
+      sessionStorage.removeItem('i9c_404_origem');
+      sessionStorage.removeItem('i9c_404_ref');
+    } catch { /* sessionStorage bloqueado */ }
+    const pagina = (origem || location.pathname).slice(0, 200);
 
     // WhatsApp com a URL quebrada (origin + pathname; nunca query string nem hash)
     const zap = root.querySelector<HTMLAnchorElement>('[data-cta-whatsapp]');
-    if (zap && wa) zap.href = wa + encodeURIComponent(`${msg}: ${location.origin}${location.pathname}`);
+    if (zap && wa) zap.href = wa + encodeURIComponent(`${msg}: ${location.origin}${pagina}`);
 
     const push = (dados: Record<string, string>) => {
       if (!consentiu()) return false;
@@ -107,8 +123,10 @@ const waBase = `${EMPRESA.whatsapp}?text=`;
     };
 
     if (tipo === '404') {
-      let referrerHost = '';
-      try { referrerHost = document.referrer ? new URL(document.referrer).host : ''; } catch { /* referrer inválido */ }
+      let referrerHost = refOrigem ?? '';
+      if (refOrigem === null) {
+        try { referrerHost = document.referrer ? new URL(document.referrer).host : ''; } catch { /* referrer inválido */ }
+      }
       const ev = { event: 'pagina_404', referrer_host: referrerHost };
       // sem consentimento ainda: dispara se a pessoa aceitar no banner desta mesma visita
       if (!push(ev)) {

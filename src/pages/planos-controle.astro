@@ -11,7 +11,7 @@ const description = "Planos controle i9c de 15GB a 80GB com ligações ilimitada
 const canonical = "https://i9c.net.br/planos-controle.html";
 ---
 
-<Base title={title} description={description} canonical={canonical} active="planos">
+<Base title={title} description={description} canonical={canonical} rota="planos-controle" active="planos">
   <Fragment slot="head" set:html={aplicarPlanos(head)} />
   <Fragment set:html={aplicarPlanos(body)} />
   <Fragment slot="end" set:html={end} />

@@ -87,11 +87,15 @@ export function formularioUrl(base: string, id: ContratarId): string {
   return `${base}?plano=${encodeURIComponent(codigo)}`;
 }
 
-/** Botão "Contratar": sem id = topo do site (formulário sem plano escolhido). */
-export function contratarUrl(id?: string): string {
+/**
+ * Botão "Contratar": sem id = topo do site (formulário sem plano escolhido).
+ * `mensagem` (páginas en/es): só troca o texto do WhatsApp enquanto o destino for o WhatsApp;
+ * com o formulário no ar o link é idêntico nos 3 idiomas (?plano=<código do givm>).
+ */
+export function contratarUrl(id?: string, mensagem?: string): string {
   if (id !== undefined && !(id in CONTRATAR)) throw new Error(`Plano desconhecido em contratarUrl: ${id}`);
   const nome = id ? CONTRATAR[id as ContratarId] : '';
-  if (viaWhatsapp()) return whatsapp(nome ? `Olá! Quero contratar o plano ${nome} da i9c.` : 'Olá! Quero contratar um plano da i9c.');
+  if (viaWhatsapp()) return whatsapp(mensagem ?? (nome ? `Olá! Quero contratar o plano ${nome} da i9c.` : 'Olá! Quero contratar um plano da i9c.'));
   return id ? formularioUrl(CONTRATAR_URL, id as ContratarId) : CONTRATAR_URL;
 }
 

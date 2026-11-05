@@ -4,18 +4,24 @@
  * Antes: reaparecia em toda página (a escolha era gravada mas nunca lida) e não controlava nada.
  * Agora: escondido por padrão; só aparece sem escolha salva; "Aceitar" libera o GTM (Base.astro).
  */
+import { ui } from '../i18n/ui';
+import { ROTAS, type Idioma } from '../i18n/rotas';
+
+interface Props { idioma?: Idioma }
+const idioma = Astro.props.idioma ?? 'pt-br';
+const c = ui(idioma).cookies;
 ---
 
-<div id="cookie-banner" hidden class="fixed bottom-0 inset-x-0 z-50 bg-white border-t-2 border-i9c-azul shadow-[0_-12px_40px_-12px_rgba(30,44,92,0.25)]" role="region" aria-label="Aviso de cookies">
+<div id="cookie-banner" hidden class="fixed bottom-0 inset-x-0 z-50 bg-white border-t-2 border-i9c-azul shadow-[0_-12px_40px_-12px_rgba(30,44,92,0.25)]" role="region" aria-label={c.aria}>
   <div class="max-w-7xl mx-auto px-5 lg:px-8 py-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
     <p class="text-sm text-cinza leading-relaxed max-w-3xl">
-      <span class="font-display font-bold text-ivm-azul">Valorizamos sua privacidade.</span>
-      Usamos cookies para medir o uso do site e melhorar sua experiência. Você decide.
-      <a href="/politica-de-privacidade.html" class="text-i9c-azul underline hover:no-underline">Saiba mais</a>.
+      <span class="font-display font-bold text-ivm-azul">{c.titulo}</span>
+      {c.texto}
+      <a href={ROTAS['politica-de-privacidade'][idioma]} class="text-i9c-azul underline hover:no-underline">{c.saibaMais}</a>.
     </p>
     <div class="flex gap-3 shrink-0">
-      <button type="button" data-consent="reject" class="px-5 py-2.5 rounded-full border-2 border-cinza-200 text-ivm-azul font-semibold text-sm hover:border-ivm-azul transition-colors">Só necessários</button>
-      <button type="button" data-consent="accept" class="px-5 py-2.5 rounded-full bg-i9c-azul text-white font-semibold text-sm hover:bg-i9c-azulDark transition-colors">Aceitar todos</button>
+      <button type="button" data-consent="reject" class="px-5 py-2.5 rounded-full border-2 border-cinza-200 text-ivm-azul font-semibold text-sm hover:border-ivm-azul transition-colors">{c.rejeitar}</button>
+      <button type="button" data-consent="accept" class="px-5 py-2.5 rounded-full bg-i9c-azul text-white font-semibold text-sm hover:bg-i9c-azulDark transition-colors">{c.aceitar}</button>
     </div>
   </div>
 </div>

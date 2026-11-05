@@ -1,0 +1,21 @@
+---
+// Gera dist/es/404.html. O GitHub Pages só serve o 404.html da raiz; ele manda para cá quando a
+// URL quebrada começa com /es/ (Base.astro, trocaIdioma404). noindex, sem canonical, fora do sitemap.
+import Base from '../../layouts/Base.astro';
+import PaginaErro from '../../components/PaginaErro.astro';
+---
+
+<Base
+  title="Página no encontrada | i9c"
+  description="Esta página ya no está. Mira los planes prepago, Control y familiares de i9c para líneas en Brasil, o escríbenos por WhatsApp."
+  noindex
+  leve
+>
+  <PaginaErro
+    tipo="404"
+    eyebrow="Error 404"
+    titulo="Esta página ya no está, pero tu nueva línea sí"
+    texto="El enlace que abriste cambió de lugar o ya no existe. Busca aquí abajo o elige un plan."
+    msgWhatsapp="Vengo del sitio web (página no encontrada)"
+  />
+</Base>

@@ -1,0 +1,17 @@
+---
+// Tradução (es) de src/pages/planos-familia.astro. Conteúdo em src/partials/es/planos-familia.*.html
+import Base from '../../layouts/Base.astro';
+import { aplicarI18n } from '../../i18n/aplicar';
+import head from '../../partials/es/planos-familia.head.html?raw';
+import body from '../../partials/es/planos-familia.body.html?raw';
+import end from '../../partials/es/planos-familia.end.html?raw';
+
+const title = "Plan familiar con 2 a 6 líneas y 5G en Brasil | i9c";
+const description = "Planes familiares i9c en Brasil: de 15GB a 230GB compartidos entre hasta 6 líneas, llamadas ilimitadas y apps gratis. 5G nacional, sin permanencia.";
+---
+
+<Base title={title} description={description} rota="planos-familia" active="planos">
+  <Fragment slot="head" set:html={aplicarI18n(head)} />
+  <Fragment set:html={aplicarI18n(body)} />
+  <Fragment slot="end" set:html={end} />
+</Base>

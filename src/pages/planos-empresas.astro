@@ -11,7 +11,7 @@ const description = "Linhas móveis para empresas e órgãos públicos de 3GB a 
 const canonical = "https://i9c.net.br/planos-empresas.html";
 ---
 
-<Base title={title} description={description} canonical={canonical} active="planos">
+<Base title={title} description={description} canonical={canonical} rota="planos-empresas" active="planos">
   <Fragment slot="head" set:html={aplicarPlanos(head)} />
   <Fragment set:html={aplicarPlanos(body)} />
   <Fragment slot="end" set:html={end} />

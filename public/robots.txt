@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://i9c.net.br/sitemap.xml
+Sitemap: https://i9c.net.br/sitemap-en.xml
+Sitemap: https://i9c.net.br/sitemap-es.xml

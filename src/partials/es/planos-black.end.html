@@ -1,0 +1,16 @@
+<script>
+    // Tab switching dos planos
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.plan-panel');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        tabs.forEach(t => { t.classList.remove('tab-active'); t.classList.add('text-ivm-azul'); });
+        tab.classList.add('tab-active'); tab.classList.remove('text-ivm-azul');
+        panels.forEach(p => {
+          if (p.dataset.panel === target) { p.classList.remove('hidden'); p.classList.add('grid'); }
+          else { p.classList.add('hidden'); p.classList.remove('grid'); }
+        });
+      });
+    });
+  </script>

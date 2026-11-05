@@ -102,7 +102,9 @@ test('begin_checkout disparado no clique, só com consentimento', () => {
 test('nenhum link de "Quero contratar" digitado fora de src/data/planos.ts', () => {
   const pastas = ['partials/', 'components/', 'pages/', 'layouts/'];
   for (const pasta of pastas) {
-    for (const f of readdirSync(new URL(pasta, SRC))) {
+    // recursivo: pages/en, pages/es, partials/en, partials/es (i18n)
+    for (const f of readdirSync(new URL(pasta, SRC), { recursive: true })) {
+      if (!/\.(astro|html|ts)$/.test(f)) continue;
       const txt = ler(`${pasta}${f}`, SRC);
       assert.doesNotMatch(txt, /Quero%20contratar|Quero contratar/, `${pasta}${f}`);
     }

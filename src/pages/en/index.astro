@@ -1,0 +1,17 @@
+---
+// Tradução (en) de src/pages/index.astro. Conteúdo em src/partials/en/index.*.html
+import Base from '../../layouts/Base.astro';
+import { aplicarI18n } from '../../i18n/aplicar';
+import head from '../../partials/en/index.head.html?raw';
+import body from '../../partials/en/index.body.html?raw';
+import end from '../../partials/en/index.end.html?raw';
+
+const title = "5G Mobile Plans in Brazil, No Contract, from R$ 13,99 | i9c";
+const description = "Prepaid, Controle, family and business mobile plans for lines in Brazil: 5G nationwide, unlimited calls, no loyalty period. ANATEL-licensed carrier.";
+---
+
+<Base title={title} description={description} rota="home" active="planos">
+  <Fragment slot="head" set:html={aplicarI18n(head)} />
+  <Fragment set:html={aplicarI18n(body)} />
+  <Fragment slot="end" set:html={end} />
+</Base>

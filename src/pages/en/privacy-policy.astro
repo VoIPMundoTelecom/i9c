@@ -1,0 +1,133 @@
+---
+import Base from '../../layouts/Base.astro';
+import Legal from '../../components/Legal.astro';
+import { EMPRESA, DPO } from '../../data/empresa';
+
+const atualizado = 'October 16, 2026';
+// RASCUNHO para revisão jurídica (Laura). Tradução EN da versão em português; a versão em português prevalece.
+// Itens a confirmar marcados com TODO_ no código.
+---
+
+<Base
+  title="Privacy Policy | i9c"
+  description="How i9c (IVM Telecomunicação) collects, uses, shares and protects your personal data on its website, under Brazil's LGPD."
+  rota="politica-de-privacidade"
+>
+  <Legal eyebrow="Privacy" title="Privacy Policy" updated={atualizado} rota="politica-de-privacidade">
+    <p>
+      This Policy explains how <strong>{EMPRESA.razaoSocial}</strong> (CNPJ {EMPRESA.cnpj}), the company responsible for
+      the <strong>i9c</strong> brand, processes the personal data of people who use the <strong>i9c.net.br</strong> website,
+      in compliance with Brazil's General Data Protection Law (Law No. 13,709/2018, “LGPD”).
+    </p>
+    <div class="box">
+      <p style="margin:0">
+        <strong>Summary:</strong> we only collect what is needed to handle your request; website usage measurement only
+        happens after you click “Accept all”; we do not sell your data; you can ask for access, correction or deletion at any time.
+      </p>
+    </div>
+
+    <h2>1. Who the controller is</h2>
+    <p>
+      {EMPRESA.razaoSocial}, CNPJ {EMPRESA.cnpj}, headquartered at {EMPRESA.endereco}. Data processed through the
+      customer area (<a href={EMPRESA.areaCliente}>app.i9c.net.br</a>) and under the mobile service contract is also
+      governed by the terms of your service agreement.
+    </p>
+
+    <h2>2. What data we collect and why</h2>
+    <table>
+      <thead><tr><th>Where</th><th>Data</th><th>Purpose</th><th>Legal basis (LGPD)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td data-label="Where">Number portability request</td>
+          <td data-label="Data">Name or company name, CPF/CNPJ (Brazilian individual/company taxpayer ID), email, contact phone number, address, number(s) to be ported, current carrier, number of lines, identity document and the line holder's document (image/PDF) and, for companies, a list of numbers</td>
+          <td data-label="Purpose">To review and carry out the portability request and the service subscription; to contact you about the request</td>
+          <td data-label="Legal basis">Preliminary procedures and performance of a contract (Art. 7, V); consent recorded on the form (Art. 7, I); regulatory obligation (Art. 7, II)</td>
+        </tr>
+        <tr>
+          <td data-label="Where">WhatsApp, phone and website chat</td>
+          <td data-label="Data">Name, phone number and the content of the conversation</td>
+          <td data-label="Purpose">To answer questions and handle sales and support</td>
+          <td data-label="Legal basis">Preliminary procedures/performance of a contract (Art. 7, V) and legitimate interest (Art. 7, IX)</td>
+        </tr>
+        <tr>
+          <td data-label="Where">Browsing (measurement cookies)</td>
+          <td data-label="Data">Pages visited, traffic source, device and browser type, cookie identifiers</td>
+          <td data-label="Purpose">To measure audience and the performance of the website and campaigns</td>
+          <td data-label="Legal basis">Consent (Art. 7, I) — only after “Accept all”</td>
+        </tr>
+        <tr>
+          <td data-label="Where">Website operation</td>
+          <td data-label="Data">IP address and technical request data; your choice in the cookie notice (stored in your browser)</td>
+          <td data-label="Purpose">To deliver the pages, keep the site secure and remember your choice</td>
+          <td data-label="Legal basis">Legitimate interest (Art. 7, IX)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>We do not request sensitive data through the website. Documents submitted for portability are used only to verify ownership of the line.</p>
+
+    <h2>3. Cookies and measurement</h2>
+    <p>
+      We use <strong>Google Tag Manager</strong> and Google measurement tools only after you click “Accept all” in the
+      cookie notice. With “Essential only”, no measurement cookies are activated. Your choice is saved in your browser;
+      to change it, clear the site data in your browser and the notice will appear again.
+    </p>
+
+    <h2>4. Who we share data with</h2>
+    <p>We do not sell personal data. We share only what is necessary with:</p>
+    <ul>
+      <li><strong>Our partner network operator (MVNO) and the entity that administers number portability</strong>, to activate the line and carry out the portability;</li>
+      <li><strong>Your current carrier</strong>, during the portability process;</li>
+      <li><strong>Technology providers</strong>: Google (Tag Manager/measurement and website fonts), our customer service chat and CRM provider, WhatsApp/Meta (messaging), OpenStreetMap (maps in the coverage map) and hosting providers;</li>
+      <li><strong>Authorities</strong> (including ANATEL, Brazil's telecommunications regulator, and the courts), when required by law or court order.</li>
+    </ul>
+    <p>
+      Some of these providers may process data outside Brazil. In such cases, the transfer follows the cases permitted
+      by Art. 33 of the LGPD.
+    </p>
+
+    <h2>5. How long we keep data</h2>
+    <p>
+      For as long as needed to fulfill the purpose (for example, completing the portability and maintaining the contract)
+      and, after that, for the periods required by law or by telecommunications regulations, or for the defense of legal
+      claims. Once these periods end, the data is deleted or anonymized.
+      <!-- TODO_RETENCAO: se houver prazo interno definido para documentos de portabilidade não concluída, citar aqui. -->
+    </p>
+
+    <h2>6. Security</h2>
+    <p>
+      Data travels over an encrypted connection (HTTPS). Portability documents are kept in a restricted area, outside
+      the public website, with access limited to the responsible team. No system is 100% invulnerable; if an incident
+      with relevant risk occurs, we will notify you and the ANPD (Brazil's National Data Protection Authority), as
+      required by the LGPD.
+    </p>
+
+    <h2>7. Your rights</h2>
+    <p>You may, at any time, request:</p>
+    <ul>
+      <li>confirmation that we process your data and access to it;</li>
+      <li>correction of incomplete, inaccurate or outdated data;</li>
+      <li>anonymization, blocking or deletion of unnecessary data or data processed in breach of the law;</li>
+      <li>portability of your data to another provider;</li>
+      <li>deletion of data processed based on consent, and withdrawal of consent;</li>
+      <li>information about who we share your data with.</li>
+    </ul>
+    <p>Some data may be kept even after your request, when required by law or regulation.</p>
+
+    <h2>8. Data Protection Officer (DPO) and contact</h2>
+    {DPO.nome ? (
+      <p>
+        Data Protection Officer: <strong>{DPO.nome}</strong> — <a href={`mailto:${DPO.email}`}>{DPO.email}</a>.
+      </p>
+    ) : (
+      <p>
+        To exercise your rights or ask questions about this Policy, contact us at
+        <strong> {EMPRESA.telefone}</strong> or via <a href={EMPRESA.whatsapp} target="_blank" rel="noopener">WhatsApp</a>,
+        stating that the subject is <strong>data privacy</strong>.
+      </p>
+    )}
+    <p>You may also file a complaint with Brazil's National Data Protection Authority (ANPD).</p>
+
+    <h2>9. Changes</h2>
+    <p>We may update this Policy. The date at the top shows the version in force; relevant changes will be highlighted on the website.</p>
+  </Legal>
+</Base>

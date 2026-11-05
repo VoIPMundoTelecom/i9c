@@ -1,6 +1,7 @@
 ---
 // Gera dist/404.html (build.format 'file'); o GitHub Pages serve esse arquivo com status 404.
 // noindex, sem canonical e fora do public/sitemap.xml.
+// URL quebrada em /en/ ou /es/: o script de trocaIdioma404 (Base.astro) abre /en/404.html ou /es/404.html.
 import Base from '../layouts/Base.astro';
 import PaginaErro from '../components/PaginaErro.astro';
 ---
@@ -10,6 +11,7 @@ import PaginaErro from '../components/PaginaErro.astro';
   description="Essa página saiu do ar. Veja os planos pré-pago, controle e família da i9c ou fale com a gente no WhatsApp."
   noindex
   leve
+  trocaIdioma404
 >
   <PaginaErro
     tipo="404"
