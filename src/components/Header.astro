@@ -6,6 +6,7 @@
  */
 import { IDIOMAS, HREFLANG, NOME_IDIOMA, SIGLA_IDIOMA, linkIdioma, type Idioma, type Rota } from '../i18n/rotas';
 import { ui } from '../i18n/ui';
+import { contratarUrl } from '../data/planos';
 
 interface Props {
   active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
@@ -19,8 +20,8 @@ const h = t.header;
 const links = h.nav;
 const inicio = linkIdioma('home', idioma);
 const AREA_CLIENTE = 'https://app.i9c.net.br/';
-// TODO_FLUXO_CONTRATACAO: trocar pelo fluxo próprio de contratação quando existir.
-const CONTRATAR = 'https://wa.me/558008000900?text=' + encodeURIComponent(h.contratarMsg);
+// Destino em CONTRATAR_URL (src/data/planos.ts): formulário sem plano escolhido (igual nos 3 idiomas).
+const CONTRATAR = contratarUrl(undefined, h.contratarMsg); // msg traduzida só vale no WhatsApp provisório
 ---
 
 <!-- TOP UTILITY BAR -->

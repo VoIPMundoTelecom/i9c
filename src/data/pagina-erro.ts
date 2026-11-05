@@ -5,8 +5,7 @@
  * [decisão do Fabricio] confirmar os 3 planos mais vendidos. Para trocar, mude os ids abaixo
  * (o plano precisa existir em PLANOS).
  */
-import { PLANOS, type PlanoId } from './planos';
-import { EMPRESA } from './empresa';
+import { contratarUrl, type PlanoId } from './planos';
 import { ROTAS, type Idioma } from '../i18n/rotas';
 
 export const PLANOS_PAGINA_ERRO: { id: PlanoId; beneficio: string }[] = [
@@ -27,12 +26,8 @@ export const LINKS_RAPIDOS = [
  * Mesmo destino do botão "Contratar" da página do plano + UTMs. Concatena em vez de usar
  * URLSearchParams para não re-codificar o ?text= do WhatsApp (que já vem codificado).
  */
-export function contratarHref(id: PlanoId, medium = '404') {
-  return comUtm(PLANOS[id].contratar, id, medium);
-}
-
-function comUtm(destino: string, id: PlanoId, medium: string) {
-  const [base, hash = ''] = destino.split('#');
+export function contratarHref(id: PlanoId, medium = '404', mensagem?: string) {
+  const [base, hash = ''] = contratarUrl(id, mensagem).split('#');
   const utm = `utm_source=site&utm_medium=${medium}&utm_campaign=${id}`;
   return `${base}${base.includes('?') ? '&' : '?'}${utm}${hash ? `#${hash}` : ''}`;
 }
@@ -41,7 +36,7 @@ function comUtm(destino: string, id: PlanoId, medium: string) {
 
 type PlanoTraduzido = { nome: string; pagina: string; rotuloPreco: string; sufixo: string; beneficio: string; msg: string };
 
-/** Mesmos 3 planos e mesmo preço (PLANOS); só nome, rótulo, benefício e mensagem do WhatsApp traduzidos. */
+/** Mesmos 3 planos e mesmo preço (PLANOS); só nome, rótulo, benefício e mensagem do WhatsApp traduzidos. O link de contratar é o contratarHref (mesmo destino nos 3 idiomas). */
 export const PLANOS_ERRO_TRADUZIDOS: Record<'en' | 'es', Record<PlanoId, PlanoTraduzido>> = {
   en: {
     'prepago-1gb': { nome: 'Prepaid 1GB', pagina: ROTAS['planos-pre-pago'].en, rotuloPreco: 'from', sufixo: '', beneficio: 'Top up whenever you want: no bill, no contract.', msg: "Hi! I'd like to sign up for the i9c Prepaid 1GB · 30 days plan." },
@@ -54,9 +49,6 @@ export const PLANOS_ERRO_TRADUZIDOS: Record<'en' | 'es', Record<PlanoId, PlanoTr
     'familia-100gb': { nome: 'Familia 100GB', pagina: ROTAS['planos-familia'].es, rotuloPreco: 'desde', sufixo: '/mes', beneficio: 'Tú y 3 líneas más en el mismo plan.', msg: '¡Hola! Quiero contratar el plan Familia 100GB · +3 líneas de i9c.' },
   },
 };
-
-export const contratarHrefTraduzido = (idioma: 'en' | 'es', id: PlanoId, medium = '404') =>
-  comUtm(`${EMPRESA.whatsapp}?text=${encodeURIComponent(PLANOS_ERRO_TRADUZIDOS[idioma][id].msg)}`, id, medium);
 
 /** Textos fixos da página de erro por idioma (pt = os que já estavam no componente). */
 export const TEXTOS_ERRO: Record<Idioma, {

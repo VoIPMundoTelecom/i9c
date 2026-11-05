@@ -7,6 +7,7 @@ import CookieBanner from '../components/CookieBanner.astro';
 import organization from '../partials/_organization.head.html?raw';
 import { IDIOMAS, HREFLANG, OG_LOCALE, PAGINA_404, idiomaDe, urlAbsoluta, type Rota } from '../i18n/rotas';
 import { ui } from '../i18n/ui';
+import { CONTRATAR, CODIGO_GIVM, PRECO_CONTRATAR } from '../data/planos';
 
 interface Props {
   title: string;
@@ -137,6 +138,29 @@ const GTM_ID = 'GTM-WPL6WQS';
       });
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') { var p = document.getElementById('wa-popup'); if (p) p.classList.add('hidden'); }
+      });
+    </script>
+
+    <!-- GA4 begin_checkout em todo botão "Contratar" (data-lead="contratar"; data-plano = id de CONTRATAR). Só com consentimento.
+         value = preço do card (PRECO_CONTRATAR) em todos os planos; plano_codigo = código do givm quando o de-para tiver. -->
+    <script is:inline define:vars={{ nomes: CONTRATAR, precos: PRECO_CONTRATAR, codigos: CODIGO_GIVM }}>
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[data-lead="contratar"]');
+        if (!a) return;
+        try { if (localStorage.getItem('i9c_cookies') !== 'accept') return; } catch (err) { return; }
+        var id = a.getAttribute('data-plano') || '';
+        var ev = { event: 'begin_checkout', plano: id || '(sem plano)' };
+        if (id && nomes[id]) {
+          if (codigos[id]) ev.plano_codigo = codigos[id];
+          ev.ecommerce = {
+            currency: 'BRL',
+            value: precos[id],
+            items: [{ item_id: id, item_name: nomes[id], item_brand: 'i9c', price: precos[id], quantity: 1 }],
+          };
+        }
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ ecommerce: null });
+        window.dataLayer.push(ev);
       });
     </script>
 

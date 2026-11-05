@@ -12,7 +12,7 @@
  */
 import { EMPRESA } from '../data/empresa';
 import { PLANOS, formatarPreco } from '../data/planos';
-import { PLANOS_PAGINA_ERRO, PLANOS_ERRO_TRADUZIDOS, TEXTOS_ERRO, contratarHref, contratarHrefTraduzido } from '../data/pagina-erro';
+import { PLANOS_PAGINA_ERRO, PLANOS_ERRO_TRADUZIDOS, TEXTOS_ERRO, contratarHref } from '../data/pagina-erro';
 import { idiomaDe } from '../i18n/rotas';
 
 interface Props {
@@ -35,7 +35,7 @@ const cards = PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
   const p = PLANOS[id];
   if (idioma === 'pt-br') return { id, preco: p.preco, nome: p.nome, pagina: p.pagina, rotuloPreco: p.rotuloPreco, sufixo: p.sufixo, beneficio, href: contratarHref(id, medium) };
   const tr = PLANOS_ERRO_TRADUZIDOS[idioma][id];
-  return { id, preco: p.preco, nome: tr.nome, pagina: tr.pagina, rotuloPreco: tr.rotuloPreco, sufixo: tr.sufixo, beneficio: tr.beneficio, href: contratarHrefTraduzido(idioma, id, medium) };
+  return { id, preco: p.preco, nome: tr.nome, pagina: tr.pagina, rotuloPreco: tr.rotuloPreco, sufixo: tr.sufixo, beneficio: tr.beneficio, href: contratarHref(id, medium, tr.msg) };
 });
 ---
 
@@ -65,7 +65,7 @@ const cards = PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
               <div class="perro-card__valor font-display num"><span data-preco>{formatarPreco(c.preco)}</span>{c.sufixo && <span class="perro-card__sufixo">{c.sufixo}</span>}</div>
             </div>
             <p class="perro-card__beneficio">{c.beneficio}</p>
-            <a href={c.href} target="_blank" rel="noopener" data-cta-plano={c.id} class="perro-btn perro-btn--laranja">{tx.contratar}</a>
+            <a href={c.href} target="_blank" rel="noopener" data-cta-plano={c.id} data-lead="contratar" data-plano={c.id} class="perro-btn perro-btn--laranja">{tx.contratar}</a>
           </article>
         ))}
       </div>

@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
-import { PLANOS, formatarPreco } from '../src/data/planos.ts';
+import { PLANOS, formatarPreco, contratarUrl } from '../src/data/planos.ts';
 
 const DIST = new URL('../dist/', import.meta.url);
 const ler = (rel) => readFileSync(new URL(rel, DIST), 'utf8');
@@ -37,12 +37,12 @@ test('exatamente 3 cards de plano, preço igual a src/data/planos.ts e CTA com U
     assert.ok(plano, `plano fora de src/data/planos.ts: ${id}`);
     assert.equal(corpo.match(/data-preco[^>]*>([^<]+)</)?.[1], formatarPreco(plano.preco), `preço de ${id}`);
     const href = decodificar(corpo.match(/href="([^"]+)"[^>]*data-cta-plano/)?.[1] ?? '');
-    assert.ok(href.startsWith(plano.contratar), `destino de ${id} diferente do botão da página do plano`);
+    assert.ok(href.startsWith(contratarUrl(id)), `destino de ${id} diferente do botão da página do plano`);
     const u = new URL(href);
     assert.equal(u.searchParams.get('utm_source'), 'site');
     assert.equal(u.searchParams.get('utm_medium'), '404');
     assert.equal(u.searchParams.get('utm_campaign'), id);
-    assert.ok(u.searchParams.get('text'), 'perdeu a mensagem do WhatsApp');
+    assert.ok(u.searchParams.get('text') || u.searchParams.get('plano') === id, 'perdeu o plano (mensagem do WhatsApp ou ?plano=)');
     assert.match(corpo, />Contratar agora</);
   }
 });
@@ -52,7 +52,7 @@ test('páginas de plano leem o mesmo dado (sem marcador sobrando)', () => {
   for (const [id, p] of Object.entries(PLANOS)) {
     const pagina = ler(p.pagina.slice(1));
     assert.ok(pagina.includes(formatarPreco(p.preco).replace(' ', ' ')), `${id}: preço não aparece em ${p.pagina}`);
-    assert.ok(pagina.includes(`href="${p.contratar}"`), `${id}: link de contratar não aparece em ${p.pagina}`);
+    assert.ok(pagina.includes(`href="${contratarUrl(id)}"`), `${id}: link de contratar não aparece em ${p.pagina}`);
   }
 });
 

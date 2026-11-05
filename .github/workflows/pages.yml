@@ -1,10 +1,13 @@
 name: Deploy site (GitHub Pages)
 
-# Builda o site i9c (Astro) e publica o dist/ a cada push na main.
+# Builda o site i9c (Astro), roda os testes sobre o dist/ e publica a cada push na main.
+# Em PR para a main roda build + testes, sem publicar.
 # O backend (FastAPI) fica versionado, mas NÃO é publicado no Pages.
 
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -13,9 +16,9 @@ permissions:
   pages: write
   id-token: write
 
-# Garante um deploy por vez
+# Garante um deploy por vez (PRs ficam em grupo próprio e não cancelam o deploy da main)
 concurrency:
-  group: pages
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'main' }}
   cancel-in-progress: true
 
 jobs:
@@ -37,16 +40,23 @@ jobs:
       - name: Build (Astro + Tailwind compilado)
         run: npm run build
 
+      # Contratar (de-para, UTM, begin_checkout), 404 e cliente cego; leem o dist/. Falhou, não publica.
+      - name: Testes
+        run: npm test
+
       - name: Configurar Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Upload do artefato
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
