@@ -43,7 +43,7 @@ export const UI = {
       contratarMsg: 'Olá! Quero contratar um plano da i9c.',
     },
     footer: {
-      sobre: 'Operadora móvel autorizada ANATEL para o serviço SMP. Cobertura 5G nacional via parceria MVNO.',
+      sobre: 'Operadora móvel autorizada ANATEL para o serviço SMP. Rede parceira de alcance nacional (MVNO), com 5G onde houver cobertura.',
       planos: 'Planos',
       planosLinks: [
         { href: '/planos-pre-pago.html', label: 'Pré-pago' },
@@ -118,7 +118,7 @@ export const UI = {
       contratarMsg: "Hi! I'd like to sign up for an i9c plan.",
     },
     footer: {
-      sobre: 'Mobile carrier authorized by ANATEL (Brazil’s telecom regulator) for mobile service (SMP). Nationwide 5G coverage in Brazil through an MVNO partnership.',
+      sobre: 'Mobile carrier authorized by ANATEL (Brazil’s telecom regulator) for mobile service (SMP). Nationwide partner network in Brazil (MVNO), with 5G wherever there’s coverage.',
       planos: 'Plans',
       planosLinks: [
         { href: ROTAS['planos-pre-pago'].en, label: 'Prepaid' },
@@ -196,7 +196,7 @@ export const UI = {
       contratarMsg: '¡Hola! Quiero contratar un plan de i9c.',
     },
     footer: {
-      sobre: 'Operadora móvil autorizada por ANATEL (el regulador de telecomunicaciones de Brasil) para el servicio móvil (SMP). Cobertura 5G nacional en Brasil mediante una alianza MVNO.',
+      sobre: 'Operadora móvil autorizada por ANATEL (el regulador de telecomunicaciones de Brasil) para el servicio móvil (SMP). Red asociada de alcance nacional en Brasil (MVNO), con 5G donde haya cobertura.',
       planos: 'Planes',
       planosLinks: [
         { href: ROTAS['planos-pre-pago'].es, label: 'Prepago' },
