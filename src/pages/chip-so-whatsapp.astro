@@ -1,0 +1,15 @@
+---
+// Artigo (conteudo/i9c-chip-so-whatsapp, segunda par 09/11). Conteúdo em src/partials/chip-so-whatsapp.*.html
+import Base from '../layouts/Base.astro';
+import head from '../partials/chip-so-whatsapp.head.html?raw';
+import body from '../partials/chip-so-whatsapp.body.html?raw';
+
+const title = "Chip só WhatsApp: para quem serve e quanto custa · i9c";
+const description = "Chip só WhatsApp da i9c: R$ 13,99 por 30 dias para mensagens de texto. Veja para quem serve, o que inclui e quando escolher um pré-pago com mais internet.";
+const canonical = "https://i9c.net.br/chip-so-whatsapp.html";
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <Fragment slot="head" set:html={head} />
+  <Fragment set:html={body} />
+</Base>
