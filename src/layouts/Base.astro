@@ -30,6 +30,20 @@ const idioma = idiomaDe(Astro.currentLocale);
 const t = ui(idioma);
 const canonical = Astro.props.canonical ?? (rota ? urlAbsoluta(rota, idioma) : undefined);
 
+// WebSite só na home de cada idioma: nome do site no Google, publicado pela Organization (_organization.head.html).
+const website =
+  rota === 'home'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        '@id': `${urlAbsoluta('home', idioma)}#website`,
+        name: 'i9c',
+        url: urlAbsoluta('home', idioma),
+        inLanguage: HREFLANG[idioma],
+        publisher: { '@id': 'https://i9c.net.br/#organization' },
+      }
+    : null;
+
 // Mesmo container do GTM da Voipmundo (decisão de 16/10/2026).
 const GTM_ID = 'GTM-WPL6WQS';
 ---
@@ -86,6 +100,7 @@ const GTM_ID = 'GTM-WPL6WQS';
     )}
 
     <Fragment set:html={organization} />
+    {website && <script type="application/ld+json" set:html={JSON.stringify(website)} />}
     <slot name="head" />
 
     <!-- Consentimento (LGPD) + GTM: nada de medição antes do "Aceitar todos" -->
