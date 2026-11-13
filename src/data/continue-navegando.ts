@@ -172,9 +172,9 @@ export const EXTERNOS = {
     'pt-br': 'Wikipédia: Lei Geral de Proteção de Dados', en: 'Wikipedia: General Personal Data Protection Law', es: 'Wikipedia: Ley General de Protección de Datos (EN)',
   },
   grupoivm: {
-    // en/es do grupoivm ainda não estão no ar (grupoivm #7 sem publicar): todos os idiomas vão para a página em pt
-    url: igual('https://grupoivm.com.br/marcas/i9c/'),
-    'pt-br': 'Grupo IVM — a i9c no grupo', en: 'Grupo IVM — i9c in the group (PT)', es: 'Grupo IVM — i9c en el grupo (PT)',
+    // en/es do grupoivm no ar desde 13/11/2026 (conferido: 200, lang e canonical próprios)
+    url: { 'pt-br': 'https://grupoivm.com.br/marcas/i9c/', en: 'https://grupoivm.com.br/en/brands/i9c/', es: 'https://grupoivm.com.br/es/marcas/i9c/' },
+    'pt-br': 'Grupo IVM — a i9c no grupo', en: 'Grupo IVM — i9c in the group', es: 'Grupo IVM — i9c en el grupo',
   },
   voipmundo: {
     url: igual('https://voipmundo.com.br/'),
