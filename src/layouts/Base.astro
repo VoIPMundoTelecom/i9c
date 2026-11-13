@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsApp from '../components/WhatsApp.astro';
 import CookieBanner from '../components/CookieBanner.astro';
+import ContinueNavegando from '../components/ContinueNavegando.astro';
 import organization from '../partials/_organization.head.html?raw';
 import { IDIOMAS, HREFLANG, OG_LOCALE, PAGINA_404, idiomaDe, urlAbsoluta, type Rota } from '../i18n/rotas';
 import { ui } from '../i18n/ui';
@@ -136,6 +137,7 @@ const GTM_ID = 'GTM-WPL6WQS';
     )}
     <main id="conteudo">
       <slot />
+      <ContinueNavegando />
     </main>
     <Footer idioma={idioma} rota={rota} />
     <slot name="end" />
