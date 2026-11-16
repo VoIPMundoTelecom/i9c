@@ -55,6 +55,7 @@ test('<img src="/…"> solta só para os logos permitidos', opts, () => {
     for (const [img] of ler(p).matchAll(/<img\b[^>]*>/g)) {
       const src = attr(img, 'src') ?? '';
       if (src.startsWith('/_astro/') || src.startsWith('data:')) continue;
+      if (/\.svg$/i.test(src)) continue; // vetor (logos de ~/marcas, ex.: Karretel): leve por natureza, fora do pipeline AVIF/WebP
       assert.ok(RASTER_PUBLIC_PERMITIDO.has(src.replace(/^\//, '')), `${p}: ${src} fora do pipeline <Imagem>`);
     }
   }
