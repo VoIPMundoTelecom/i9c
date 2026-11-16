@@ -42,7 +42,8 @@ const CONTRATAR = contratarUrl(undefined, h.contratarMsg); // msg traduzida só 
 <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-cinza-200">
   <div class="max-w-7xl mx-auto px-5 lg:px-8 h-16 flex items-center justify-between gap-3">
     <a href={inicio} class="flex items-center gap-3" aria-label={h.logoAria}>
-      <img src="/i9c-logo.png" alt="i9c" width="80" height="40" class="h-10 w-auto shrink-0" />
+      <!-- Logo: PNG até o arquivo oficial estar em ~/marcas (aí passa por <Imagem prioridade>). width/height na proporção real (870×635). -->
+      <img src="/i9c-logo.png" alt="i9c" width="55" height="40" class="h-10 w-auto shrink-0" />
       <span class="hidden sm:block font-mono text-[10px] tracking-[0.25em] text-cinza uppercase border-l border-cinza-200 pl-3 leading-tight">{h.operadora[0]}<br />{h.operadora[1]}</span>
     </a>
     <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-cinza" aria-label={h.navAria}>

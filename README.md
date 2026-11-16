@@ -45,6 +45,25 @@ Deploy: `.github/workflows/pages.yml` roda `npm ci && npm run build` e publica `
 - Paleta: IVM Azul `#1E2C5C` · i9c Azul `#136BA2` · Laranja `#E8672A` · Cinza `#716F6E`.
 - Logos reais: `i9c-logo.png` (header/positivo) e `i9c-logo-negativo.png` (footer/fundo escuro), com fundo recortado para transparente.
 
+## Imagens (regra de 16/11/2026 — vale para páginas novas, blog e sites novos)
+
+Toda imagem raster nova entra pelo pipeline do build, nunca como `<img src="/foto.png">` em `public/`:
+
+1. Arquivo em `src/assets/…` (não em `public/`).
+2. Na página: `<Imagem src={foto} alt="…" width={640} />` (`src/components/Imagem.astro`).
+   O build (astro:assets + sharp) gera `<picture>` com **AVIF → WebP → PNG/JPEG de reserva**, em 1x e 2x,
+   sempre com `width`/`height`.
+3. Padrão `loading="lazy"`. Só a imagem do LCP (a maior da primeira dobra) recebe `prioridade`
+   → sem lazy e com `fetchpriority="high"`; no máximo uma por página.
+4. **Logo e imagem de marca: só arquivo de `~/marcas`**. Converter formato pode; redesenhar não. SVG de logo continua SVG.
+5. Exceções que seguem em PNG/ICO: favicons e `apple-touch-icon` (o navegador pede esses formatos)
+   e a imagem de compartilhamento (`og:image`), que as redes sociais leem melhor em PNG/JPEG.
+6. JPEG XL: abre por padrão no Chrome 155 e no Firefox 158, mas o sharp do npm ainda não grava `.jxl`.
+   Quando gravar, entra como mais uma `<source>` (a primeira) no mesmo `<picture>`.
+
+Conferência: `npm run build && npm run test:imagens` (barra PNG/JPEG novo em `public/`, `<img>` sem
+width/height, ordem das `<source>`, lazy no rodapé) e `npm run peso -- index.html` (peso da página pelo `dist`).
+
 ## Como publicar
 
 Site **100% estático**. Suba o conteúdo da pasta para a raiz do domínio `i9c.net.br`.

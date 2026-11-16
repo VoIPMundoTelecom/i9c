@@ -1,0 +1,57 @@
+---
+/**
+ * Pipeline de imagem do site (regra de 16/11/2026 — ver README, "Imagens").
+ * Toda imagem raster nova entra por aqui, não por <img src="/…png">:
+ *
+ *   ---
+ *   import Imagem from '../components/Imagem.astro';
+ *   import foto from '../assets/img/foto.png';      // arquivo em src/assets, não em public/
+ *   ---
+ *   <Imagem src={foto} alt="…" width={640} />                 // abaixo da dobra: lazy
+ *   <Imagem src={foto} alt="…" width={640} prioridade />      // imagem do LCP: eager + fetchpriority=high
+ *
+ * Saída no build (sharp): <picture> com <source> AVIF → <source> WebP → <img> PNG/JPEG de reserva,
+ * nas densidades 1x e 2x, com width/height sempre preenchidos (sem salto de layout).
+ *
+ * JPEG XL (conferido em 16/11/2026): já abre por padrão no Chrome 155 e no Firefox 158, mas o sharp
+ * do npm (libvips sem libjxl) não grava .jxl e o Astro não lista 'jxl' como formato de saída.
+ * Quando o build gerar .jxl, entra como a 1ª <source> (antes do AVIF), no mesmo <picture>.
+ *
+ * Logo de marca: só arquivo de ~/marcas (converter formato pode; redesenhar não). SVG continua SVG.
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  /** largura exibida em px (a altura sai da proporção do arquivo) */
+  width?: number;
+  height?: number;
+  /** imagem do LCP / primeira dobra: sem lazy, com fetchpriority="high" */
+  prioridade?: boolean;
+  class?: string;
+  sizes?: string;
+  widths?: number[];
+}
+
+const FORMATOS = ['avif', 'webp'] as const;
+
+const { src, alt, width, height, prioridade = false, class: classe, sizes, widths } = Astro.props;
+const reserva = src.format === 'jpg' || src.format === 'jpeg' ? 'jpg' : 'png';
+---
+<Picture
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  formats={[...FORMATOS]}
+  fallbackFormat={reserva}
+  densities={widths ? undefined : [2]}
+  widths={widths}
+  sizes={sizes}
+  class={classe}
+  loading={prioridade ? 'eager' : 'lazy'}
+  decoding={prioridade ? 'auto' : 'async'}
+  fetchpriority={prioridade ? 'high' : undefined}
+/>
