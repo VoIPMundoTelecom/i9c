@@ -18,7 +18,7 @@ export const CATEGORIAS: Record<Categoria, string> = {
 /** pilar padrão do "Continue navegando" quando o post não tem `produto` */
 export const PRODUTO_DA_CATEGORIA: Record<Categoria, { href: string; titulo: string; texto: string }> = {
   planos: { href: '/#planos', titulo: 'Planos i9c', texto: 'Pré-pago, controle, Black e família, sem fidelidade.' },
-  recarga: { href: '/recargas.html', titulo: 'Recarga online', texto: 'Recarregue o seu chip i9c pelo app, na hora.' },
+  recarga: { href: '/recargas.html', titulo: 'Recarga online', texto: 'Recarregue o seu chip i9c pela área do cliente: o crédito entra assim que o pagamento é compensado.' },
   portabilidade: { href: '/portabilidade.html', titulo: 'Portabilidade', texto: 'Traga seu número para a i9c, sem taxa e sem fidelidade.' },
   cobertura: { href: '/mapa-de-cobertura.html', titulo: 'Mapa de cobertura', texto: 'Confira o sinal no seu endereço antes de contratar.' },
   empresas: { href: '/planos-empresas.html', titulo: 'Planos para empresas', texto: 'Linhas corporativas sem fidelidade.' },
