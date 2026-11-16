@@ -1,0 +1,208 @@
+---
+/**
+ * /blog/<slug>.html — post do blog (entradas sem `url`; as com `url` já são páginas do site).
+ * Datas de publicação e de atualização visíveis, autor, JSON-LD BlogPosting + BreadcrumbList
+ * (+ FAQPage quando houver FAQ), OG image própria (/blog/og/<slug>.png) e "Continue navegando":
+ * 2 posts relacionados + a página do produto.
+ */
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import {
+  CATEGORIAS, PRODUTO_DA_CATEGORIA, BLOG, SITE,
+  postsPublicados, ehPostDoBlog, hrefDo, urlDo, ogDo, relacionados, fmtData, isoData, type Post,
+} from '../../data/blog';
+import { EMPRESA } from '../../data/empresa';
+
+export async function getStaticPaths() {
+  const todos = await postsPublicados();
+  return todos.filter(ehPostDoBlog).map((post) => ({ params: { slug: post.id }, props: { post, todos } }));
+}
+
+const { post, todos } = Astro.props as { post: Post; todos: Post[] };
+const { Content } = await render(post);
+const d = post.data;
+const url = urlDo(post);
+const og = ogDo(post);
+const categoria = CATEGORIAS[d.categoria];
+
+const blogPosting = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: d.titulo,
+  description: d.resumo,
+  image: og,
+  datePublished: isoData(d.publicado),
+  dateModified: isoData(d.atualizado ?? d.publicado),
+  inLanguage: 'pt-BR',
+  articleSection: categoria,
+  url,
+  mainEntityOfPage: url,
+  author: { '@type': 'Organization', name: d.autor, url: 'https://grupoivm.com.br/' },
+  publisher: { '@id': 'https://i9c.net.br/#organization' },
+  isPartOf: { '@type': 'Blog', name: 'Blog i9c', url: SITE + BLOG },
+};
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Início', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + BLOG },
+    { '@type': 'ListItem', position: 3, name: d.titulo, item: url },
+  ],
+};
+const faqPage = d.faq.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: d.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    }
+  : null;
+const schemas = [blogPosting, breadcrumb, ...(faqPage ? [faqPage] : [])];
+
+const vizinhos = relacionados(post, todos, 2);
+const produto = d.produto ?? PRODUTO_DA_CATEGORIA[d.categoria];
+const cta = d.cta;
+const ctaExterno = cta ? /^https?:/.test(cta.href) : false;
+const WHATS = `${EMPRESA.whatsapp}?text=${encodeURIComponent('Olá! Li um artigo no blog da i9c e quero saber mais.')}`;
+---
+
+<Base title={d.seoTitulo ?? `${d.titulo} · Blog i9c`} description={d.resumo} canonical={url} active="blog" ogImage={og} ogType="article" rss>
+  <Fragment slot="head">
+    <meta property="article:published_time" content={isoData(d.publicado)} />
+    <meta property="article:modified_time" content={isoData(d.atualizado ?? d.publicado)} />
+    <meta property="article:section" content={categoria} />
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </Fragment>
+
+  <section class="relative grain overflow-hidden bg-white">
+    <div class="hero-blob absolute -top-20 -right-32 w-[600px] h-[600px] rounded-full"></div>
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-8 lg:pt-12 pb-10 relative z-10">
+      <div class="max-w-3xl">
+        <nav aria-label="Você está em" class="font-mono text-xs text-cinza mb-6">
+          <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <li><a href="/" class="hover:text-i9c-azul">Início</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href={BLOG} class="hover:text-i9c-azul">Blog</a></li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" class="text-ivm-azul">{categoria}</li>
+          </ol>
+        </nav>
+        <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja rise rise-1">Guia · {categoria}</div>
+        <h1 class="font-display font-bold text-[clamp(2rem,5.5vw,3.75rem)] leading-[1.02] tracking-tightest mt-3 rise rise-2 text-ivm-azul">{d.titulo}</h1>
+        <p class="font-mono text-xs text-cinza mt-5 rise rise-3">
+          Por {d.autor} · publicado em <time datetime={isoData(d.publicado)}>{fmtData(d.publicado)}</time>
+          {d.atualizado && <> · atualizado em <time datetime={isoData(d.atualizado)}>{fmtData(d.atualizado)}</time></>}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <article class="py-10 lg:py-14 bg-white">
+    <div class="max-w-3xl mx-auto px-5 lg:px-8 text-cinza leading-relaxed text-[1.05rem] post"><Content /></div>
+
+    {d.faq.length > 0 && (
+      <section class="max-w-3xl mx-auto px-5 lg:px-8 mt-12" aria-labelledby="faq-titulo">
+        <h2 id="faq-titulo" class="font-display font-bold text-2xl lg:text-3xl tracking-tightest text-ivm-azul">Perguntas frequentes</h2>
+        <div class="mt-5 space-y-3">
+          {d.faq.map((f) => (
+            <details class="group rounded-2xl border border-cinza-200 bg-white px-5">
+              <summary class="cursor-pointer list-none py-4 font-semibold text-ivm-azul flex items-center justify-between gap-4">
+                {f.q}<span class="text-laranja text-xl leading-none group-open:rotate-45 transition-transform" aria-hidden="true">+</span>
+              </summary>
+              <p class="pb-4 text-cinza leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <div class="max-w-3xl mx-auto px-5 lg:px-8 mt-12">
+      <div class="rounded-3xl bg-ivm-azul text-white p-7 lg:p-9">
+        {cta ? (
+          <>
+            <h2 class="font-display font-bold text-2xl tracking-tightest">{cta.titulo}</h2>
+            <p class="text-white/75 mt-2">{cta.texto}</p>
+            <div class="flex flex-wrap gap-3 mt-6">
+              <a href={cta.href} {...(ctaExterno ? { target: '_blank', rel: 'noopener' } : {})} class="inline-flex items-center min-h-11 bg-laranja hover:bg-laranja-dark text-white font-semibold px-5 py-3 rounded-full">{cta.botao}</a>
+              <a href={WHATS} target="_blank" rel="noopener" class="inline-flex items-center min-h-11 border border-white/30 hover:bg-white hover:text-ivm-azul font-semibold px-5 py-3 rounded-full">Falar no WhatsApp</a>
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 class="font-display font-bold text-2xl tracking-tightest">Quer um plano i9c?</h2>
+            <p class="text-white/75 mt-2">Sem fidelidade, com 5G onde houver cobertura e portabilidade online.</p>
+            <div class="flex flex-wrap gap-3 mt-6">
+              <a href="/#planos" class="inline-flex items-center min-h-11 bg-laranja hover:bg-laranja-dark text-white font-semibold px-5 py-3 rounded-full">Ver os planos</a>
+              <a href={WHATS} target="_blank" rel="noopener" class="inline-flex items-center min-h-11 border border-white/30 hover:bg-white hover:text-ivm-azul font-semibold px-5 py-3 rounded-full">Falar no WhatsApp</a>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  </article>
+
+  <section class="bg-cinza-50 border-t border-cinza-200 py-12 lg:py-16" aria-labelledby="continue-titulo" data-continue-navegando>
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <h2 id="continue-titulo" class="font-display font-bold text-2xl lg:text-3xl tracking-tightest text-ivm-azul">Continue navegando</h2>
+      <ul class="grid gap-5 md:grid-cols-3 mt-6">
+        {vizinhos.map((p) => (
+          <li>
+            <a href={hrefDo(p)} class="group h-full flex flex-col rounded-3xl border border-cinza-200 bg-white p-6 hover:border-i9c-azul transition">
+              <span class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja">{CATEGORIAS[p.data.categoria]}</span>
+              <span class="font-display font-bold text-lg leading-snug text-ivm-azul mt-2 group-hover:text-i9c-azul">{p.data.titulo}</span>
+              <time class="font-mono text-xs text-cinza mt-3" datetime={isoData(p.data.publicado)}>{fmtData(p.data.publicado)}</time>
+            </a>
+          </li>
+        ))}
+        <li>
+          <a href={produto.href} class="group h-full flex flex-col rounded-3xl bg-i9c-azul text-white p-6 hover:bg-i9c-azulDark transition">
+            <span class="font-mono text-xs font-semibold uppercase tracking-widest text-white/70">i9c</span>
+            <span class="font-display font-bold text-lg leading-snug mt-2">{produto.titulo} →</span>
+            <span class="text-white/80 text-sm mt-2">{produto.texto}</span>
+          </a>
+        </li>
+      </ul>
+      <p class="mt-6"><a href={BLOG} class="text-i9c-azul font-semibold hover:underline">Ver todos os artigos do blog</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .post > :global(* + *) { margin-top: 1.25rem; }
+  .post :global(h2) {
+    font-family: theme('fontFamily.display');
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: theme('colors.ivm.azul');
+    padding-top: 1.5rem;
+  }
+  @media (min-width: 1024px) { .post :global(h2) { font-size: 1.875rem; } }
+  .post :global(h3) { font-weight: 700; font-size: 1.15rem; color: theme('colors.ivm.azul'); padding-top: 0.5rem; }
+  .post :global(strong) { color: theme('colors.ivm.azul'); }
+  .post :global(a) { color: theme('colors.i9c.azul'); font-weight: 600; }
+  .post :global(a:hover) { text-decoration: underline; }
+  .post :global(ul) { list-style: disc; padding-left: 1.25rem; }
+  .post :global(ol) { list-style: decimal; padding-left: 1.25rem; }
+  .post :global(li + li) { margin-top: 0.5rem; }
+  /* "Resposta curta" (1º parágrafo): mesmo destaque dos artigos do site */
+  .post > :global(p:first-child) {
+    background: theme('colors.i9c.azulSoft');
+    border-left: 4px solid theme('colors.i9c.azul');
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: theme('colors.ivm.azul');
+  }
+  .post :global(table) {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  .post :global(th), .post :global(td) { border-bottom: 1px solid theme('colors.cinza.200'); padding: 0.6rem 0.75rem; text-align: left; }
+  .post :global(th) { background: theme('colors.cinza.100'); color: theme('colors.ivm.azul'); font-weight: 600; }
+  .post :global(td:not(:first-child)), .post :global(th:not(:first-child)) { text-align: center; }
+  .post :global(td) { color: theme('colors.ivm.azul'); }
+</style>

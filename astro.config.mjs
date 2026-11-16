@@ -6,16 +6,17 @@ import { fileURLToPath } from 'node:url';
 /**
  * Com build.format 'file', src/pages/en/index.astro vira dist/en.html, e o GitHub Pages só
  * responde /en/ com dist/en/index.html. Este passo move a home de cada idioma para lá
- * (a URL pública é /en/ e /es/, a mesma de src/i18n/rotas.ts).
+ * (a URL pública é /en/ e /es/, a mesma de src/i18n/rotas.ts). O índice do blog vai junto:
+ * dist/blog.html → dist/blog/index.html (URL /blog/; os posts ficam em /blog/<slug>.html).
  */
-const homesDosIdiomas = (idiomas) => ({
+const homesDosIdiomas = (pastas) => ({
   name: 'i9c-homes-idiomas',
   hooks: {
     'astro:build:done': ({ dir }) => {
       const dist = fileURLToPath(dir);
-      for (const i of idiomas) {
+      for (const i of pastas) {
         const de = `${dist}${i}.html`;
-        if (!existsSync(de)) throw new Error(`home ${i} não gerada (${de})`);
+        if (!existsSync(de)) throw new Error(`índice de /${i}/ não gerado (${de})`);
         mkdirSync(`${dist}${i}`, { recursive: true });
         renameSync(de, `${dist}${i}/index.html`);
       }
@@ -35,5 +36,5 @@ export default defineConfig({
     locales: ['pt-br', 'en', 'es'],
     routing: { prefixDefaultLocale: false },
   },
-  integrations: [homesDosIdiomas(['en', 'es'])],
+  integrations: [homesDosIdiomas(['en', 'es', 'blog'])],
 });
