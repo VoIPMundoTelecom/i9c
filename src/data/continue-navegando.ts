@@ -109,6 +109,11 @@ export const PAGINAS = {
     href: '/qual-operadora-tem-a-maior-cobertura.html',
     'pt-br': { titulo: 'Qual operadora tem a maior cobertura?', resumo: 'Por que o sinal muda de um lugar para outro e como conferir antes de trocar.' },
   },
+  // Blog (i9c #34): o índice entra aqui; o post (/blog/<slug>.html) tem bloco próprio em src/pages/blog/[slug].astro
+  blog: {
+    href: '/blog/',
+    'pt-br': { titulo: 'Blog da i9c', resumo: 'Guias sobre planos, portabilidade, cobertura, recarga e linhas para empresas.' },
+  },
 } satisfies Record<string, Pagina>;
 
 export type IdPagina = keyof typeof PAGINAS;
@@ -219,6 +224,7 @@ export const RELACIONADOS: Record<IdPagina, Relacionado> = {
   'cancelamento-por-falta-de-recarga': { internas: ['chip-so-whatsapp', 'operadoras-virtuais', 'planos-pre-pago'], externas: ['anatelConsumidor', 'consumidor', 'lgt'] },
   'operadoras-virtuais': { internas: ['como-trazer-seu-numero', 'maior-cobertura', 'home'], externas: ['wikiMvno', 'anatel', 'lgt', 'grupoivm'] },
   'maior-cobertura': { internas: ['operadoras-virtuais', 'como-trazer-seu-numero', 'mapa-de-cobertura'], externas: ['anatel', 'wiki5g', 'wikiMvno'] },
+  blog: { internas: ['home', 'planos-empresas', 'perguntas-frequentes'], externas: ['anatelConsumidor', 'wikiMvno', 'grupoivm'] },
 };
 
 /** caminho público da página no idioma (página sem tradução: caminho em pt-BR) */

@@ -1,0 +1,132 @@
+---
+/**
+ * /blog/ — índice do blog da i9c, mais recente primeiro, com filtro por categoria.
+ * Lista os posts da coleção (src/content/blog) e os artigos que já eram páginas do site
+ * (entradas com `url`), na URL de sempre. Sem JS o filtro some e a lista mostra tudo.
+ * Com build.format 'file' esta página sai como dist/blog.html; o passo do astro.config move para blog/index.html.
+ */
+import Base from '../../layouts/Base.astro';
+import { CATEGORIAS, BLOG, SITE, postsPublicados, hrefDo, fmtData, isoData, urlDo, type Categoria } from '../../data/blog';
+
+const posts = await postsPublicados();
+const usadas = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => posts.some((p) => p.data.categoria === c));
+
+const title = 'Blog i9c: planos, recarga, portabilidade e cobertura';
+const description = 'Guias da i9c sobre planos de celular, recarga, portabilidade, cobertura e linhas para empresas, com a resposta direto no topo.';
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Início', item: `${SITE}/` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: SITE + BLOG },
+  ],
+};
+const lista = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Blog i9c',
+  url: SITE + BLOG,
+  inLanguage: 'pt-BR',
+  publisher: { '@id': 'https://i9c.net.br/#organization' },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.titulo,
+    url: urlDo(p),
+    datePublished: isoData(p.data.publicado),
+    dateModified: isoData(p.data.atualizado ?? p.data.publicado),
+    author: { '@type': 'Organization', name: p.data.autor },
+  })),
+};
+---
+
+<Base
+  title={title}
+  description={description}
+  canonical={SITE + BLOG}
+  active="blog"
+  ogImage={`${SITE}/blog/og/blog.png`}
+  rss
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} />
+    <script type="application/ld+json" set:html={JSON.stringify(lista)} />
+  </Fragment>
+
+  <section class="relative grain overflow-hidden bg-white">
+    <div class="hero-blob absolute -top-20 -right-32 w-[600px] h-[600px] rounded-full"></div>
+    <div class="max-w-7xl mx-auto px-5 lg:px-8 pt-12 lg:pt-16 pb-8 relative z-10">
+      <div class="max-w-3xl">
+        <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja rise rise-1">Blog</div>
+        <h1 class="font-display font-bold text-[clamp(2.25rem,6vw,4.25rem)] leading-[0.98] tracking-tightest mt-3 rise rise-2 text-ivm-azul">
+          Blog da i9c
+        </h1>
+        <p class="text-lg text-cinza max-w-2xl mt-5 leading-relaxed rise rise-3">
+          Guias curtos sobre planos, recarga, portabilidade, cobertura e linhas para empresas. A resposta vem logo no começo.
+        </p>
+        <p class="font-mono text-xs text-cinza mt-4"><a href="/blog/rss.xml" class="hover:text-i9c-azul underline underline-offset-4">Assinar o RSS</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white pb-16 lg:pb-24">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="hidden flex-wrap gap-2 mb-8" role="group" aria-label="Filtrar por categoria" data-blog-filtro>
+        <button type="button" class="blog-chip" aria-pressed="true" data-cat="">Todos</button>
+        {usadas.map((c) => (
+          <button type="button" class="blog-chip" aria-pressed="false" data-cat={c}>{CATEGORIAS[c]}</button>
+        ))}
+      </div>
+
+      <ol class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-blog-lista>
+        {posts.map((p) => (
+          <li data-cat={p.data.categoria}>
+            <a href={hrefDo(p)} class="group h-full flex flex-col rounded-3xl border border-cinza-200 bg-white p-6 hover:border-i9c-azul hover:shadow-lg transition">
+              <div class="flex items-center justify-between gap-3 font-mono text-xs">
+                <span class="font-semibold uppercase tracking-widest text-laranja">{CATEGORIAS[p.data.categoria]}</span>
+                <time class="text-cinza" datetime={isoData(p.data.publicado)}>{fmtData(p.data.publicado)}</time>
+              </div>
+              <h2 class="font-display font-bold text-xl leading-snug tracking-tightest text-ivm-azul mt-3 group-hover:text-i9c-azul">{p.data.titulo}</h2>
+              <p class="text-cinza text-[0.95rem] leading-relaxed mt-2 flex-1">{p.data.resumo}</p>
+              {p.data.atualizado && (
+                <p class="font-mono text-xs text-cinza mt-4">atualizado em <time datetime={isoData(p.data.atualizado)}>{fmtData(p.data.atualizado)}</time></p>
+              )}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .blog-chip {
+    font-family: theme('fontFamily.mono');
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.55rem 1rem;
+    min-height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid theme('colors.cinza.200');
+    color: theme('colors.ivm.azul');
+    background: #fff;
+  }
+  .blog-chip:hover { border-color: theme('colors.i9c.azul'); }
+  .blog-chip[aria-pressed='true'] { background: theme('colors.i9c.azul'); border-color: theme('colors.i9c.azul'); color: #fff; }
+</style>
+
+<script is:inline>
+  (function () {
+    var f = document.querySelector('[data-blog-filtro]'), l = document.querySelector('[data-blog-lista]');
+    if (!f || !l) return;
+    f.classList.remove('hidden');
+    f.classList.add('flex');
+    f.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-cat]');
+      if (!b) return;
+      var cat = b.getAttribute('data-cat');
+      f.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      l.querySelectorAll('li').forEach(function (li) { li.hidden = !!cat && li.getAttribute('data-cat') !== cat; });
+    });
+  })();
+</script>
