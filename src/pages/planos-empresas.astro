@@ -1,6 +1,7 @@
 ---
 // Gerado a partir do planos-empresas.html (site estático). Conteúdo da página em src/partials/planos-empresas.*.html
 import Base from '../layouts/Base.astro';
+import GuiasBlog from '../components/GuiasBlog.astro';
 import { aplicarPlanos } from '../data/planos';
 import head from '../partials/planos-empresas.head.html?raw';
 import body from '../partials/planos-empresas.body.html?raw';
@@ -14,5 +15,6 @@ const canonical = "https://i9c.net.br/planos-empresas.html";
 <Base title={title} description={description} canonical={canonical} rota="planos-empresas" active="planos">
   <Fragment slot="head" set:html={aplicarPlanos(head)} />
   <Fragment set:html={aplicarPlanos(body)} />
+  <GuiasBlog pilar="/planos-empresas.html" titulo="Guias sobre linhas para empresas" />
   <Fragment slot="end" set:html={end} />
 </Base>

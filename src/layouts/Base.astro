@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsApp from '../components/WhatsApp.astro';
 import CookieBanner from '../components/CookieBanner.astro';
+import ContinueNavegando from '../components/ContinueNavegando.astro';
 import organization from '../partials/_organization.head.html?raw';
 import { IDIOMAS, HREFLANG, OG_LOCALE, PAGINA_404, idiomaDe, urlAbsoluta, type Rota } from '../i18n/rotas';
 import { ui } from '../i18n/ui';
@@ -16,7 +17,13 @@ interface Props {
   canonical?: string;
   /** id da página em src/i18n/rotas.ts: liga hreflang (pt-BR, en, es, x-default) e o seletor de idioma */
   rota?: Rota;
-  active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq';
+  active?: 'planos' | 'cobertura' | 'portabilidade' | 'recarga' | 'faq' | 'blog';
+  /** URL absoluta da imagem de compartilhamento (og:image + twitter:card) */
+  ogImage?: string;
+  /** og:type (padrão website; post do blog = article) */
+  ogType?: 'website' | 'article';
+  /** true = <link rel=alternate> para o RSS do blog */
+  rss?: boolean;
   /** true = <meta robots noindex> */
   noindex?: boolean;
   /** true = página leve (404/manutenção): sem o chat do Bitrix24 (o CTA de contato já é o WhatsApp) e fontes sem bloquear a renderização */
@@ -24,7 +31,7 @@ interface Props {
   /** só a 404 da raiz: URL quebrada em /en/ ou /es/ vai para a 404 do idioma */
   trocaIdioma404?: boolean;
 }
-const { title, description, rota, active, noindex = false, leve = false, trocaIdioma404 = false } = Astro.props;
+const { title, description, rota, active, ogImage, ogType = 'website', rss = false, noindex = false, leve = false, trocaIdioma404 = false } = Astro.props;
 
 const idioma = idiomaDe(Astro.currentLocale);
 const t = ui(idioma);
@@ -76,12 +83,21 @@ const GTM_ID = 'GTM-WPL6WQS';
     {noindex && <meta name="robots" content="noindex, follow" />}
     <!-- Google Search Console (conta marketing@grupoivm.com.br) -->
     <meta name="google-site-verification" content="e89soBTv-h7gCjONFsTHJecGi0oSu6-Cn8c76oDUYAU" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="i9c" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:locale" content={OG_LOCALE[idioma]} />
+    {ogImage && (
+      <Fragment>
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Fragment>
+    )}
+    {rss && <link rel="alternate" type="application/rss+xml" title="Blog i9c" href="https://i9c.net.br/blog/rss.xml" />}
     {rota && IDIOMAS.filter((i) => i !== idioma).map((i) => <meta property="og:locale:alternate" content={OG_LOCALE[i]} />)}
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
@@ -136,6 +152,7 @@ const GTM_ID = 'GTM-WPL6WQS';
     )}
     <main id="conteudo">
       <slot />
+      <ContinueNavegando />
     </main>
     <Footer idioma={idioma} rota={rota} />
     <slot name="end" />

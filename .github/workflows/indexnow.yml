@@ -1,0 +1,27 @@
+name: IndexNow
+
+# Mesmo padrão do voipmundo-site: avisa Bing/Yandex das URLs que mudaram no push da main.
+# Roda depois que o deploy do GitHub Pages termina com sucesso (não precisa de "sleep").
+# Google não usa IndexNow: para ele vale o sitemap-index.xml + docs/seo/INDEXAR.md.
+
+on:
+  workflow_run:
+    workflows: ['Deploy site (GitHub Pages)']
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/indexnow.mjs $(git diff --name-only HEAD~1 HEAD -- src/content src/pages src/partials src/data)
