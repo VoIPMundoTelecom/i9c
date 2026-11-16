@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Índice dos sitemaps por idioma (padrão do voipmundo-site). Sitemap novo? Somar aqui e no robots.txt. -->
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://i9c.net.br/sitemap.xml</loc></sitemap>
+  <sitemap><loc>https://i9c.net.br/sitemap-en.xml</loc></sitemap>
+  <sitemap><loc>https://i9c.net.br/sitemap-es.xml</loc></sitemap>
+</sitemapindex>

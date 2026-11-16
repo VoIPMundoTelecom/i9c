@@ -108,7 +108,8 @@ do site funciona normalmente.
 
 ## Pendências / próximos passos
 
-- **Idiomas EN/ES**: marcados como "em breve" na top bar (PT ativo).
+- **Marketing/SEO**: antes de qualquer conteúdo, ler `docs/MKT-REGRAS.md` (aponta para as regras do voipmundo-site).
+- **Idiomas EN/ES**: no ar em `/en/` e `/es/` — ver `docs/seo/i18n.md`.
 - **Páginas legais**: `politica-de-privacidade.html` e `termos-de-uso.html` estão referenciadas
   no rodapé/cookies, mas ainda precisam ser criadas.
 - **Atualizar cobertura**: substituir `assets/municipios.json` quando houver novos pontos.
