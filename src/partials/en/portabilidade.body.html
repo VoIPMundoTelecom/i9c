@@ -213,6 +213,14 @@
           .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {ok:r.ok, j:j}; }); })
           .then(function(res){
             if (res.ok) {
+              // pixel do Grupo IVM (só age com consentimento): form_submit + identify
+              try {
+                var pj = fd.get('tipo_pessoa') === 'PJ';
+                document.dispatchEvent(new CustomEvent('ivm:form-enviado', { detail: {
+                  nome: pj ? '' : String(fd.get('nome') || ''), empresa: pj ? String(fd.get('nome') || '') : '',
+                  email: String(fd.get('email') || ''), telefone: String(fd.get('telefone_contato') || '')
+                } }));
+              } catch (err) {}
               form.reset(); syncTipo();
               tone(true, '<strong>Request received!</strong> Our team will contact you soon to complete the number portability. You can also call us at <a href="tel:08008000900" class="font-semibold underline">0800 800 0900</a>.');
             } else {

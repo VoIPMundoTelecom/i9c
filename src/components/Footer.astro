@@ -1,6 +1,7 @@
 ---
 import { IDIOMAS, HREFLANG, NOME_IDIOMA, linkIdioma, type Idioma, type Rota } from '../i18n/rotas';
 import { ui } from '../i18n/ui';
+import { consentimento } from '../data/consentimento';
 
 interface Props { idioma?: Idioma; rota?: Rota }
 const { idioma = 'pt-br', rota } = Astro.props;
@@ -39,6 +40,7 @@ const f = t.footer;
             <li>Curitiba · PR{idioma !== 'pt-br' && ' · Brasil'}</li>
             <li><a href={f.privacidade.href} class="hover:text-white">{f.privacidade.label}</a></li>
             <li><a href={f.termos.href} class="hover:text-white">{f.termos.label}</a></li>
+            <li><button type="button" data-consent-abrir class="text-left hover:text-white underline-offset-4 hover:underline">{consentimento(idioma).preferencias}</button></li>
           </ul>
           <nav class="mt-6" aria-label={t.idiomaRotulo}>
             <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja mb-3" aria-hidden="true">{t.idiomaRotulo}</div>
