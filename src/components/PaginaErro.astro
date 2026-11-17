@@ -1,7 +1,7 @@
 ---
 /**
  * Corpo da 404 e da página de manutenção: busca, 3 planos, WhatsApp e links rápidos.
- * Eventos (dataLayer, só com consentimento: localStorage i9c_cookies = 'accept'):
+ * Eventos (dataLayer, só com consentimento: window.ivmConsent.estado() = 'aceito', ver src/scripts/ivm-consent.js):
  *   pagina_404       { pagina_quebrada, referrer_host, tipo_pagina }   (só na 404)
  *   cta_404_plano    { plano, pagina_quebrada, tipo_pagina }
  *   cta_404_whatsapp { pagina_quebrada, tipo_pagina }
@@ -93,10 +93,10 @@ const cards = PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
 
 <script>
   declare global {
-    interface Window { dataLayer?: unknown[] }
+    interface Window { dataLayer?: unknown[]; ivmConsent?: { estado(): string | null } }
   }
   const consentiu = () => {
-    try { return localStorage.getItem('i9c_cookies') === 'accept'; } catch { return false; }
+    try { return window.ivmConsent?.estado() === 'aceito'; } catch { return false; }
   };
   const root = document.querySelector<HTMLElement>('[data-pagina-erro]');
   if (root) {

@@ -1,27 +1,42 @@
 ---
 /**
- * Banner de cookies (LGPD).
- * Antes: reaparecia em toda página (a escolha era gravada mas nunca lida) e não controlava nada.
- * Agora: escondido por padrão; só aparece sem escolha salva; "Aceitar" libera o GTM (Base.astro).
+ * Aviso de cookies/consentimento (LGPD). Texto em src/data/consentimento.ts (provisório até o oficial da S1).
+ * Escondido por padrão; aparece sem escolha válida ou pelo link "Preferências de cookies" do rodapé.
+ * Não bloqueia a página (sem fundo escuro nem trava de foco). "Aceitar" e "Recusar" com o mesmo destaque.
+ * A escolha e o que ela libera (GTM + pixel) ficam em src/scripts/ivm-consent.js (window.ivmConsent).
  */
-import { ui } from '../i18n/ui';
-import { ROTAS, type Idioma } from '../i18n/rotas';
+import { consentimento } from '../data/consentimento';
+import type { Idioma } from '../i18n/rotas';
 
 interface Props { idioma?: Idioma }
 const idioma = Astro.props.idioma ?? 'pt-br';
-const c = ui(idioma).cookies;
+const c = consentimento(idioma);
+const botao = 'min-w-[7.5rem] px-5 py-2.5 rounded-full border-2 border-ivm-azul bg-ivm-azul text-white font-semibold text-sm hover:bg-i9c-azulDark hover:border-i9c-azulDark transition-colors';
 ---
 
-<div id="cookie-banner" hidden class="fixed bottom-0 inset-x-0 z-50 bg-white border-t-2 border-i9c-azul shadow-[0_-12px_40px_-12px_rgba(30,44,92,0.25)]" role="region" aria-label={c.aria}>
+<div
+  id="cookie-banner"
+  hidden
+  class="fixed bottom-0 inset-x-0 z-[60] bg-white border-t-2 border-i9c-azul shadow-[0_-12px_40px_-12px_rgba(30,44,92,0.25)]"
+  role="region"
+  aria-label={c.aria}
+  data-txt-atual={c.atual}
+  data-txt-aceito={c.aceito}
+  data-txt-recusado={c.recusado}
+  data-locale={idioma === 'pt-br' ? 'pt-BR' : idioma}
+>
   <div class="max-w-7xl mx-auto px-5 lg:px-8 py-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-    <p class="text-sm text-cinza leading-relaxed max-w-3xl">
-      <span class="font-display font-bold text-ivm-azul">{c.titulo}</span>
-      {c.texto}
-      <a href={ROTAS['politica-de-privacidade'][idioma]} class="text-i9c-azul underline hover:no-underline">{c.saibaMais}</a>.
-    </p>
+    <div class="text-sm text-cinza leading-relaxed max-w-3xl">
+      <p>
+        <span class="font-display font-bold text-ivm-azul">{c.titulo}</span>
+        {' '}{c.texto}{' '}
+        <a href={c.link.href} class="text-i9c-azulDark font-semibold underline hover:no-underline">{c.link.label}</a>.
+      </p>
+      <p class="mt-1 text-xs" data-consent-atual hidden></p>
+    </div>
     <div class="flex gap-3 shrink-0">
-      <button type="button" data-consent="reject" class="px-5 py-2.5 rounded-full border-2 border-cinza-200 text-ivm-azul font-semibold text-sm hover:border-ivm-azul transition-colors">{c.rejeitar}</button>
-      <button type="button" data-consent="accept" class="px-5 py-2.5 rounded-full bg-i9c-azul text-white font-semibold text-sm hover:bg-i9c-azulDark transition-colors">{c.aceitar}</button>
+      <button type="button" data-consent="recusado" class={botao}>{c.recusar}</button>
+      <button type="button" data-consent="aceito" class={botao}>{c.aceitar}</button>
     </div>
   </div>
 </div>
@@ -29,17 +44,54 @@ const c = ui(idioma).cookies;
 <script is:inline>
   (function () {
     var el = document.getElementById('cookie-banner');
-    if (!el) return;
-    var saved = null;
-    try { saved = localStorage.getItem('i9c_cookies'); } catch (e) {}
-    if (!saved) el.hidden = false;
+    var api = window.ivmConsent;
+    if (!el || !api) return;
+    var atual = el.querySelector('[data-consent-atual]');
+    var origem = null;
+
+    function mostrar(foco) {
+      var v = api.estado();
+      if (v && atual) {
+        var dt = new Date(api.data());
+        var quando = isNaN(dt) ? '' : dt.toLocaleDateString(el.getAttribute('data-locale') || undefined);
+        atual.textContent = el.getAttribute('data-txt-atual')
+          .replace('{escolha}', el.getAttribute('data-txt-' + v) || v)
+          .replace('{data}', quando);
+        atual.hidden = false;
+      } else if (atual) {
+        atual.hidden = true;
+      }
+      el.hidden = false;
+      if (foco) {
+        var b = el.querySelector('[data-consent]');
+        if (b) b.focus();
+      }
+    }
+    function fechar() {
+      el.hidden = true;
+      if (origem && document.contains(origem)) origem.focus();
+      origem = null;
+    }
+
+    if (!api.estado()) mostrar(false);
+
     el.querySelectorAll('[data-consent]').forEach(function (b) {
       b.addEventListener('click', function () {
-        var v = b.getAttribute('data-consent');
-        try { localStorage.setItem('i9c_cookies', v); } catch (e) {}
-        el.hidden = true;
-        if (v === 'accept' && window.__i9cGrant) window.__i9cGrant();
+        api.definir(b.getAttribute('data-consent'));
+        fechar();
       });
+    });
+    // Esc fecha só quando já existe uma escolha (reaberto pelo rodapé); sem escolha, o aviso fica.
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && api.estado()) fechar();
+    });
+    document.addEventListener('ivm:consent-abrir', function () { mostrar(true); });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-consent-abrir]');
+      if (!t) return;
+      e.preventDefault();
+      origem = t;
+      api.abrir();
     });
   })();
 </script>

@@ -1,5 +1,5 @@
 /**
- * Textos de layout (header, footer, widget do WhatsApp, banner de cookies, moldura jurídica)
+ * Textos de layout (header, footer, widget do WhatsApp, moldura jurídica; o aviso de cookies fica em src/data/consentimento.ts)
  * por idioma. O pt-br repete exatamente o texto que já estava nos componentes.
  *
  * Link com `pt: true` aponta para página que só existe em português: ganha hreflang="pt-BR"
@@ -84,14 +84,6 @@ export const UI = {
       gratuito: '0800 800 0900 · atendimento gratuito',
       abrir: 'Conversar no WhatsApp',
     },
-    cookies: {
-      aria: 'Aviso de cookies',
-      titulo: 'Valorizamos sua privacidade.',
-      texto: 'Usamos cookies para medir o uso do site e melhorar sua experiência. Você decide.',
-      saibaMais: 'Saiba mais',
-      rejeitar: 'Só necessários',
-      aceitar: 'Aceitar todos',
-    },
     legal: { inicio: 'Início', voceEsta: 'Você está em', atualizada: 'Atualizada em', aviso: '', versaoPt: '' },
   },
 
@@ -157,14 +149,6 @@ export const UI = {
       falar: 'Chat on WhatsApp',
       gratuito: '0800 800 0900 · toll-free from Brazil',
       abrir: 'Chat on WhatsApp',
-    },
-    cookies: {
-      aria: 'Cookie notice',
-      titulo: 'We value your privacy.',
-      texto: 'We use cookies to measure how the site is used and make it better for you. It’s your call.',
-      saibaMais: 'Learn more',
-      rejeitar: 'Essential only',
-      aceitar: 'Accept all',
     },
     legal: {
       inicio: 'Home',
@@ -237,14 +221,6 @@ export const UI = {
       falar: 'Hablar por WhatsApp',
       gratuito: '0800 800 0900 · gratuito desde Brasil',
       abrir: 'Hablar por WhatsApp',
-    },
-    cookies: {
-      aria: 'Aviso de cookies',
-      titulo: 'Valoramos tu privacidad.',
-      texto: 'Usamos cookies para medir el uso del sitio y mejorar tu experiencia. Tú decides.',
-      saibaMais: 'Más información',
-      rejeitar: 'Solo necesarias',
-      aceitar: 'Aceptar todas',
     },
     legal: {
       inicio: 'Inicio',

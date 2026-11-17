@@ -6,6 +6,7 @@ import WhatsApp from '../components/WhatsApp.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import ContinueNavegando from '../components/ContinueNavegando.astro';
 import organization from '../partials/_organization.head.html?raw';
+import consentJs from '../scripts/ivm-consent.js?raw';
 import { IDIOMAS, HREFLANG, OG_LOCALE, PAGINA_404, idiomaDe, urlAbsoluta, type Rota } from '../i18n/rotas';
 import { ui } from '../i18n/ui';
 import { CONTRATAR, CODIGO_GIVM, PRECO_CONTRATAR } from '../data/planos';
@@ -51,8 +52,6 @@ const website =
       }
     : null;
 
-// Mesmo container do GTM da Voipmundo (decisão de 16/10/2026).
-const GTM_ID = 'GTM-WPL6WQS';
 ---
 
 <!doctype html>
@@ -119,27 +118,8 @@ const GTM_ID = 'GTM-WPL6WQS';
     {website && <script type="application/ld+json" set:html={JSON.stringify(website)} />}
     <slot name="head" />
 
-    <!-- Consentimento (LGPD) + GTM: nada de medição antes do "Aceitar todos" -->
-    <script is:inline define:vars={{ gtmId: GTM_ID }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied' });
-      function loadGTM() {
-        if (!gtmId || window.__gtmLoaded) return;
-        window.__gtmLoaded = true;
-        (function (w, d, s, l, i) {
-          w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-          var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
-          j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i;
-          f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', gtmId);
-      }
-      window.__i9cGrant = function () {
-        gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
-        loadGTM();
-      };
-      try { if (localStorage.getItem('i9c_cookies') === 'accept') window.__i9cGrant(); } catch (e) {}
-    </script>
+    <!-- Consentimento (LGPD): GTM e pixel do Grupo IVM só depois do "Aceitar" (src/scripts/ivm-consent.js) -->
+    <script is:inline set:html={consentJs} />
   </head>
 
   <body class="bg-white antialiased overflow-x-hidden">
@@ -179,7 +159,7 @@ const GTM_ID = 'GTM-WPL6WQS';
       document.addEventListener('click', function (e) {
         var a = e.target.closest && e.target.closest('a[data-lead="contratar"]');
         if (!a) return;
-        try { if (localStorage.getItem('i9c_cookies') !== 'accept') return; } catch (err) { return; }
+        if (!window.ivmConsent || window.ivmConsent.estado() !== 'aceito') return;
         var id = a.getAttribute('data-plano') || '';
         var ev = { event: 'begin_checkout', plano: id || '(sem plano)' };
         if (id && nomes[id]) {
