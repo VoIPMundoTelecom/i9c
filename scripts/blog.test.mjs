@@ -17,14 +17,15 @@ const jsonld = (html) =>
   [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
 
 /** entradas da coleção (frontmatter mínimo, sem dependência) */
-const entradas = readdirSync(CONTEUDO)
+const todasEntradas = readdirSync(CONTEUDO)
   .filter((f) => f.endsWith('.md'))
   .map((f) => {
     const fm = readFileSync(new URL(f, CONTEUDO), 'utf8').match(/^---\n([\s\S]*?)\n---/)[1];
     const campo = (k) => fm.match(new RegExp(`^${k}:\\s*'?([^'\\n]*)'?`, 'm'))?.[1];
     return { id: f.replace(/\.md$/, ''), url: campo('url'), rascunho: campo('rascunho') === 'true', publicado: campo('publicado') };
-  })
-  .filter((e) => !e.rascunho);
+  });
+const entradas = todasEntradas.filter((e) => !e.rascunho);
+const rascunhos = todasEntradas.filter((e) => e.rascunho);
 const caminhoDe = (e) => e.url ?? `/blog/${e.id}.html`;
 const arquivoDe = (e) => (e.url === '/' ? 'index.html' : caminhoDe(e).replace(/^\//, ''));
 const posts = entradas.filter((e) => !e.url);
@@ -129,7 +130,21 @@ test('link "Blog" no topo e no rodapé (pt, en, es)', opts, () => {
 });
 
 test('página-pilar lista os guias do cluster (GuiasBlog)', opts, () => {
-  const html = ler('planos-empresas.html');
+  const html = ler('portabilidade.html');
   assert.match(html, /id="guias"/);
-  assert.ok(html.includes('href="/blog/como-controlar-os-celulares-da-empresa.html"'));
+  assert.ok(html.includes('href="/como-trazer-seu-numero-para-a-i9c.html"'));
+});
+
+test('rascunho fica fora: sem página, sem OG, fora do índice, RSS, sitemap e GuiasBlog', opts, () => {
+  const indice = ler('blog/index.html');
+  const rss = ler('blog/rss.xml');
+  const sm = ler('sitemap.xml');
+  const empresas = ler('planos-empresas.html');
+  for (const e of rascunhos) {
+    const caminho = caminhoDe(e);
+    if (!e.url) assert.ok(!existe(arquivoDe(e)), `${e.id}: rascunho gerou ${arquivoDe(e)}`);
+    assert.ok(!existe(`blog/og/${e.id}.png`), `${e.id}: rascunho gerou OG`);
+    for (const [nome, txt] of [['índice', indice], ['RSS', rss], ['sitemap', sm], ['planos-empresas', empresas]])
+      assert.ok(!txt.includes(caminho), `${e.id}: rascunho aparece no ${nome}`);
+  }
 });

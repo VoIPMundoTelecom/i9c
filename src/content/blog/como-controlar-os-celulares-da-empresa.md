@@ -3,6 +3,11 @@ titulo: 'Como controlar os celulares da empresa (sem complicar a vida de ningué
 seoTitulo: 'Como controlar os celulares da empresa · Blog i9c'
 resumo: 'Veja onde está cada celular da empresa, bloqueie à distância e instale os apps de trabalho. Na linha corporativa i9c, o Karretel vem incluso.'
 publicado: 2026-11-20
+# RASCUNHO: fora do /blog/, do RSS, do GuiasBlog e sem /blog/<slug>.html. Para publicar: tirar
+# `rascunho`, conferir a data e devolver a URL ao public/sitemap.xml.
+# [CONFERIR PREÇO] Essencial R$ 9,90 · Gestão R$ 18,90 · Completo R$ 33,30 (grupoivm, 13/11/2026):
+# conferir no givm no dia da publicação (sexta na i9c / sábado no grupoivm).
+rascunho: true
 categoria: empresas
 pilar: '/planos-empresas.html'
 relacionados: ['operadoras-virtuais-no-brasil', 'como-trazer-seu-numero-para-a-i9c']
