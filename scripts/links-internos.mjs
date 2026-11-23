@@ -13,7 +13,8 @@ export function* paginas(dir = DIST) {
   for (const n of readdirSync(dir).sort()) {
     const p = join(dir, n);
     if (statSync(p).isDirectory()) yield* paginas(p);
-    else if (n.endsWith('.html')) yield p;
+    // Página-ponte (scripts/relatorio-404.mjs) não é página do site: só redireciona, noindex.
+    else if (n.endsWith('.html') && !readFileSync(p, 'utf8').includes('<!-- ponte-404:')) yield p;
   }
 }
 
