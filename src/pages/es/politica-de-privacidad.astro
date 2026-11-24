@@ -2,8 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import Legal from '../../components/Legal.astro';
 import { EMPRESA, DPO } from '../../data/empresa';
+import { consentimento } from '../../data/consentimento';
 
-const atualizado = '16 de octubre de 2026';
+const atualizado = '24 de noviembre de 2026';
+const cookies = consentimento('es').detalhe;
 // RASCUNHO para revisão jurídica (Laura). Tradução ES da versão em português; a versão em português prevalece.
 // Itens a confirmar marcados com TODO_ no código.
 ---
@@ -22,7 +24,7 @@ const atualizado = '16 de octubre de 2026';
     <div class="box">
       <p style="margin:0">
         <strong>Resumen:</strong> solo recopilamos lo necesario para atender su solicitud; la medición del uso del sitio
-        solo se activa después de que usted haga clic en “Aceptar todas”; no vendemos sus datos; puede solicitar acceso,
+        solo se activa después de que usted haga clic en “Aceptar” en el aviso de cookies; no vendemos sus datos; puede solicitar acceso,
         corrección o eliminación en cualquier momento.
       </p>
     </div>
@@ -54,7 +56,7 @@ const atualizado = '16 de octubre de 2026';
           <td data-label="Dónde">Navegación (cookies de medición)</td>
           <td data-label="Datos">Páginas visitadas, origen del acceso, tipo de dispositivo y navegador, identificadores de cookies</td>
           <td data-label="Finalidad">Medir la audiencia y el rendimiento del sitio y de las campañas</td>
-          <td data-label="Base legal">Consentimiento (art. 7, I) — solo después de “Aceptar todas”</td>
+          <td data-label="Base legal">Consentimiento (art. 7, I), solo después de “Aceptar”</td>
         </tr>
         <tr>
           <td data-label="Dónde">Funcionamiento del sitio</td>
@@ -69,9 +71,14 @@ const atualizado = '16 de octubre de 2026';
     <h2>3. Cookies y medición</h2>
     <p>
       Usamos <strong>Google Tag Manager</strong> y herramientas de medición de Google solo después de que usted haga clic en
-      “Aceptar todas” en el aviso de cookies. Con “Solo necesarias”, no se activa ninguna cookie de medición. Su elección
-      queda guardada en su navegador; para cambiarla, borre los datos del sitio en el navegador y el aviso volverá a aparecer.
+      “Aceptar” en el aviso de cookies. Con “Rechazar”, no se activa ninguna cookie de medición. Su elección queda
+      guardada en su navegador durante 13 meses; para cambiarla, use “Preferencias de cookies” en el pie del sitio.
     </p>
+
+    <h3 id="cookies">{cookies.titulo}</h3>
+    {cookies.itens.map((i) => (
+      <p><strong>{i.rotulo}</strong> <Fragment set:html={i.html} /></p>
+    ))}
 
     <h2>4. Con quién compartimos</h2>
     <p>No vendemos datos personales. Compartimos solo lo necesario con:</p>

@@ -1,6 +1,6 @@
 ---
 /**
- * Aviso de cookies/consentimento (LGPD). Texto em src/data/consentimento.ts (provisório até o oficial da S1).
+ * Aviso de cookies/consentimento (LGPD). Texto oficial em src/data/consentimento.ts ("Saiba mais" completo na política de privacidade, #cookies).
  * Escondido por padrão; aparece sem escolha válida ou pelo link "Preferências de cookies" do rodapé.
  * Não bloqueia a página (sem fundo escuro nem trava de foco). "Aceitar" e "Recusar" com o mesmo destaque.
  * A escolha e o que ela libera (GTM + pixel) ficam em src/scripts/ivm-consent.js (window.ivmConsent).
@@ -28,9 +28,10 @@ const botao = 'min-w-[7.5rem] px-5 py-2.5 rounded-full border-2 border-ivm-azul 
   <div class="max-w-7xl mx-auto px-5 lg:px-8 py-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
     <div class="text-sm text-cinza leading-relaxed max-w-3xl">
       <p>
-        <span class="font-display font-bold text-ivm-azul">{c.titulo}</span>
-        {' '}{c.texto}{' '}
-        <a href={c.link.href} class="text-i9c-azulDark font-semibold underline hover:no-underline">{c.link.label}</a>.
+        {c.texto}{' '}
+        <a href={c.saibaMais.href} class="text-i9c-azulDark font-semibold underline hover:no-underline">{c.saibaMais.label}</a>
+        {' · '}
+        <a href={c.link.href} class="text-i9c-azulDark font-semibold underline hover:no-underline">{c.link.label}</a>
       </p>
       <p class="mt-1 text-xs" data-consent-atual hidden></p>
     </div>

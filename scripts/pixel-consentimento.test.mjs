@@ -236,13 +236,38 @@ test('HTML: aviso com Aceitar e Recusar de mesmo destaque, link de privacidade e
     assert.equal(botoes[0][2], botoes[1][2], `${p}: mesmas classes nos dois botões`);
     assert.deepEqual(botoes.map((b) => b[3]).sort(), [aceitar, recusar].sort());
     assert.ok(banner.includes(`href="${priv}"`), `${p}: link ${priv}`);
-    assert.match(banner, /13 (meses|months)/);
+    assert.ok(banner.includes(`href="${priv.replace('#contato', '#cookies')}"`), `${p}: "Saiba mais" na política`);
+    assert.match(banner, /cookies (próprios|propias)|our own cookies/, `${p}: texto oficial`);
+    assert.match(banner, /i9c/);
     const footer = html.slice(html.lastIndexOf('<footer'));
     assert.match(footer, new RegExp(`data-consent-abrir[^>]*>${pref}<`), `${p}: ${pref} no rodapé`);
   }
 });
 
-test('texto provisório num arquivo só, marcado TODO da S1', () => {
+test('texto oficial: sem TODO provisório e sem citar fornecedor no aviso', () => {
   const txt = readFileSync(new URL('../src/data/consentimento.ts', import.meta.url), 'utf8');
-  assert.match(txt, /TODO: texto oficial da S1/);
+  assert.doesNotMatch(txt, /TODO/);
+  const aviso = txt.slice(txt.indexOf('export const CONSENTIMENTO'));
+  assert.doesNotMatch(aviso, /google|meta|bitrix|facebook|tim\b|vivo|claro/i, 'fornecedor/operadora no aviso');
+  assert.doesNotMatch(aviso, /—/, 'sem travessão no texto');
+});
+
+test('HTML: política (pt/en/es) traz o "Saiba mais" completo em #cookies', opts, () => {
+  const casos = [
+    ['politica-de-privacidade.html', /13 meses/, /15 dias/, /art\. 7º, I/, /Preferências de cookies/],
+    ['en/privacy-policy.html', /13 months/, /15 days/, /art\. 7, I/, /Cookie preferences/],
+    ['es/politica-de-privacidad.html', /13 meses/, /15 días/, /art\. 7, I/, /Preferencias de cookies/],
+  ];
+  for (const [p, ...regras] of casos) {
+    const html = ler(p);
+    const i = html.indexOf('id="cookies"');
+    assert.ok(i > 0, `${p}: seção #cookies`);
+    const sec = html.slice(i, html.indexOf('<h2', i));
+    assert.match(sec, /_ivm_vid/, p);
+    assert.match(sec, /utm/, p);
+    assert.match(sec, /WhatsApp/, p);
+    assert.match(sec, /href="#contato"/, `${p}: canal de contato`);
+    assert.doesNotMatch(sec, /mailto:|privacidade@/, `${p}: sem e-mail inventado`);
+    for (const r of regras) assert.match(sec, r, `${p}: ${r}`);
+  }
 });
