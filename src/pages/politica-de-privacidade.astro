@@ -2,8 +2,10 @@
 import Base from '../layouts/Base.astro';
 import Legal from '../components/Legal.astro';
 import { EMPRESA, DPO } from '../data/empresa';
+import { consentimento } from '../data/consentimento';
 
-const atualizado = '16/10/2026';
+const atualizado = '24/11/2026';
+const cookies = consentimento('pt-br').detalhe;
 // RASCUNHO para revisão jurídica (Laura). Itens a confirmar marcados com TODO_ no código.
 ---
 
@@ -22,7 +24,7 @@ const atualizado = '16/10/2026';
     <div class="box">
       <p style="margin:0">
         <strong>Resumo:</strong> só coletamos o que é necessário para atender o seu pedido; medição de uso do site só
-        depois do seu “Aceitar todos”; não vendemos seus dados; você pode pedir acesso, correção ou exclusão a qualquer momento.
+        depois do seu “Aceitar” no aviso de cookies; não vendemos seus dados; você pode pedir acesso, correção ou exclusão a qualquer momento.
       </p>
     </div>
 
@@ -53,7 +55,7 @@ const atualizado = '16/10/2026';
           <td data-label="Onde">Navegação (cookies de medição)</td>
           <td data-label="Dados">Páginas visitadas, origem do acesso, tipo de dispositivo e navegador, identificadores de cookie</td>
           <td data-label="Finalidade">Medir audiência e desempenho do site e de campanhas</td>
-          <td data-label="Base legal">Consentimento (art. 7º, I) — só após “Aceitar todos”</td>
+          <td data-label="Base legal">Consentimento (art. 7º, I), só após “Aceitar”</td>
         </tr>
         <tr>
           <td data-label="Onde">Funcionamento do site</td>
@@ -68,9 +70,14 @@ const atualizado = '16/10/2026';
     <h2>3. Cookies e medição</h2>
     <p>
       Usamos o <strong>Google Tag Manager</strong> e ferramentas de medição do Google somente depois que você clica em
-      “Aceitar todos” no aviso de cookies. Com “Só necessários”, nenhum cookie de medição é ativado. Sua escolha fica
-      salva no seu navegador; para mudar, limpe os dados do site no navegador e o aviso aparecerá de novo.
+      “Aceitar” no aviso de cookies. Com “Recusar”, nenhum cookie de medição é ativado. Sua escolha fica salva no seu
+      navegador por 13 meses; para mudar de ideia, use “Preferências de cookies” no rodapé do site.
     </p>
+
+    <h3 id="cookies">{cookies.titulo}</h3>
+    {cookies.itens.map((i) => (
+      <p><strong>{i.rotulo}</strong> <Fragment set:html={i.html} /></p>
+    ))}
 
     <h2>4. Com quem compartilhamos</h2>
     <p>Não vendemos dados pessoais. Compartilhamos apenas o necessário com:</p>
@@ -112,7 +119,7 @@ const atualizado = '16/10/2026';
     </ul>
     <p>Alguns dados podem ser mantidos mesmo após o pedido, quando a lei ou a regulamentação exigirem.</p>
 
-    <h2>8. Encarregado (DPO) e contato</h2>
+    <h2 id="contato">8. Encarregado (DPO) e contato</h2>
     {DPO.nome ? (
       <p>
         Encarregado pelo tratamento de dados: <strong>{DPO.nome}</strong> — <a href={`mailto:${DPO.email}`}>{DPO.email}</a>.

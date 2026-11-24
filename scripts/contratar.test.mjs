@@ -93,7 +93,7 @@ test('begin_checkout disparado no clique, só com consentimento', () => {
   const html = ler('index.html');
   const js = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]).find((c) => c.includes('begin_checkout')) ?? '';
   assert.match(js, /a\[data-lead="contratar"\]/);
-  assert.match(js, /i9c_cookies/);
+  assert.match(js, /ivmConsent\.estado\(\) !== 'aceito'/);
   assert.match(js, /currency: 'BRL'/);
   assert.match(js, /value: precos\[id\]/);
   for (const id of Object.keys(CONTRATAR)) assert.ok(PRECO_CONTRATAR[id] > 0, `${id} sem value`);

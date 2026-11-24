@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "node --test scripts/contratar.test.mjs scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs scripts/cliente-cego.test.mjs scripts/i18n.test.mjs scripts/entidade.test.mjs scripts/continue-navegando.test.mjs scripts/karretel.test.mjs scripts/blog.test.mjs scripts/imagens.test.mjs scripts/sitemap-lastmod.test.mjs",
+    "test": "node --test scripts/contratar.test.mjs scripts/pagina-404.test.mjs scripts/relatorio-404.test.mjs scripts/cliente-cego.test.mjs scripts/i18n.test.mjs scripts/entidade.test.mjs scripts/continue-navegando.test.mjs scripts/karretel.test.mjs scripts/blog.test.mjs scripts/imagens.test.mjs scripts/sitemap-lastmod.test.mjs scripts/pixel-consentimento.test.mjs",
     "test:sitemap": "node --test scripts/sitemap-lastmod.test.mjs",
     "sitemap:lastmod": "node scripts/sitemap-lastmod.mjs",
     "test:entidade": "node --test scripts/entidade.test.mjs",
@@ -21,7 +21,8 @@
     "auditoria:links": "node scripts/links-internos.mjs",
     "test:karretel": "node --test scripts/karretel.test.mjs",
     "check:de-para": "node scripts/de-para-givm.mjs",
-    "relatorio:404": "node scripts/relatorio-404.mjs"
+    "relatorio:404": "node scripts/relatorio-404.mjs",
+    "test:pixel": "node --test scripts/pixel-consentimento.test.mjs"
   },
   "dependencies": {
     "astro": "^5.18.2"

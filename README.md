@@ -15,7 +15,10 @@ npm run build    # gera dist/ (é o que vai para o GitHub Pages)
 
 | Caminho | O quê |
 |---|---|
-| `src/layouts/Base.astro` | `<head>`, consentimento LGPD + GTM (`GTM-WPL6WQS`), Bitrix24 e o esqueleto de todas as páginas |
+| `src/layouts/Base.astro` | `<head>`, consentimento LGPD (inline de `src/scripts/ivm-consent.js`), Bitrix24 e o esqueleto de todas as páginas |
+| `src/scripts/ivm-consent.js` | Escolha do aviso (`ivm_consent` = `aceito`/`recusado` + `ivm_consent_data`); só com `aceito` carrega GTM (`GTM-WPL6WQS`) e o pixel |
+| `public/assets/ivm-pixel.js` | Pixel first-party do Grupo IVM (`/track`, `/identify` em api.givm.com.br; cookie `_ivm_vid`). Teste: `npm run test:pixel` |
+| `src/data/consentimento.ts` | Texto oficial do aviso de cookies (pt/en/es) e do "Saiba mais" da política (fonte: givm_backend `docs/lgpd/aviso-cookies-pixel.md`) |
 | `src/components/Header.astro` | Barra superior + menu (desktop e **mobile**) — um só para o site todo |
 | `src/components/Footer.astro`, `WhatsApp.astro`, `CookieBanner.astro` | Rodapé, widget do WhatsApp e aviso de cookies únicos |
 | `src/pages/<pagina>.astro` | Uma por página; título, descrição, canonical e item ativo do menu |

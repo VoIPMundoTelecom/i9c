@@ -2,8 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import Legal from '../../components/Legal.astro';
 import { EMPRESA, DPO } from '../../data/empresa';
+import { consentimento } from '../../data/consentimento';
 
-const atualizado = 'October 16, 2026';
+const atualizado = 'November 24, 2026';
+const cookies = consentimento('en').detalhe;
 // RASCUNHO para revisão jurídica (Laura). Tradução EN da versão em português; a versão em português prevalece.
 // Itens a confirmar marcados com TODO_ no código.
 ---
@@ -22,7 +24,7 @@ const atualizado = 'October 16, 2026';
     <div class="box">
       <p style="margin:0">
         <strong>Summary:</strong> we only collect what is needed to handle your request; website usage measurement only
-        happens after you click “Accept all”; we do not sell your data; you can ask for access, correction or deletion at any time.
+        happens after you click “Accept” in the cookie notice; we do not sell your data; you can ask for access, correction or deletion at any time.
       </p>
     </div>
 
@@ -53,7 +55,7 @@ const atualizado = 'October 16, 2026';
           <td data-label="Where">Browsing (measurement cookies)</td>
           <td data-label="Data">Pages visited, traffic source, device and browser type, cookie identifiers</td>
           <td data-label="Purpose">To measure audience and the performance of the website and campaigns</td>
-          <td data-label="Legal basis">Consent (Art. 7, I) — only after “Accept all”</td>
+          <td data-label="Legal basis">Consent (Art. 7, I), only after “Accept”</td>
         </tr>
         <tr>
           <td data-label="Where">Website operation</td>
@@ -67,10 +69,15 @@ const atualizado = 'October 16, 2026';
 
     <h2>3. Cookies and measurement</h2>
     <p>
-      We use <strong>Google Tag Manager</strong> and Google measurement tools only after you click “Accept all” in the
-      cookie notice. With “Essential only”, no measurement cookies are activated. Your choice is saved in your browser;
-      to change it, clear the site data in your browser and the notice will appear again.
+      We use <strong>Google Tag Manager</strong> and Google measurement tools only after you click “Accept” in the
+      cookie notice. With “Decline”, no measurement cookies are activated. Your choice is saved in your browser for
+      13 months; to change your mind, use “Cookie preferences” in the website footer.
     </p>
+
+    <h3 id="cookies">{cookies.titulo}</h3>
+    {cookies.itens.map((i) => (
+      <p><strong>{i.rotulo}</strong> <Fragment set:html={i.html} /></p>
+    ))}
 
     <h2>4. Who we share data with</h2>
     <p>We do not sell personal data. We share only what is necessary with:</p>
@@ -113,7 +120,7 @@ const atualizado = 'October 16, 2026';
     </ul>
     <p>Some data may be kept even after your request, when required by law or regulation.</p>
 
-    <h2>8. Data Protection Officer (DPO) and contact</h2>
+    <h2 id="contato">8. Data Protection Officer (DPO) and contact</h2>
     {DPO.nome ? (
       <p>
         Data Protection Officer: <strong>{DPO.nome}</strong> — <a href={`mailto:${DPO.email}`}>{DPO.email}</a>.
