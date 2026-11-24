@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # histórico completo: o teste do sitemap compara <lastmod> com a data do último commit de cada página
+          fetch-depth: 0
 
       - name: Node
         uses: actions/setup-node@v4
