@@ -11,9 +11,9 @@ export const EMPRESA = {
 
 /**
  * Encarregado pelo tratamento de dados (DPO) — LGPD art. 41, §1º: identidade e contato devem ser públicos.
- * TODO_DPO: preencher nome e e-mail antes de publicar. Enquanto vazio, a página mostra os canais de atendimento.
+ * Definido pelo Fabricio em 24/11/2026 (mesmo encarregado do Grupo IVM nos sites da Voipmundo).
  */
 export const DPO = {
-  nome: '',
-  email: '',
+  nome: 'Fabricio Mella',
+  email: 'ouvidoria@voipmundo.com.br',
 } as const;

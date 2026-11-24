@@ -7,7 +7,7 @@
  *   guarda      = 13 meses (MKT_PIXEL_RETENCAO_MESES no givm; mudou lá, muda aqui)
  *   direitos    = cópia ou exclusão a pedido, pelo canal de contato do site, em até 15 dias
  * Não citar fornecedor, operadora nem ferramenta de terceiros no aviso.
- * Sem e-mail de privacidade enquanto DPO.email (src/data/empresa.ts) estiver vazio: o contato é o do site.
+ * O canal de contato (#contato da política) mostra o encarregado (DPO) e o e-mail dele (src/data/empresa.ts).
  */
 import type { Idioma } from '../i18n/rotas';
 import { ROTAS } from '../i18n/rotas';
