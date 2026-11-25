@@ -123,7 +123,7 @@ const WHATS = `${EMPRESA.whatsapp}?text=${encodeURIComponent('Olá! Li um artigo
             <h2 class="font-display font-bold text-2xl tracking-tightest">{cta.titulo}</h2>
             <p class="text-white/75 mt-2">{cta.texto}</p>
             <div class="flex flex-wrap gap-3 mt-6">
-              <a href={cta.href} {...(ctaExterno ? { target: '_blank', rel: 'noopener' } : {})} class="inline-flex items-center min-h-11 bg-laranja hover:bg-laranja-dark text-white font-semibold px-5 py-3 rounded-full">{cta.botao}</a>
+              <a href={cta.href} {...(ctaExterno ? { target: '_blank', rel: 'noopener' } : {})} class="inline-flex items-center min-h-11 bg-laranja hover:bg-laranja-dark text-white font-bold text-[19px] px-5 py-3 rounded-full">{cta.botao}</a>
               <a href={WHATS} target="_blank" rel="noopener" class="inline-flex items-center min-h-11 border border-white/30 hover:bg-white hover:text-ivm-azul font-semibold px-5 py-3 rounded-full">Falar no WhatsApp</a>
             </div>
           </>
@@ -132,7 +132,7 @@ const WHATS = `${EMPRESA.whatsapp}?text=${encodeURIComponent('Olá! Li um artigo
             <h2 class="font-display font-bold text-2xl tracking-tightest">Quer um plano i9c?</h2>
             <p class="text-white/75 mt-2">Sem fidelidade, com 5G onde houver cobertura e portabilidade online.</p>
             <div class="flex flex-wrap gap-3 mt-6">
-              <a href="/#planos" class="inline-flex items-center min-h-11 bg-laranja hover:bg-laranja-dark text-white font-semibold px-5 py-3 rounded-full">Ver os planos</a>
+              <a href="/#planos" class="inline-flex items-center min-h-11 bg-laranja hover:bg-laranja-dark text-white font-bold text-[19px] px-5 py-3 rounded-full">Ver os planos</a>
               <a href={WHATS} target="_blank" rel="noopener" class="inline-flex items-center min-h-11 border border-white/30 hover:bg-white hover:text-ivm-azul font-semibold px-5 py-3 rounded-full">Falar no WhatsApp</a>
             </div>
           </>

@@ -33,6 +33,9 @@ const RASTER_PUBLIC_PERMITIDO = new Set([
   'i9c-logo-negativo.png',
   'assets/img/i9c-logo.png',
   'assets/img/i9c-logo-negativo.png',
+  // WebP dos logos no tamanho exibido (arquivo oficial confirmado pelo Fabricio em 25/11; o PNG fica para OG e JSON-LD).
+  'i9c-logo-55.webp', 'i9c-logo-110.webp', 'i9c-logo-165.webp',
+  'i9c-logo-negativo-49.webp', 'i9c-logo-negativo-98.webp', 'i9c-logo-negativo-147.webp',
 ]);
 
 test('nenhuma imagem raster nova em public/ (entra por <Imagem>)', () => {
