@@ -9,8 +9,8 @@ const w = ui(Astro.props.idioma ?? 'pt-br').whats;
 const href = `${EMPRESA.whatsapp}?text=${encodeURIComponent(w.msg)}`;
 ---
 <!-- WIDGET FLUTUANTE WHATSAPP (canto inferior esquerdo) -->
-  <div class="fixed bottom-6 left-6 z-40 flex flex-col gap-3 items-start">
-    <div id="wa-popup" class="hidden bg-white rounded-2xl shadow-2xl w-[330px] overflow-hidden origin-bottom-left" style="animation: wa-pop .25s cubic-bezier(.2,.7,.2,1.05) both;">
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3 items-end">
+    <div id="wa-popup" class="hidden bg-white rounded-2xl shadow-2xl w-[330px] overflow-hidden origin-bottom-right" style="animation: wa-pop .25s cubic-bezier(.2,.7,.2,1.05) both;">
       <div class="bg-[#075E54] text-white px-4 py-3.5 flex items-center gap-3 relative">
         <div class="w-11 h-11 rounded-full bg-white shrink-0 flex items-center justify-center overflow-hidden">
           <img src="/i9c-logo.png" alt="" width="36" height="26" loading="lazy" decoding="async" class="w-9 h-auto object-contain" />
