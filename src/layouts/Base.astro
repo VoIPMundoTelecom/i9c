@@ -27,7 +27,7 @@ interface Props {
   rss?: boolean;
   /** true = <meta robots noindex> */
   noindex?: boolean;
-  /** true = página leve (404/manutenção): sem o chat do Bitrix24 (o CTA de contato já é o WhatsApp) e fontes sem bloquear a renderização */
+  /** true = página leve (404/manutenção): fontes sem bloquear a renderização (chat do Bitrix24 removido em 25/11: contato é o WhatsApp) */
   leve?: boolean;
   /** só a 404 da raiz: URL quebrada em /en/ ou /es/ vai para a 404 do idioma */
   trocaIdioma404?: boolean;
@@ -176,12 +176,5 @@ const website =
       });
     </script>
 
-    <!-- Bitrix24 — chat widget oficial -->
-    {!leve && <script is:inline>
-      (function (w, d, u) {
-        var s = d.createElement('script'); s.async = true; s.src = u + '?' + (Date.now() / 60000 | 0);
-        var h = d.getElementsByTagName('script')[0]; h.parentNode.insertBefore(s, h);
-      })(window, document, 'https://cdn.bitrix24.com.br/b25756911/crm/site_button/loader_4_4suya7.js');
-    </script>}
   </body>
 </html>

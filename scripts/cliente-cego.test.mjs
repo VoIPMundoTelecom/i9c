@@ -52,14 +52,6 @@ const EXCECOES = [
     arquivo: /^es\/portabilidad-numerica\.html$/,
     trecho: /Operadora actual \* Selecciona… Vivo Claro TIM Oi Algar Sercomtel Otra/,
   })),
-  {
-    // Texto jurídico (LGPD, art. 9º): a política lista os fornecedores que tratam
-    // dados (Google, Meta, OpenStreetMap...). Bitrix24 aqui é o CRM/chat, não a
-    // rede. Mantido até revisão do Fabricio.
-    termo: 'Bitrix',
-    arquivo: /^politica-de-privacidade\.html$/,
-    trecho: /Bitrix24 \(chat e CRM\)/,
-  },
 ];
 
 function* arquivos(dir) {
