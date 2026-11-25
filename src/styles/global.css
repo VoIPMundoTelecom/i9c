@@ -47,3 +47,13 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* ===== Contraste AA no texto pequeno (decisão do Fabricio, 25/11/2026) =====
+   Logo, botões e títulos mantêm a cor oficial; só o texto pequeno (rótulos em mono/caixa alta e links de texto)
+   usa um tom da mesma família que passa em 4,5:1. Lighthouse color-contrast. */
+.text-laranja:is(.font-mono, .uppercase, .hover\:underline) { color: #BD4C18; }               /* laranja-dark: 5,0:1 no branco */
+.bg-ivm-azul .text-laranja:is(.font-mono, .uppercase, .hover\:underline) { color: #F2864F; }  /* 5,3:1 no azul IVM */
+.bg-i9c-azul .opacity-70 { opacity: .9; }                                                      /* branco 90% no azul i9c: 5,0:1 */
+.bg-i9c-azul .opacity-80 { opacity: 1; }
+.bg-i9c-azul .text-white\/70 { color: rgb(255 255 255 / .9); }
+.bg-i9c-azul .text-white\/80 { color: #fff; }
