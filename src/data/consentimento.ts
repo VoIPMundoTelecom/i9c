@@ -62,7 +62,7 @@ export const CONSENTIMENTO: Record<Idioma, TextoConsentimento> = {
     aria: 'Cookie notice',
     texto:
       'We use our own cookies to understand how you browse the i9c website (which pages you visit and where you came from) so we can improve our offers and customer service. We do not sell or share this data. Your choice:',
-    saibaMais: { href: `${politica('en')}#cookies`, label: 'Learn more' },
+    saibaMais: { href: `${politica('en')}#cookies`, label: 'Learn more about cookies' },
     link: { href: `${politica('en')}#contato`, label: 'Privacy and contact' },
     aceitar: 'Accept',
     recusar: 'Decline',
@@ -86,7 +86,7 @@ export const CONSENTIMENTO: Record<Idioma, TextoConsentimento> = {
     aria: 'Aviso de cookies',
     texto:
       'Usamos cookies propias para entender cómo navega por el sitio de i9c (qué páginas visita y de dónde llegó) y así mejorar nuestras ofertas y la atención. No vendemos ni compartimos estos datos. Usted elige:',
-    saibaMais: { href: `${politica('es')}#cookies`, label: 'Más información' },
+    saibaMais: { href: `${politica('es')}#cookies`, label: 'Más información sobre cookies' },
     link: { href: `${politica('es')}#contato`, label: 'Privacidad y contacto' },
     aceitar: 'Aceptar',
     recusar: 'Rechazar',
