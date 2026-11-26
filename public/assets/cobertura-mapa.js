@@ -46,7 +46,7 @@
 
   var markers = L.markerClusterGroup({
     chunkedLoading: true,           // carrega em lotes sem travar a UI (73k pontos)
-    chunkInterval: 120,
+    chunkInterval: 10,              // lote curto: não vira tarefa longa nem em celular lento (TBT/INP)
     chunkDelay: 30,
     maxClusterRadius: 55,
     spiderfyOnMaxZoom: true,
@@ -89,29 +89,46 @@
 
   var status = document.getElementById("map-status");
 
-  fetch(DADOS_URL)
+  // Os 73 mil pontos só começam a carregar depois que a página terminou de abrir
+  // (evento load + navegador ocioso), para não disputar com o primeiro desenho.
+  var ocioso = window.requestIdleCallback || function (fn) { return setTimeout(fn, 1); };
+  function depoisDeCarregar(fn) {
+    if (document.readyState === "complete") ocioso(fn);
+    else window.addEventListener("load", function () { ocioso(fn); }, { once: true });
+  }
+
+  depoisDeCarregar(function () { fetch(DADOS_URL)
     .then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();
     })
     .then(function (data) {
+      // Cria os marcadores em fatias de até 10 ms, devolvendo o controle ao navegador
+      // entre elas (antes: um laço único de 73 mil pontos travava a página por segundos).
+      // O popup é montado só no clique (parseName dentro do bindPopup).
       var lote = [];
-      for (var i = 0; i < data.length; i++) {
-        var m = data[i];
-        if (typeof m.lat !== "number" || typeof m.lng !== "number") continue;
-        var mk = L.marker([m.lat, m.lng], { icon: pin });
-        mk._cob = parseName(m.name || "");
-        mk.bindPopup(function (layer) { return popupHTML(layer._cob); });
-        lote.push(mk);
-      }
-      markers.addLayers(lote);
+      var i = 0;
       map.addLayer(markers);
-      if (status) status.textContent = lote.length.toLocaleString("pt-BR") + " pontos de cobertura no mapa.";
+      function fatia() {
+        var fim = Date.now() + 10;
+        while (i < data.length && Date.now() < fim) {
+          var m = data[i++];
+          if (typeof m.lat !== "number" || typeof m.lng !== "number") continue;
+          var mk = L.marker([m.lat, m.lng], { icon: pin });
+          mk._nome = m.name || "";
+          mk.bindPopup(function (layer) { return popupHTML(parseName(layer._nome)); });
+          lote.push(mk);
+        }
+        if (i < data.length) { setTimeout(fatia, 0); return; }
+        markers.addLayers(lote);
+        if (status) status.textContent = lote.length.toLocaleString("pt-BR") + " pontos de cobertura no mapa.";
+      }
+      fatia();
     })
     .catch(function (err) {
       console.error("Erro ao carregar cobertura:", err);
       if (status) status.innerHTML = "Não foi possível carregar o mapa agora. Tente recarregar a página ou fale pelo <a href='https://wa.me/558008000900' style='color:#136BA2;font-weight:600'>0800 800 0900</a>.";
-    });
+    }); });
 
   // ---- Busca por endereço / rua / CEP (somente Brasil, pt-BR) ----
   if (L.Control && L.Control.Geocoder) {
