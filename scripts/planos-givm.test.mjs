@@ -38,7 +38,15 @@ test('nenhum marcador {{plano:}}/{{menor:}} sobrando no site', () => {
   for (const f of HTMLS) assert.doesNotMatch(ler(f), /\{\{(plano|menor|contratar|consultor):/, f);
 });
 
-test('card de plano do givm (pt/en/es): preço do givm, minutos/SMS do givm e nada de "ilimitado"', () => {
+// Decisão do Fabricio (26/11, ajuste 1): "ilimitado" só para voz. SMS e dados mostram a franquia do givm.
+const SMS_ILIMITADO = /SMS ilimitad|ilimitad[oa]s? (de |e )?SMS|unlimited (texts|SMS)|(calls|ligações|llamadas) (and|e|y) (texts|SMS) (ilimitad|unlimited)|(ligações|llamadas) e SMS ilimitad|(ligações|llamadas) y SMS ilimitad|unlimited calls and texts/i;
+const VOZ_ILIMITADA = /Ligações ilimitadas|Llamadas ilimitadas|Unlimited calls/;
+
+test('nenhuma página promete SMS ilimitado (texto, meta, OG e JSON-LD; pt/en/es)', () => {
+  for (const f of HTMLS) assert.doesNotMatch(ler(f), SMS_ILIMITADO, f);
+});
+
+test('card de plano do givm (pt/en/es): preço do givm, ligações ilimitadas, SMS do givm e sem minutos contados', () => {
   let vistos = 0;
   for (const f of HTMLS) {
     for (const c of cards(ler(f))) {
@@ -47,10 +55,10 @@ test('card de plano do givm (pt/en/es): preço do givm, minutos/SMS do givm e na
       if (f in PAGINAS_PLANO || /^((en|es)\/)?index\.html$/.test(f)) vistos++; // a 404 e a manutenção também passam pela regra
       const texto = c.html.replace(/&nbsp;| /g, ' ');
       assert.ok(texto.includes(formatarPreco(g.preco)), `${f}: ${c.id} sem ${formatarPreco(g.preco)}`);
-      assert.doesNotMatch(texto, /ilimitad|unlimited|ilim\./i, `${f}: ${c.id} ainda promete ilimitado`);
+      assert.doesNotMatch(texto, SMS_ILIMITADO, `${f}: ${c.id} promete SMS ilimitado`);
       if (g.min != null) {
-        const min = [g.min.toLocaleString('pt-BR'), g.min.toLocaleString('en-US')];
-        assert.ok(min.some((m) => texto.includes(`${m} min`) || texto.includes(`${m} call min`)), `${f}: ${c.id} sem ${g.min} min`);
+        assert.match(texto, VOZ_ILIMITADA, `${f}: ${c.id} sem "ligações ilimitadas"`);
+        assert.doesNotMatch(texto, /\d[.,]000 (min|call min)/, `${f}: ${c.id} ainda mostra minutos contados`);
         const sms = [g.sms.toLocaleString('pt-BR'), g.sms.toLocaleString('en-US')];
         assert.ok(sms.some((s) => new RegExp(`${s.replace('.', '\\.')} (SMS|texts)`).test(texto)), `${f}: ${c.id} sem ${g.sms} SMS`);
       } else {

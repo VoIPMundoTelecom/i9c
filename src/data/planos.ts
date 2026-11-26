@@ -127,7 +127,10 @@ export interface PlanoGivm {
   preco: number;
   /** franquia de dados em GB (0,5 = WhatsApp) */
   gb: number;
-  /** minutos de ligação; null = plano só de dados/WhatsApp */
+  /**
+   * minutos de ligação no givm; null = plano só de dados/WhatsApp. O site NÃO mostra este número:
+   * decisão do Fabricio (26/11) = voz aparece como "ligações ilimitadas"; SMS e dados com a franquia do givm.
+   */
   min: number | null;
   sms: number | null;
 }

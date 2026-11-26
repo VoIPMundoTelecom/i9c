@@ -10,7 +10,7 @@ import { ROTAS, type Idioma } from '../i18n/rotas';
 
 export const PLANOS_PAGINA_ERRO: { id: PlanoId; beneficio: string }[] = [
   { id: 'prepago-1gb', beneficio: 'Recarrega quando quiser, sem fatura e sem fidelidade.' },
-  { id: 'controle-30gb', beneficio: '2.000 min · 200 SMS' }, // mesmo texto do card do plano (franquia do givm, I9C-19)
+  { id: 'controle-30gb', beneficio: 'Ligações ilimitadas · 200 SMS' }, // mesmo texto do card do plano (franquia do givm, I9C-19)
   { id: 'familia-100gb', beneficio: 'Você e mais 3 linhas no mesmo plano.' },
 ];
 
@@ -40,12 +40,12 @@ type PlanoTraduzido = { nome: string; pagina: string; rotuloPreco: string; sufix
 export const PLANOS_ERRO_TRADUZIDOS: Record<'en' | 'es', Record<PlanoId, PlanoTraduzido>> = {
   en: {
     'prepago-1gb': { nome: 'Prepaid 1GB', pagina: ROTAS['planos-pre-pago'].en, rotuloPreco: 'from', sufixo: '', beneficio: 'Top up whenever you want: no bill, no contract.', msg: "Hi! I'd like to sign up for the i9c Prepaid 1GB · 30 days plan." },
-    'controle-30gb': { nome: 'Controle 30GB', pagina: ROTAS['planos-controle'].en, rotuloPreco: 'from', sufixo: '/month', beneficio: '2,000 min · 200 texts', msg: "Hi! I'd like to sign up for the i9c Controle 30GB · 30 days plan." },
+    'controle-30gb': { nome: 'Controle 30GB', pagina: ROTAS['planos-controle'].en, rotuloPreco: 'from', sufixo: '/month', beneficio: 'Unlimited calls · 200 texts', msg: "Hi! I'd like to sign up for the i9c Controle 30GB · 30 days plan." },
     'familia-100gb': { nome: 'Family 100GB', pagina: ROTAS['planos-familia'].en, rotuloPreco: 'from', sufixo: '/month', beneficio: 'You plus 3 more lines on the same plan.', msg: "Hi! I'd like to sign up for the i9c Family 100GB · +3 lines plan." },
   },
   es: {
     'prepago-1gb': { nome: 'Prepago 1GB', pagina: ROTAS['planos-pre-pago'].es, rotuloPreco: 'desde', sufixo: '', beneficio: 'Recargas cuando quieras, sin factura y sin permanencia.', msg: '¡Hola! Quiero contratar el plan Prepago 1GB · 30 días de i9c.' },
-    'controle-30gb': { nome: 'Control 30GB', pagina: ROTAS['planos-controle'].es, rotuloPreco: 'desde', sufixo: '/mes', beneficio: '2.000 min · 200 SMS', msg: '¡Hola! Quiero contratar el plan Control 30GB · 30 días de i9c.' },
+    'controle-30gb': { nome: 'Control 30GB', pagina: ROTAS['planos-controle'].es, rotuloPreco: 'desde', sufixo: '/mes', beneficio: 'Llamadas ilimitadas · 200 SMS', msg: '¡Hola! Quiero contratar el plan Control 30GB · 30 días de i9c.' },
     'familia-100gb': { nome: 'Familia 100GB', pagina: ROTAS['planos-familia'].es, rotuloPreco: 'desde', sufixo: '/mes', beneficio: 'Tú y 3 líneas más en el mismo plan.', msg: '¡Hola! Quiero contratar el plan Familia 100GB · +3 líneas de i9c.' },
   },
 };
