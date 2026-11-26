@@ -13,6 +13,7 @@
 import { EMPRESA } from '../data/empresa';
 import { PLANOS, formatarPreco } from '../data/planos';
 import { PLANOS_PAGINA_ERRO, PLANOS_ERRO_TRADUZIDOS, TEXTOS_ERRO, contratarHref } from '../data/pagina-erro';
+import { notaLigacoesHtml } from '../data/nota-ligacoes';
 import { idiomaDe } from '../i18n/rotas';
 
 interface Props {
@@ -69,6 +70,7 @@ const cards = PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
           </article>
         ))}
       </div>
+      <p class="perro-nota" data-nota-ligacoes set:html={notaLigacoesHtml(idioma)} />
 
       <div class="perro-zap">
         <p>{tx.zapTexto}</p>
@@ -178,6 +180,8 @@ const cards = PLANOS_PAGINA_ERRO.map(({ id, beneficio }) => {
   .perro-card__valor { font-size: 2.25rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; }
   .perro-card__sufixo { font-family: 'Inter', system-ui, sans-serif; font-size: 1rem; font-weight: 500; letter-spacing: 0; color: #716F6E; }
   .perro-card__beneficio { margin: 1rem 0 0; color: #716F6E; flex: 1; }
+  .perro-nota { margin: 1rem 0 0; font-size: .75rem; line-height: 1.5; color: #716F6E; }
+  .perro-nota :global(a) { text-decoration: underline; }
 
   .perro-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; padding: .75rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none; }
   .perro-btn--laranja { margin-top: 1.25rem; background: #BD4C18; color: #fff; }

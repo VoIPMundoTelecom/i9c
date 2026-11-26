@@ -8,12 +8,15 @@
  *   {{plano:<id>:valor}}       → 15.99   (schema.org Offer.price)
  *   {{contratar:<id>}}         → botão "Contratar" (formulário com ?plano=<id>; id de CONTRATAR)
  *   {{consultor:<id>}}         → link secundário "Falar com um consultor" (WhatsApp)
+ *   {{nota-ligacoes:<idioma>}} → rodapé do "Ligações ilimitadas*" (pt-br, en ou es; texto em nota-ligacoes.ts)
  *   {{menor:<família>:<campo>}} → menor preço da família (prepago, black, controle, familia, empresas ou todos),
  *                                 mesmos campos do {{plano:...}}: o "a partir de" dos textos
  * e a página troca os marcadores com aplicarPlanos(). Marcador desconhecido quebra o build.
  * O <id> é qualquer plano de CONTRATAR; o preço sai de PRECO_CONTRATAR (que lê GIVM_I9C nos planos do givm).
  */
 import { EMPRESA } from './empresa.ts'; // com extensão: os testes (node --test) importam este arquivo direto
+import { notaLigacoesHtml } from './nota-ligacoes.ts';
+import { ROTAS, type Idioma } from '../i18n/rotas.ts';
 
 /**
  * Destino de todos os botões "Contratar" (cards, home, 404 e topo do site).
@@ -128,8 +131,9 @@ export interface PlanoGivm {
   /** franquia de dados em GB (0,5 = WhatsApp) */
   gb: number;
   /**
-   * minutos de ligação no givm; null = plano só de dados/WhatsApp. O site NÃO mostra este número:
-   * decisão do Fabricio (26/11) = voz aparece como "ligações ilimitadas"; SMS e dados com a franquia do givm.
+   * minutos de ligação no givm (limite técnico contra chipeira); null = plano só de dados/WhatsApp. O CARD não mostra
+   * este número: decisão do Fabricio (26/11, ajuste 2) = "Ligações ilimitadas*" + rodapé (nota-ligacoes.ts).
+   * [pendência: Fabricio] o rodapé diz "informado em cada plano", mas o site não tem detalhe do plano onde mostrar.
    */
   min: number | null;
   sms: number | null;
@@ -226,6 +230,10 @@ export function menorPreco(familia: Familia): number {
 
 export function aplicarPlanos(html: string): string {
   return html
+    .replace(/\{\{nota-ligacoes:([a-z-]+)\}\}/g, (marcador, idioma: string) => {
+      if (!(idioma in ROTAS['termos-de-uso'])) throw new Error(`Idioma desconhecido no marcador ${marcador}`);
+      return notaLigacoesHtml(idioma as Idioma);
+    })
     .replace(/\{\{contratar:([a-z0-9-]+)\}\}/g, (_, id: string) => contratarUrl(id))
     .replace(/\{\{consultor:([a-z0-9-]+)\}\}/g, (_, id: string) => consultorUrl(id))
     .replace(/\{\{(plano|menor):([a-z0-9-]+):([a-z-]+)\}\}/g, (marcador, tipo: string, id: string, campo: string) => {
