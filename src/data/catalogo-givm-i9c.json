@@ -1,0 +1,91 @@
+{
+  "origem": "https://api.givm.com.br/api/public/planos?marca=i9c",
+  "consultadoEm": "2026-11-26",
+  "planos": [
+    {
+      "id": "993bf928-ebb4-4350-b0b7-061f1ee10aa0",
+      "nome": "+Black WhatsAPP",
+      "valorMensalCentavos": 1890
+    },
+    {
+      "id": "5aea0e92-2ce0-44e1-aa6c-de94e003de87",
+      "nome": "+Black 03GB",
+      "valorMensalCentavos": 2590
+    },
+    {
+      "id": "236a7813-d2c0-4259-bf50-e8eda1d88fdd",
+      "nome": "+Black 05GB",
+      "valorMensalCentavos": 3090
+    },
+    {
+      "id": "e0833991-1186-4c54-84bb-0567b8730644",
+      "nome": "+Black 06GB",
+      "valorMensalCentavos": 3290
+    },
+    {
+      "id": "78a077dd-91e9-4087-b727-3002915148bb",
+      "nome": "+Flex 10GB",
+      "valorMensalCentavos": 3690
+    },
+    {
+      "id": "256031ac-676f-4d4d-9b94-21215b67ea8c",
+      "nome": "+Black 10GB",
+      "valorMensalCentavos": 3890
+    },
+    {
+      "id": "a7bf4500-78cc-433e-897e-1a941fb572af",
+      "nome": "+Black 12GB",
+      "valorMensalCentavos": 3990
+    },
+    {
+      "id": "0cb525f3-707b-4d19-a0e1-8f15af391317",
+      "nome": "+Black 15GB",
+      "valorMensalCentavos": 4090
+    },
+    {
+      "id": "51796afc-7892-44ea-a064-e20f9069c1db",
+      "nome": "+Flex 20GB",
+      "valorMensalCentavos": 4390
+    },
+    {
+      "id": "c0a6ced9-239e-47ab-8e96-b306ff5c5a28",
+      "nome": "+Black 20GB",
+      "valorMensalCentavos": 4590
+    },
+    {
+      "id": "fdd9b616-ae44-4b31-aab1-bec08bc83c54",
+      "nome": "+Black 24GB",
+      "valorMensalCentavos": 5390
+    },
+    {
+      "id": "dea3020c-3e47-462b-a066-e5cc58ae9470",
+      "nome": "+Black 30GB",
+      "valorMensalCentavos": 5790
+    },
+    {
+      "id": "36a8ebf0-35dd-40a2-957a-02e4c3c45d07",
+      "nome": "+Black 40GB",
+      "valorMensalCentavos": 6190
+    },
+    {
+      "id": "90a509a3-1a1b-4e80-87b9-331a364cd31b",
+      "nome": "+Flex 50GB",
+      "valorMensalCentavos": 7390
+    },
+    {
+      "id": "dddcfd7a-f818-49ab-b3de-4c620c496ae3",
+      "nome": "+Black 50GB",
+      "valorMensalCentavos": 7890
+    },
+    {
+      "id": "15bb3e4c-25d0-4b5e-8893-ab36b218a779",
+      "nome": "+Flex 100GB",
+      "valorMensalCentavos": 12990
+    },
+    {
+      "id": "4857c5c4-9593-401f-9737-7cd5553143e5",
+      "nome": "+Black 60GB",
+      "valorMensalCentavos": 15490
+    }
+  ]
+}

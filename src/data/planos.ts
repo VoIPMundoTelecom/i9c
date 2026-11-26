@@ -17,6 +17,7 @@
 import { EMPRESA } from './empresa.ts'; // com extensão: os testes (node --test) importam este arquivo direto
 import { notaLigacoesHtml } from './nota-ligacoes.ts';
 import { ROTAS, type Idioma } from '../i18n/rotas.ts';
+import { CATALOGO, idDoCard, precoCatalogo } from './catalogo-givm.ts';
 
 /**
  * Destino de todos os botões "Contratar" (cards, home, 404 e topo do site).
@@ -34,9 +35,24 @@ export const CONTRATAR = {
   'prepago-10gb': 'Pré-pago 10GB · 7 dias',
   'prepago-30gb': 'Pré-pago 30GB · 30 dias',
   'black-1gb': 'Black Individual 1GB · 30 dias',
+  // Black e Flex do catálogo do givm (catalogo-givm.ts): um id por plano da rota pública. Plano novo na rota sem id
+  // aqui quebra o build (ver CARDS_CATALOGO).
+  'black-3gb': 'Black 03GB · 30 dias',
   'black-5gb': 'Black Individual 5GB · 30 dias',
+  'black-6gb': 'Black 06GB · 30 dias',
   'black-10gb': 'Black Individual 10GB · 30 dias',
+  'black-12gb': 'Black 12GB · 30 dias',
+  'black-15gb': 'Black 15GB · 30 dias',
+  'black-20gb': 'Black 20GB · 30 dias',
+  'black-24gb': 'Black 24GB · 30 dias',
+  'black-30gb': 'Black 30GB · 30 dias',
+  'black-40gb': 'Black 40GB · 30 dias',
   'black-50gb': 'Black Individual 50GB · 30 dias',
+  'black-60gb': 'Black 60GB · 30 dias',
+  'flex-10gb': 'Flex 10GB · 30 dias',
+  'flex-20gb': 'Flex 20GB · 30 dias',
+  'flex-50gb': 'Flex 50GB · 30 dias',
+  'flex-100gb': 'Flex 100GB · 30 dias',
   'controle-15gb': 'Controle 15GB · 30 dias',
   'controle-30gb': 'Controle 30GB · 30 dias',
   'controle-80gb': 'Controle 80GB · 30 dias',
@@ -64,9 +80,22 @@ export const CODIGO_GIVM: Record<ContratarId, string | null> = {
   'prepago-10gb': null,
   'prepago-30gb': null,
   'black-1gb': null,
+  'black-3gb': null,
   'black-5gb': null,
+  'black-6gb': null,
   'black-10gb': null,
+  'black-12gb': null,
+  'black-15gb': null,
+  'black-20gb': null,
+  'black-24gb': null,
+  'black-30gb': null,
+  'black-40gb': null,
   'black-50gb': null,
+  'black-60gb': null,
+  'flex-10gb': null,
+  'flex-20gb': null,
+  'flex-50gb': null,
+  'flex-100gb': null,
   'controle-15gb': null,
   'controle-30gb': null,
   'controle-80gb': null,
@@ -148,19 +177,38 @@ export interface PlanoGivm {
  * Mesmo código em dois cards (I9C-7, I9C-10, I9C-12, I9C-19) = mesmo plano do givm vendido em duas famílias do site.
  * Isto é só o preço; o de-para do formulário (CODIGO_GIVM) é outra coisa e não aceita código repetido.
  */
+// Preço: sai do catálogo do givm (rota pública, catalogo-givm-i9c.json) pelo nome do plano no givm. Minutos e SMS:
+// a rota não devolve; são os da tabela do givm de 26/11 (#58). Plano do givm sem SMS na tabela = card sem linha de SMS.
+const givm = (codigo: string, nomeGivm: string, gb: number, min: number | null, sms: number | null) =>
+  ({ codigo, nomeGivm, preco: precoCatalogo(nomeGivm), gb, min, sms });
+
 export const GIVM_I9C = {
-  'prepago-whatsapp': { codigo: 'I9C-5', preco: 18.9, gb: 0.5, min: null, sms: null },
-  'prepago-30gb': { codigo: 'I9C-19', preco: 57.9, gb: 30, min: 2000, sms: 200 },
-  'black-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 2000, sms: 100 },
-  'black-10gb': { codigo: 'I9C-2', preco: 38.9, gb: 10, min: 2000, sms: 100 },
-  'black-50gb': { codigo: 'I9C-12', preco: 78.9, gb: 50, min: 2000, sms: 1000 },
-  'controle-15gb': { codigo: 'I9C-10', preco: 40.9, gb: 15, min: 2000, sms: 100 },
-  'controle-30gb': { codigo: 'I9C-19', preco: 57.9, gb: 30, min: 2000, sms: 200 },
-  'empresas-3gb': { codigo: 'I9C-6', preco: 25.9, gb: 3, min: 2000, sms: 100 },
-  'empresas-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 2000, sms: 100 },
-  'empresas-15gb': { codigo: 'I9C-10', preco: 40.9, gb: 15, min: 2000, sms: 100 },
-  'empresas-50gb': { codigo: 'I9C-12', preco: 78.9, gb: 50, min: 2000, sms: 1000 },
-} satisfies Partial<Record<ContratarId, PlanoGivm>>;
+  'prepago-whatsapp': givm('I9C-5', '+Black WhatsAPP', 0.5, null, null),
+  'prepago-30gb': givm('I9C-19', '+Black 30GB', 30, 2000, 200),
+  'black-5gb': givm('I9C-7', '+Black 05GB', 5, 2000, 100),
+  'black-10gb': givm('I9C-2', '+Black 10GB', 10, 2000, 100),
+  'black-50gb': givm('I9C-12', '+Black 50GB', 50, 2000, 1000),
+  'controle-15gb': givm('I9C-10', '+Black 15GB', 15, 2000, 100),
+  'controle-30gb': givm('I9C-19', '+Black 30GB', 30, 2000, 200),
+  'empresas-3gb': givm('I9C-6', '+Black 03GB', 3, 2000, 100),
+  'empresas-5gb': givm('I9C-7', '+Black 05GB', 5, 2000, 100),
+  'empresas-15gb': givm('I9C-10', '+Black 15GB', 15, 2000, 100),
+  'empresas-50gb': givm('I9C-12', '+Black 50GB', 50, 2000, 1000),
+} satisfies Partial<Record<ContratarId, PlanoGivm & { nomeGivm: string }>>;
+
+/** SMS do givm por plano (tabela de 26/11, #58): a rota pública não traz SMS. Fora daqui = card sem linha de SMS. */
+export const SMS_GIVM: Record<string, number> = Object.fromEntries(
+  Object.values(GIVM_I9C).filter((g) => g.sms != null).map((g) => [g.nomeGivm, g.sms as number]),
+);
+
+/** Cards Black e Flex da página Black: um por plano do catálogo (menos o WhatsApp, que é o card do pré-pago). */
+export const CARDS_CATALOGO = CATALOGO.filter((p) => p.familia !== 'whatsapp')
+  .sort((a, b) => (a.familia === b.familia ? (a.gb ?? 0) - (b.gb ?? 0) : a.familia === 'black' ? -1 : 1))
+  .map((p) => {
+    const id = idDoCard(p);
+    if (!(id in CONTRATAR)) throw new Error(`Plano "${p.nomeGivm}" do givm sem id em CONTRATAR (${id}): adicionar em src/data/planos.ts`);
+    return { ...p, id: id as ContratarId, sms: SMS_GIVM[p.nomeGivm] ?? null };
+  });
 
 export const PLANOS = {
   'prepago-1gb': {
@@ -200,6 +248,7 @@ export const PRECO_CONTRATAR: Record<ContratarId, number> = {
   'prepago-10gb': 41.99, // sem equivalente no givm
   'prepago-30gb': GIVM_I9C['prepago-30gb'].preco,
   'black-1gb': 15.99, // sem equivalente no givm
+  ...(Object.fromEntries(CARDS_CATALOGO.map((c) => [c.id, c.preco])) as Record<string, number>),
   'black-5gb': GIVM_I9C['black-5gb'].preco,
   'black-10gb': GIVM_I9C['black-10gb'].preco,
   'black-50gb': GIVM_I9C['black-50gb'].preco,
@@ -219,7 +268,7 @@ export const PRECO_CONTRATAR: Record<ContratarId, number> = {
 
 export const formatarPreco = (v: number) => `R$ ${v.toFixed(2).replace('.', ',')}`;
 
-export type Familia = 'prepago' | 'black' | 'controle' | 'familia' | 'empresas' | 'todos';
+export type Familia = 'prepago' | 'black' | 'flex' | 'controle' | 'familia' | 'empresas' | 'todos';
 
 /** Menor preço da família no site (o "a partir de" de títulos, descrições e textos). */
 export function menorPreco(familia: Familia): number {
@@ -228,8 +277,116 @@ export function menorPreco(familia: Familia): number {
   return Math.min(...ids.map((id) => PRECO_CONTRATAR[id]));
 }
 
+// ---------- Cards e JSON-LD gerados do catálogo do givm (página Black, pt/en/es) ----------
+const TXT = {
+  'pt-br': {
+    dias: '30 dias', rotulo: 'a partir de', mes: '/mês', voz: 'Ligações ilimitadas*', sms: (n: number) => `${n.toLocaleString('pt-BR')} SMS`,
+    apps: 'WhatsApp, IG e FB grátis', roaming: 'Roaming nacional', g5: 'Tecnologia 5G', dados: 'Plano só de dados',
+    destaque: 'Mais escolhido', botao: 'Contratar', msg: (id: ContratarId) => undefined as string | undefined,
+  },
+  en: {
+    dias: '30 days', rotulo: 'from', mes: '/month', voz: 'Unlimited calls*', sms: (n: number) => `${n.toLocaleString('en-US')} texts`,
+    apps: 'Free WhatsApp, IG and FB', roaming: 'Roaming within Brazil', g5: '5G technology', dados: 'Data-only plan',
+    destaque: 'Most popular', botao: 'Sign up',
+    msg: (id: ContratarId) => `Hi! I'd like to sign up for the i9c ${CONTRATAR[id].replace(' · 30 dias', '')} · 30 days plan.`,
+  },
+  es: {
+    dias: '30 días', rotulo: 'desde', mes: '/mes', voz: 'Llamadas ilimitadas*', sms: (n: number) => `${n.toLocaleString('pt-BR')} SMS`,
+    apps: 'WhatsApp, IG y FB gratis', roaming: 'Roaming nacional', g5: 'Tecnología 5G', dados: 'Plan solo de datos',
+    destaque: 'Más elegido', botao: 'Contratar',
+    msg: (id: ContratarId) => `¡Hola! Quiero contratar el plan ${CONTRATAR[id].replace(' · 30 dias', '')} · 30 días de i9c.`,
+  },
+} as const;
+
+type IdiomaCards = keyof typeof TXT;
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+
+/** Card no mesmo HTML dos cards digitados (planos-black.body.html). Black 10GB = destaque "Mais escolhido". */
+function cardHtml(c: (typeof CARDS_CATALOGO)[number], idioma: IdiomaCards): string {
+  const t = TXT[idioma];
+  const d = c.id === 'black-10gb';
+  const li = (s: string) => `<li class="flex gap-2"><span class="text-laranja font-bold">→</span> ${s}</li>`;
+  // Flex = só dados: nenhum texto de ligação (Fabricio 26/11). SMS só quando o givm informa a quantidade.
+  const itens = c.voz
+    ? [t.voz, ...(c.sms != null ? [t.sms(c.sms)] : []), t.apps, t.roaming, t.g5]
+    : [t.dados, t.g5];
+  const href = esc(contratarUrl(c.id, t.msg(c.id)));
+  const consultor = idioma === 'pt-br'
+    ? `\n<a class="mt-3 text-center text-sm font-semibold underline underline-offset-4 opacity-80 hover:opacity-100" data-lead="consultor" data-plano="${c.id}" href="${esc(consultorUrl(c.id))}" rel="noopener" target="_blank">Falar com um consultor</a>`
+    : '';
+  const preco = formatarPreco(c.preco).replace(' ', ' '); // mesmo espaço do {{plano:<id>:preco-card}}
+  return d
+    ? `<article class="plan-card relative bg-i9c-azul text-white rounded-3xl p-7 flex flex-col" data-givm="${esc(c.nomeGivm)}">
+<div class="absolute -top-3 left-7 bg-laranja-dark text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider font-mono">${t.destaque}</div>
+<div class="flex items-baseline justify-between">
+<span class="font-display font-bold text-5xl tracking-tightest num">${c.gb}<span class="text-2xl opacity-70">GB</span></span>
+<span class="text-xs opacity-70 font-mono uppercase tracking-wider">${t.dias}</span>
+</div>
+<div class="mt-6 pb-6 border-b border-white/20">
+<div class="text-xs opacity-70 font-semibold font-mono uppercase tracking-wider">${t.rotulo}</div>
+<div class="font-display font-bold text-3xl tracking-tightest num">${preco}<span class="text-base opacity-70 font-medium">${t.mes}</span></div>
+</div>
+<ul class="mt-5 space-y-2.5 text-sm opacity-95 flex-1">
+${itens.map(li).join('\n')}
+</ul>
+<a class="mt-6 inline-flex items-center justify-center gap-1.5 bg-laranja-dark text-white font-semibold py-3 rounded-full hover:bg-i9c-azulDark transition-colors" data-lead="contratar" data-plano="${c.id}" href="${href}" rel="noopener" target="_blank">${t.botao}</a>${consultor}
+</article>`
+    : `<article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col" data-givm="${esc(c.nomeGivm)}">
+<div class="flex items-baseline justify-between">
+<span class="font-display font-bold text-5xl tracking-tightest num text-ivm-azul">${c.gb}<span class="text-2xl text-cinza">GB</span></span>
+<span class="text-xs text-cinza font-mono uppercase tracking-wider">${t.dias}</span>
+</div>
+<div class="mt-6 pb-6 border-b border-cinza-200">
+<div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">${t.rotulo}</div>
+<div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">${preco}<span class="text-base text-cinza font-medium">${t.mes}</span></div>
+</div>
+<ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1">
+${itens.map(li).join('\n')}
+</ul>
+<a class="mt-6 inline-flex items-center justify-center gap-1.5 bg-ivm-azul text-white font-semibold py-3 rounded-full hover:bg-i9c-azul transition-colors" data-lead="contratar" data-plano="${c.id}" href="${href}" rel="noopener" target="_blank">${t.botao}</a>${consultor}
+</article>`;
+}
+
+/** {{cards:<black|flex>:<idioma>}} → os cards da família no catálogo do givm. */
+export function cardsCatalogo(familia: 'black' | 'flex', idioma: IdiomaCards): string {
+  return CARDS_CATALOGO.filter((c) => c.familia === familia).map((c) => cardHtml(c, idioma)).join('\n');
+}
+
+/**
+ * {{ofertas:black:<idioma>}} → AggregateOffer da página Black, na ordem dos cards: Black 1GB (fora do givm),
+ * os Black do catálogo e os Flex.
+ */
+export function ofertasPaginaBlack(idioma: IdiomaCards): string {
+  const t = TXT[idioma];
+  const url = `https://i9c.net.br${ROTAS['planos-black'][idioma as Idioma]}`;
+  const lista = [
+    { name: `1GB · ${t.dias}`, price: PRECO_CONTRATAR['black-1gb'] },
+    ...CARDS_CATALOGO.map((c) => ({ name: `${c.familia === 'flex' ? 'Flex ' : ''}${c.gb}GB · ${t.dias}`, price: c.preco })),
+  ];
+  const precos = lista.map((o) => o.price);
+  return JSON.stringify({
+    '@type': 'AggregateOffer',
+    priceCurrency: 'BRL',
+    lowPrice: Math.min(...precos).toFixed(2),
+    highPrice: Math.max(...precos).toFixed(2),
+    offerCount: lista.length,
+    offers: lista.map((o) => ({
+      '@type': 'Offer', name: o.name, price: o.price.toFixed(2), priceCurrency: 'BRL',
+      availability: 'https://schema.org/InStock', url,
+    })),
+  }, null, 2);
+}
+
 export function aplicarPlanos(html: string): string {
   return html
+    .replace(/\{\{cards:(black|flex):([a-z-]+)\}\}/g, (marcador, familia: 'black' | 'flex', idioma: string) => {
+      if (!(idioma in TXT)) throw new Error(`Idioma desconhecido no marcador ${marcador}`);
+      return cardsCatalogo(familia, idioma as IdiomaCards);
+    })
+    .replace(/\{\{ofertas:black:([a-z-]+)\}\}/g, (marcador, idioma: string) => {
+      if (!(idioma in TXT)) throw new Error(`Idioma desconhecido no marcador ${marcador}`);
+      return ofertasPaginaBlack(idioma as IdiomaCards);
+    })
     .replace(/\{\{nota-ligacoes:([a-z-]+)\}\}/g, (marcador, idioma: string) => {
       if (!(idioma in ROTAS['termos-de-uso'])) throw new Error(`Idioma desconhecido no marcador ${marcador}`);
       return notaLigacoesHtml(idioma as Idioma);
