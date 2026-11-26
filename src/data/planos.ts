@@ -132,8 +132,8 @@ export interface PlanoGivm {
   gb: number;
   /**
    * minutos de ligação no givm (limite técnico contra chipeira); null = plano só de dados/WhatsApp. O CARD não mostra
-   * este número: decisão do Fabricio (26/11, ajuste 2) = "Ligações ilimitadas*" + rodapé (nota-ligacoes.ts).
-   * [pendência: Fabricio] o rodapé diz "informado em cada plano", mas o site não tem detalhe do plano onde mostrar.
+   * este número: decisão do Fabricio (26/11, ajuste 2) = "Ligações ilimitadas*" + rodapé (nota-ligacoes.ts), que cita
+   * o teto (ajuste 3): 2.000 em todo plano com voz, 3.000 só no I9C-17 (20 GB, sem card no site).
    */
   min: number | null;
   sms: number | null;
@@ -151,13 +151,13 @@ export interface PlanoGivm {
 export const GIVM_I9C = {
   'prepago-whatsapp': { codigo: 'I9C-5', preco: 18.9, gb: 0.5, min: null, sms: null },
   'prepago-30gb': { codigo: 'I9C-19', preco: 57.9, gb: 30, min: 2000, sms: 200 },
-  'black-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 1000, sms: 100 },
+  'black-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 2000, sms: 100 },
   'black-10gb': { codigo: 'I9C-2', preco: 38.9, gb: 10, min: 2000, sms: 100 },
   'black-50gb': { codigo: 'I9C-12', preco: 78.9, gb: 50, min: 2000, sms: 1000 },
   'controle-15gb': { codigo: 'I9C-10', preco: 40.9, gb: 15, min: 2000, sms: 100 },
   'controle-30gb': { codigo: 'I9C-19', preco: 57.9, gb: 30, min: 2000, sms: 200 },
-  'empresas-3gb': { codigo: 'I9C-6', preco: 25.9, gb: 3, min: 1000, sms: 100 },
-  'empresas-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 1000, sms: 100 },
+  'empresas-3gb': { codigo: 'I9C-6', preco: 25.9, gb: 3, min: 2000, sms: 100 },
+  'empresas-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 2000, sms: 100 },
   'empresas-15gb': { codigo: 'I9C-10', preco: 40.9, gb: 15, min: 2000, sms: 100 },
   'empresas-50gb': { codigo: 'I9C-12', preco: 78.9, gb: 50, min: 2000, sms: 1000 },
 } satisfies Partial<Record<ContratarId, PlanoGivm>>;

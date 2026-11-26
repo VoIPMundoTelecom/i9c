@@ -113,9 +113,21 @@ test('rodapé do "Ligações ilimitadas*" em toda página com plano, no idioma d
   }
 });
 
-test('texto pt do rodapé = o do Fabricio (26/11), palavra por palavra', () => {
+test('texto pt do rodapé = o do Fabricio (26/11, ajuste 3), palavra por palavra', () => {
   assert.equal(notaLigacoesTexto('pt-br'),
-    '*Ligações ilimitadas para qualquer operadora do Brasil, para uso pessoal, conforme a Política de Uso. Para proteger a rede contra uso irregular, como equipamentos que fazem ligações em massa com chips de celular (chipeiras), existe um limite técnico de minutos por mês, informado em cada plano. O uso fora do perfil pessoal descumpre os Termos de Uso.');
+    '*Ligações ilimitadas para qualquer operadora do Brasil, para uso pessoal, conforme a Política de Uso. Para proteger a rede contra uso irregular, como equipamentos que fazem ligações em massa com chips de celular (chipeiras), existe um limite técnico de 2.000 minutos por mês (3.000 no plano de 20 GB). O uso fora do perfil pessoal descumpre os Termos de Uso.');
+});
+
+// Ajuste 3 (givm 26/11): todo plano com voz tem teto de 2.000 min (3.000 só no I9C-17, 20 GB, que não tem card no
+// site); o WhatsApp (I9C-5) segue sem voz. O rodapé cita esses números: a tabela não pode divergir dele.
+test('teto de minutos do givm = o do rodapé: 2.000 em todo card com voz, WhatsApp sem voz', () => {
+  for (const [id, g] of Object.entries(GIVM_I9C)) {
+    if (id === 'prepago-whatsapp') assert.equal(g.min, null, id);
+    else assert.equal(g.min, 2000, `${id} (${g.codigo})`);
+  }
+  for (const idioma of ['pt-br', 'en', 'es']) {
+    assert.match(notaLigacoesTexto(idioma), /2[.,]000 .*\(3[.,]000 [^)]*20 GB[^)]*\)/, idioma);
+  }
 });
 
 test('JSON-LD (pt/en/es): Offer.price = preço do card, lowPrice/highPrice = menor/maior', () => {

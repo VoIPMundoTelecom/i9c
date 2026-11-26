@@ -1,6 +1,6 @@
 /**
- * Rodapé do "Ligações ilimitadas*" (decisão do Fabricio, 26/11): o ilimitado é para uso pessoal; o teto de minutos
- * do givm é limite técnico contra chipeira. Vai em toda página com card de plano (pt/en/es) pelo marcador
+ * Rodapé do "Ligações ilimitadas*" (decisão do Fabricio, 26/11; texto do ajuste 3): o ilimitado é para uso pessoal; o
+ * teto de minutos do givm é limite técnico contra chipeira: 2.000 min/mês em todo plano com voz, 3.000 no I9C-17 (20 GB). Vai em toda página com card de plano (pt/en/es) pelo marcador
  * {{nota-ligacoes:<idioma>}} (ver aplicarPlanos em planos.ts) e na 404/manutenção (PaginaErro.astro).
  *
  * Texto pt = o do Fabricio, sem mudar nada. en/es = tradução fiel, [revisão por falante nativo].
@@ -18,21 +18,21 @@ const TEXTO: Record<Idioma, { antes: string; politica: string; meio: string; ter
   'pt-br': {
     antes: '*Ligações ilimitadas para qualquer operadora do Brasil, para uso pessoal, conforme a ',
     politica: 'Política de Uso',
-    meio: '. Para proteger a rede contra uso irregular, como equipamentos que fazem ligações em massa com chips de celular (chipeiras), existe um limite técnico de minutos por mês, informado em cada plano. O uso fora do perfil pessoal descumpre os ',
+    meio: '. Para proteger a rede contra uso irregular, como equipamentos que fazem ligações em massa com chips de celular (chipeiras), existe um limite técnico de 2.000 minutos por mês (3.000 no plano de 20 GB). O uso fora do perfil pessoal descumpre os ',
     termos: 'Termos de Uso',
     depois: '.',
   },
   en: {
     antes: '*Unlimited calls to any carrier in Brazil, for personal use, in accordance with the ',
     politica: 'Usage Policy',
-    meio: '. To protect the network against irregular use, such as equipment that makes mass calls with mobile SIM cards (SIM boxes), there is a technical limit of minutes per month, stated in each plan. Use outside a personal profile breaches the ',
+    meio: '. To protect the network against irregular use, such as equipment that makes mass calls with mobile SIM cards (SIM boxes), there is a technical limit of 2,000 minutes per month (3,000 on the 20 GB plan). Use outside a personal profile breaches the ',
     termos: 'Terms of Use',
     depois: '.',
   },
   es: {
     antes: '*Llamadas ilimitadas a cualquier operadora de Brasil, para uso personal, conforme a la ',
     politica: 'Política de Uso',
-    meio: '. Para proteger la red contra el uso irregular, como equipos que hacen llamadas masivas con chips de celular (SIM boxes), existe un límite técnico de minutos por mes, informado en cada plan. El uso fuera del perfil personal incumple los ',
+    meio: '. Para proteger la red contra el uso irregular, como equipos que hacen llamadas masivas con chips de celular (SIM boxes), existe un límite técnico de 2.000 minutos por mes (3.000 en el plan de 20 GB). El uso fuera del perfil personal incumple los ',
     termos: 'Términos de Uso',
     depois: '.',
   },
