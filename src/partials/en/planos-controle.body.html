@@ -10,7 +10,7 @@
 <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja">Controle plans</div>
 <h1 class="font-display font-bold text-5xl lg:text-7xl tracking-tightest leading-[0.95] mt-3 text-ivm-azul">i9c Controle: a fixed price, no surprise bills.</h1>
 </div>
-<p class="text-cinza max-w-md text-lg">Controle is a monthly plan with a fixed data allowance and a predictable bill, for mobile lines in Brazil. Choose from 15GB to 80GB a month, with unlimited calls anywhere in Brazil and WhatsApp that doesn't count against your data. You know exactly what you'll pay — and you can leave whenever you want.</p>
+<p class="text-cinza max-w-md text-lg">Controle is a monthly plan with a fixed data allowance and a predictable bill, for mobile lines in Brazil. Choose from 15GB to 80GB a month, with minutes and texts included and WhatsApp that doesn't count against your data. You know exactly what you'll pay — and you can leave whenever you want.</p>
 </div>
 <!-- Tab selector -->
 
@@ -22,15 +22,15 @@
 <div class="plan-panel grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" data-panel="controle">
 <article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col">
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest num text-ivm-azul">15<span class="text-2xl text-cinza">GB</span></span><span class="text-xs text-cinza font-mono uppercase tracking-wider">30 days</span></div>
-<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">from</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">R$ 55,99<span class="text-base text-cinza font-medium">/mo</span></div></div>
-<ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Unlimited calls</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Free WhatsApp</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 5G where available</li></ul>
+<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">from</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">{{plano:controle-15gb:preco}}<span class="text-base text-cinza font-medium">/mo</span></div></div>
+<ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 2,000 min · 100 texts</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Free WhatsApp</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 5G where available</li></ul>
 <a class="mt-6 inline-flex items-center justify-center bg-ivm-azul text-white font-semibold py-3 rounded-full hover:bg-i9c-azul transition-colors" data-lead="contratar" data-plano="controle-15gb" href="{{contratar:controle-15gb|Hi! I'd like to sign up for the i9c Controle 15GB · 30 days plan.}}" rel="noopener" target="_blank">Sign up</a>
 </article>
 <article class="plan-card relative bg-i9c-azul text-white rounded-3xl p-7 flex flex-col">
 <div class="absolute -top-3 left-7 bg-laranja-dark text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider font-mono">Most popular</div>
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest num">30<span class="text-2xl opacity-70">GB</span></span><span class="text-xs opacity-70 font-mono uppercase tracking-wider">30 days</span></div>
 <div class="mt-6 pb-6 border-b border-white/20"><div class="text-xs opacity-70 font-semibold font-mono uppercase tracking-wider">from</div><div class="font-display font-bold text-3xl tracking-tightest num">{{plano:controle-30gb:preco-card}}<span class="text-base opacity-70 font-medium">/mo</span></div></div>
-<ul class="mt-5 space-y-2.5 text-sm opacity-95 flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Unlimited calls</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Free WhatsApp</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 5G where available</li></ul>
+<ul class="mt-5 space-y-2.5 text-sm opacity-95 flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 2,000 min · 200 texts</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Free WhatsApp</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 5G where available</li></ul>
 <a class="mt-6 inline-flex items-center justify-center bg-laranja-dark text-white font-semibold py-3 rounded-full hover:bg-i9c-azulDark transition-colors" data-lead="contratar" data-plano="controle-30gb" href="{{contratar:controle-30gb|Hi! I'd like to sign up for the i9c Controle 30GB · 30 days plan.}}" rel="noopener" target="_blank">Sign up</a>
 </article>
 <article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col">
@@ -75,7 +75,7 @@
 <div>
 <label class="text-xs text-white/60 font-semibold uppercase tracking-wider font-mono">Plan you're interested in</label>
 <select class="w-full mt-1 bg-transparent border-b border-white/20 text-white py-2 focus:outline-none focus:border-laranja" aria-label="Plan you're interested in">
-<option class="bg-ivm-azul">Black 10GB · R$ 41,99</option>
+<option class="bg-ivm-azul">Black 10GB · {{plano:black-10gb:preco}}</option>
 <option class="bg-ivm-azul">Controle 30GB · {{plano:controle-30gb:preco}}</option>
 <option class="bg-ivm-azul">Family 100GB · {{plano:familia-100gb:preco}}</option>
 <option class="bg-ivm-azul">Other</option>

@@ -41,6 +41,27 @@ código em `?plano=`.
 Exemplo, depois de preenchido: `prepago-1gb` → `I9C-2` → `https://contratar.i9c.net.br/?plano=I9C-2`
 (número ilustrativo: o real vem do catálogo).
 
+## Preço e franquia do givm no site (26/11/2026)
+
+`GIVM_I9C` em `src/data/planos.ts` guarda, para os 11 cards que têm equivalente no catálogo i9c do givm, o código,
+o preço e a franquia (GB, minutos, SMS) revisados pelo Fabricio em 26/11. `PRECO_CONTRATAR` lê dali, e os partials
+usam `{{plano:<id>:...}}` / `{{menor:<família>:...}}`, então trocar um preço é mudar uma linha. Teste:
+`npm run test:planos-givm` (tabela de 26/11 digitada à parte, cards sem "ilimitado", JSON-LD = cards).
+
+| id do site | código givm | preço |
+|---|---|---:|
+| prepago-whatsapp | I9C-5 | R$ 18,90 |
+| prepago-30gb, controle-30gb | I9C-19 | R$ 57,90 |
+| black-5gb, empresas-5gb | I9C-7 | R$ 30,90 |
+| black-10gb | I9C-2 | R$ 38,90 |
+| black-50gb, empresas-50gb | I9C-12 | R$ 78,90 |
+| controle-15gb, empresas-15gb | I9C-10 | R$ 40,90 |
+| empresas-3gb | I9C-6 | R$ 25,90 |
+
+Sem equivalente no givm (preço antigo, [decisão do Fabricio]): black-1gb, prepago-1gb, prepago-10gb, controle-80gb,
+os 4 familia-* e empresas-160gb. O mesmo código em dois cards **não** serve para o `CODIGO_GIVM` do formulário
+(o teste barra código repetido): isso fica para quando o formulário for ligado.
+
 ## Ordem para ligar o formulário
 1. S1 publica o catálogo i9c (com `codigo`).
 2. Preencher `CODIGO_GIVM` e rodar `npm run check:de-para` até dar "De-para OK" (PR próprio).

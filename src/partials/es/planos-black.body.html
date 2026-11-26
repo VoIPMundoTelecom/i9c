@@ -8,9 +8,9 @@
 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
 <div>
 <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja">Black Individual</div>
-<h1 class="font-display font-bold text-5xl lg:text-7xl tracking-tightest leading-[0.95] mt-3 text-ivm-azul">Black Individual: llamadas ilimitadas y apps gratis.</h1>
+<h1 class="font-display font-bold text-5xl lg:text-7xl tracking-tightest leading-[0.95] mt-3 text-ivm-azul">Black Individual: minutos, SMS y apps gratis.</h1>
 </div>
-<p class="text-cinza max-w-md text-lg">Planes para líneas móviles en Brasil, de 1GB a 50GB al mes, con llamadas y SMS ilimitados, WhatsApp, Instagram y Facebook que no descuentan de tus datos y roaming nacional incluido. 5G donde haya cobertura.</p>
+<p class="text-cinza max-w-md text-lg">Planes para líneas móviles en Brasil, de 1GB a 50GB al mes, con minutos y SMS incluidos, WhatsApp, Instagram y Facebook que no descuentan de tus datos y roaming nacional incluido. 5G donde haya cobertura.</p>
 </div>
 <!-- Tab selector -->
 
@@ -41,11 +41,11 @@
 </div>
 <div class="mt-6 pb-6 border-b border-cinza-200">
 <div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">desde</div>
-<div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">R$ 31,99<span class="text-base text-cinza font-medium">/mes</span></div>
+<div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">{{plano:black-5gb:preco-card}}<span class="text-base text-cinza font-medium">/mes</span></div>
 </div>
 <ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1">
-<li class="flex gap-2"><span class="text-laranja font-bold">→</span> Llamadas ilimitadas</li>
-<li class="flex gap-2"><span class="text-laranja font-bold">→</span> SMS ilimitados</li>
+<li class="flex gap-2"><span class="text-laranja font-bold">→</span> 1.000 min de llamadas</li>
+<li class="flex gap-2"><span class="text-laranja font-bold">→</span> 100 SMS</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> WhatsApp, IG y FB gratis</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> Roaming nacional</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> Tecnología 5G</li>
@@ -61,11 +61,11 @@
 </div>
 <div class="mt-6 pb-6 border-b border-white/20">
 <div class="text-xs opacity-70 font-semibold font-mono uppercase tracking-wider">desde</div>
-<div class="font-display font-bold text-3xl tracking-tightest num">R$ 41,99<span class="text-base opacity-70 font-medium">/mes</span></div>
+<div class="font-display font-bold text-3xl tracking-tightest num">{{plano:black-10gb:preco-card}}<span class="text-base opacity-70 font-medium">/mes</span></div>
 </div>
 <ul class="mt-5 space-y-2.5 text-sm opacity-95 flex-1">
-<li class="flex gap-2"><span class="text-laranja font-bold">→</span> Llamadas ilimitadas</li>
-<li class="flex gap-2"><span class="text-laranja font-bold">→</span> SMS ilimitados</li>
+<li class="flex gap-2"><span class="text-laranja font-bold">→</span> 2.000 min de llamadas</li>
+<li class="flex gap-2"><span class="text-laranja font-bold">→</span> 100 SMS</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> WhatsApp, IG y FB gratis</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> Roaming nacional</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> Tecnología 5G</li>
@@ -79,11 +79,11 @@
 </div>
 <div class="mt-6 pb-6 border-b border-cinza-200">
 <div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">desde</div>
-<div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">R$ 129,99<span class="text-base text-cinza font-medium">/mes</span></div>
+<div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">{{plano:black-50gb:preco-card}}<span class="text-base text-cinza font-medium">/mes</span></div>
 </div>
 <ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1">
-<li class="flex gap-2"><span class="text-laranja font-bold">→</span> Llamadas ilimitadas</li>
-<li class="flex gap-2"><span class="text-laranja font-bold">→</span> SMS ilimitados</li>
+<li class="flex gap-2"><span class="text-laranja font-bold">→</span> 2.000 min de llamadas</li>
+<li class="flex gap-2"><span class="text-laranja font-bold">→</span> 1.000 SMS</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> WhatsApp, IG y FB gratis</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> Roaming nacional</li>
 <li class="flex gap-2"><span class="text-laranja font-bold">→</span> Tecnología 5G</li>
@@ -130,7 +130,7 @@
 <div>
 <label class="text-xs text-white/60 font-semibold uppercase tracking-wider font-mono">Plan de interés</label>
 <select class="w-full mt-1 bg-transparent border-b border-white/20 text-white py-2 focus:outline-none focus:border-laranja" aria-label="Plan de interés">
-<option class="bg-ivm-azul">Black 10GB · R$ 41,99</option>
+<option class="bg-ivm-azul">Black 10GB · {{plano:black-10gb:preco}}</option>
 <option class="bg-ivm-azul">Control 30GB · {{plano:controle-30gb:preco}}</option>
 <option class="bg-ivm-azul">Familia 100GB · {{plano:familia-100gb:preco}}</option>
 <option class="bg-ivm-azul">Otro</option>

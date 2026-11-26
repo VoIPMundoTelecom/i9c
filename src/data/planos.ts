@@ -8,9 +8,10 @@
  *   {{plano:<id>:valor}}       → 15.99   (schema.org Offer.price)
  *   {{contratar:<id>}}         → botão "Contratar" (formulário com ?plano=<id>; id de CONTRATAR)
  *   {{consultor:<id>}}         → link secundário "Falar com um consultor" (WhatsApp)
+ *   {{menor:<família>:<campo>}} → menor preço da família (prepago, black, controle, familia, empresas ou todos),
+ *                                 mesmos campos do {{plano:...}}: o "a partir de" dos textos
  * e a página troca os marcadores com aplicarPlanos(). Marcador desconhecido quebra o build.
- *
- * Por enquanto só os planos usados na 404 têm preço aqui; os outros seguem com o preço escrito no partial.
+ * O <id> é qualquer plano de CONTRATAR; o preço sai de PRECO_CONTRATAR (que lê GIVM_I9C nos planos do givm).
  */
 import { EMPRESA } from './empresa.ts'; // com extensão: os testes (node --test) importam este arquivo direto
 
@@ -118,6 +119,42 @@ export interface Plano {
   sufixo: string;
 }
 
+/** Plano do catálogo do givm (marca i9c) equivalente a um card do site. */
+export interface PlanoGivm {
+  /** código no givm (I9C-<n>) */
+  codigo: string;
+  /** mensal, reais */
+  preco: number;
+  /** franquia de dados em GB (0,5 = WhatsApp) */
+  gb: number;
+  /** minutos de ligação; null = plano só de dados/WhatsApp */
+  min: number | null;
+  sms: number | null;
+}
+
+/**
+ * Planos do site com equivalente no catálogo do givm (marca i9c): preço e franquia do givm em 26/11/2026,
+ * revisados pelo Fabricio (média do mercado). Os outros 9 planos do site (Black 1GB, Pré 1GB, Pré 10GB semanal,
+ * Controle 80GB, os 4 Família e Empresas 160GB) NÃO existem no givm e seguem com o preço antigo até o Fabricio
+ * decidir (criar no givm ou tirar do site).
+ *
+ * Mesmo código em dois cards (I9C-7, I9C-10, I9C-12, I9C-19) = mesmo plano do givm vendido em duas famílias do site.
+ * Isto é só o preço; o de-para do formulário (CODIGO_GIVM) é outra coisa e não aceita código repetido.
+ */
+export const GIVM_I9C = {
+  'prepago-whatsapp': { codigo: 'I9C-5', preco: 18.9, gb: 0.5, min: null, sms: null },
+  'prepago-30gb': { codigo: 'I9C-19', preco: 57.9, gb: 30, min: 2000, sms: 200 },
+  'black-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 1000, sms: 100 },
+  'black-10gb': { codigo: 'I9C-2', preco: 38.9, gb: 10, min: 2000, sms: 100 },
+  'black-50gb': { codigo: 'I9C-12', preco: 78.9, gb: 50, min: 2000, sms: 1000 },
+  'controle-15gb': { codigo: 'I9C-10', preco: 40.9, gb: 15, min: 2000, sms: 100 },
+  'controle-30gb': { codigo: 'I9C-19', preco: 57.9, gb: 30, min: 2000, sms: 200 },
+  'empresas-3gb': { codigo: 'I9C-6', preco: 25.9, gb: 3, min: 1000, sms: 100 },
+  'empresas-5gb': { codigo: 'I9C-7', preco: 30.9, gb: 5, min: 1000, sms: 100 },
+  'empresas-15gb': { codigo: 'I9C-10', preco: 40.9, gb: 15, min: 2000, sms: 100 },
+  'empresas-50gb': { codigo: 'I9C-12', preco: 78.9, gb: 50, min: 2000, sms: 1000 },
+} satisfies Partial<Record<ContratarId, PlanoGivm>>;
+
 export const PLANOS = {
   'prepago-1gb': {
     nome: 'Pré-pago 1GB',
@@ -129,7 +166,7 @@ export const PLANOS = {
   'controle-30gb': {
     nome: 'Controle 30GB',
     pagina: '/planos-controle.html',
-    preco: 81.99,
+    preco: GIVM_I9C['controle-30gb'].preco,
     rotuloPreco: 'a partir de',
     sufixo: '/mês',
   },
@@ -145,42 +182,52 @@ export const PLANOS = {
 export type PlanoId = keyof typeof PLANOS;
 
 /**
- * Preço de cada plano com botão "Contratar" (reais), usado no value do begin_checkout.
- * Conferido no site no ar em 03/11/2026. Os da 404 vêm de PLANOS; os outros ainda estão escritos
- * no partial, e o test:contratar falha se o card mostrar valor diferente deste.
+ * Preço de cada plano com botão "Contratar" (reais): fonte dos marcadores {{plano:<id>:...}} e do value do
+ * begin_checkout. Os 11 planos com equivalente no givm vêm de GIVM_I9C (26/11/2026); os outros 9 seguem
+ * com o preço conferido no site em 03/11/2026 [decisão do Fabricio: criar no givm ou tirar do site].
+ * O test:contratar falha se o card mostrar valor diferente deste.
  */
 export const PRECO_CONTRATAR: Record<ContratarId, number> = {
-  'prepago-whatsapp': 13.99,
-  'prepago-1gb': PLANOS['prepago-1gb'].preco,
-  'prepago-10gb': 41.99,
-  'prepago-30gb': 81.99,
-  'black-1gb': 15.99,
-  'black-5gb': 31.99,
-  'black-10gb': 41.99,
-  'black-50gb': 129.99,
-  'controle-15gb': 55.99,
+  'prepago-whatsapp': GIVM_I9C['prepago-whatsapp'].preco,
+  'prepago-1gb': PLANOS['prepago-1gb'].preco, // sem equivalente no givm
+  'prepago-10gb': 41.99, // sem equivalente no givm
+  'prepago-30gb': GIVM_I9C['prepago-30gb'].preco,
+  'black-1gb': 15.99, // sem equivalente no givm
+  'black-5gb': GIVM_I9C['black-5gb'].preco,
+  'black-10gb': GIVM_I9C['black-10gb'].preco,
+  'black-50gb': GIVM_I9C['black-50gb'].preco,
+  'controle-15gb': GIVM_I9C['controle-15gb'].preco,
   'controle-30gb': PLANOS['controle-30gb'].preco,
-  'controle-80gb': 194.99,
-  'familia-15gb': 49.99,
-  'familia-40gb': 79.99,
-  'familia-100gb': PLANOS['familia-100gb'].preco,
-  'familia-230gb': 429.99,
-  'empresas-3gb': 19.99,
-  'empresas-5gb': 35.99,
-  'empresas-15gb': 59.99,
-  'empresas-50gb': 129.99,
-  'empresas-160gb': 390.99,
+  'controle-80gb': 194.99, // sem equivalente no givm
+  'familia-15gb': 49.99, // sem equivalente no givm
+  'familia-40gb': 79.99, // sem equivalente no givm
+  'familia-100gb': PLANOS['familia-100gb'].preco, // sem equivalente no givm
+  'familia-230gb': 429.99, // sem equivalente no givm
+  'empresas-3gb': GIVM_I9C['empresas-3gb'].preco,
+  'empresas-5gb': GIVM_I9C['empresas-5gb'].preco,
+  'empresas-15gb': GIVM_I9C['empresas-15gb'].preco,
+  'empresas-50gb': GIVM_I9C['empresas-50gb'].preco,
+  'empresas-160gb': 390.99, // sem equivalente no givm
 };
 
 export const formatarPreco = (v: number) => `R$ ${v.toFixed(2).replace('.', ',')}`;
+
+export type Familia = 'prepago' | 'black' | 'controle' | 'familia' | 'empresas' | 'todos';
+
+/** Menor preço da família no site (o "a partir de" de títulos, descrições e textos). */
+export function menorPreco(familia: Familia): number {
+  const ids = (Object.keys(PRECO_CONTRATAR) as ContratarId[]).filter((id) => familia === 'todos' || id.startsWith(`${familia}-`));
+  if (!ids.length) throw new Error(`Família desconhecida: ${familia}`);
+  return Math.min(...ids.map((id) => PRECO_CONTRATAR[id]));
+}
 
 export function aplicarPlanos(html: string): string {
   return html
     .replace(/\{\{contratar:([a-z0-9-]+)\}\}/g, (_, id: string) => contratarUrl(id))
     .replace(/\{\{consultor:([a-z0-9-]+)\}\}/g, (_, id: string) => consultorUrl(id))
-    .replace(/\{\{plano:([a-z0-9-]+):([a-z-]+)\}\}/g, (marcador, id: string, campo: string) => {
-    const p = (PLANOS as Record<string, Plano>)[id];
-    if (!p) throw new Error(`Plano desconhecido no marcador ${marcador}`);
+    .replace(/\{\{(plano|menor):([a-z0-9-]+):([a-z-]+)\}\}/g, (marcador, tipo: string, id: string, campo: string) => {
+    if (tipo === 'plano' && !(id in PRECO_CONTRATAR)) throw new Error(`Plano desconhecido no marcador ${marcador}`);
+    const p = { preco: tipo === 'menor' ? menorPreco(id as Familia) : PRECO_CONTRATAR[id as ContratarId] };
     switch (campo) {
       case 'preco': return formatarPreco(p.preco);
       case 'preco-card': return formatarPreco(p.preco).replace(' ', ' ');

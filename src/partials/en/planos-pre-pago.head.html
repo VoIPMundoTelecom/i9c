@@ -2,7 +2,7 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "i9c Prepaid",
-  "description": "i9c prepaid plans for Brazilian mobile lines with WhatsApp, Instagram and Facebook, from R$ 13,99 (WhatsApp only) to 30GB. 5G where available, online top-ups and no contract.",
+  "description": "i9c prepaid plans for Brazilian mobile lines with WhatsApp, Instagram and Facebook, from {{menor:prepago:preco}} to 30GB, plus WhatsApp only for {{plano:prepago-whatsapp:preco}}. 5G where available, online top-ups and no contract.",
   "brand": {
     "@type": "Brand",
     "name": "i9c"
@@ -10,14 +10,14 @@
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "BRL",
-    "lowPrice": "13.99",
-    "highPrice": "81.99",
+    "lowPrice": "15.99",
+    "highPrice": "57.90",
     "offerCount": 4,
     "offers": [
       {
         "@type": "Offer",
         "name": "WhatsApp only · 30 days",
-        "price": "13.99",
+        "price": "{{plano:prepago-whatsapp:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/en/prepaid-plans.html"
@@ -33,7 +33,7 @@
       {
         "@type": "Offer",
         "name": "10GB · 7 days",
-        "price": "41.99",
+        "price": "{{plano:prepago-10gb:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/en/prepaid-plans.html"
@@ -41,7 +41,7 @@
       {
         "@type": "Offer",
         "name": "30GB · 30 days",
-        "price": "81.99",
+        "price": "{{plano:prepago-30gb:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/en/prepaid-plans.html"
@@ -58,7 +58,7 @@
       "name": "Who is the WhatsApp-only plan for?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "For anyone who needs a line just for WhatsApp text messages: a second line, older relatives, kids or devices you only use now and then. It costs R$ 13,99 for 30 days."
+        "text": "For anyone who needs a line just for WhatsApp text messages: a second line, older relatives, kids or devices you only use now and then. It costs {{plano:prepago-whatsapp:preco}} for 30 days, with 0.5 GB for WhatsApp."
       }
     },
     {

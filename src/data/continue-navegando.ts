@@ -37,15 +37,15 @@ export const PAGINAS = {
   },
   'planos-controle': {
     href: '/planos-controle.html', rota: 'planos-controle',
-    'pt-br': { titulo: 'Planos controle', resumo: 'Valor fixo por mês, ligações ilimitadas e WhatsApp sem gastar a internet.' },
-    en: { titulo: 'Controle plans', resumo: 'Fixed monthly price, unlimited calls and WhatsApp without using your data.' },
-    es: { titulo: 'Planes control', resumo: 'Precio fijo al mes, llamadas ilimitadas y WhatsApp sin gastar datos.' },
+    'pt-br': { titulo: 'Planos controle', resumo: 'Valor fixo por mês, minutos e SMS inclusos e WhatsApp sem gastar a internet.' },
+    en: { titulo: 'Controle plans', resumo: 'Fixed monthly price, minutes and texts included and WhatsApp without using your data.' },
+    es: { titulo: 'Planes control', resumo: 'Precio fijo al mes, minutos y SMS incluidos y WhatsApp sin gastar datos.' },
   },
   'planos-black': {
     href: '/planos-black.html', rota: 'planos-black',
-    'pt-br': { titulo: 'Black Individual', resumo: 'Ligações e SMS ilimitados, apps grátis e roaming nacional, sem fidelidade.' },
-    en: { titulo: 'Black Individual', resumo: 'Unlimited calls and texts, free apps and nationwide roaming, no contract.' },
-    es: { titulo: 'Black Individual', resumo: 'Llamadas y SMS ilimitados, apps gratis y roaming nacional, sin permanencia.' },
+    'pt-br': { titulo: 'Black Individual', resumo: 'Minutos e SMS inclusos, apps grátis e roaming nacional, sem fidelidade.' },
+    en: { titulo: 'Black Individual', resumo: 'Minutes and texts included, free apps and nationwide roaming, no contract.' },
+    es: { titulo: 'Black Individual', resumo: 'Minutos y SMS incluidos, apps gratis y roaming nacional, sin permanencia.' },
   },
   'planos-familia': {
     href: '/planos-familia.html', rota: 'planos-familia',

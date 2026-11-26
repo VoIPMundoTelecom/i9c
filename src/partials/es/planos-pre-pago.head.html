@@ -2,7 +2,7 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "i9c Prepago",
-  "description": "Planes prepago i9c para líneas móviles en Brasil con WhatsApp, Instagram y Facebook, desde R$ 13,99 (solo WhatsApp) hasta 30GB. 5G donde haya cobertura, recarga en línea y sin permanencia.",
+  "description": "Planes prepago i9c para líneas móviles en Brasil con WhatsApp, Instagram y Facebook, desde {{menor:prepago:preco}} hasta 30GB, y solo WhatsApp por {{plano:prepago-whatsapp:preco}}. 5G donde haya cobertura, recarga en línea y sin permanencia.",
   "brand": {
     "@type": "Brand",
     "name": "i9c"
@@ -10,14 +10,14 @@
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "BRL",
-    "lowPrice": "13.99",
-    "highPrice": "81.99",
+    "lowPrice": "15.99",
+    "highPrice": "57.90",
     "offerCount": 4,
     "offers": [
       {
         "@type": "Offer",
         "name": "Solo WhatsApp · 30 días",
-        "price": "13.99",
+        "price": "{{plano:prepago-whatsapp:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/es/planes-prepago.html"
@@ -33,7 +33,7 @@
       {
         "@type": "Offer",
         "name": "10GB · 7 días",
-        "price": "41.99",
+        "price": "{{plano:prepago-10gb:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/es/planes-prepago.html"
@@ -41,7 +41,7 @@
       {
         "@type": "Offer",
         "name": "30GB · 30 días",
-        "price": "81.99",
+        "price": "{{plano:prepago-30gb:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/es/planes-prepago.html"
@@ -58,7 +58,7 @@
       "name": "¿Para quién es el plan solo WhatsApp?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Para quien necesita una línea solo para mensajes de texto en WhatsApp: segunda línea, personas mayores, niños o equipos de uso ocasional. Cuesta R$ 13,99 por 30 días."
+        "text": "Para quien necesita una línea solo para mensajes de texto en WhatsApp: segunda línea, personas mayores, niños o equipos de uso ocasional. Cuesta {{plano:prepago-whatsapp:preco}} por 30 días, con 0,5 GB para WhatsApp."
       }
     },
     {
