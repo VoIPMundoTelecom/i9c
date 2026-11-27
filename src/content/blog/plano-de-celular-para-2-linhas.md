@@ -1,8 +1,9 @@
 ---
 titulo: 'Plano de celular para 2 linhas: família ou dois controles?'
-seoTitulo: 'Plano de celular para 2 linhas: família ou controle · i9c'
+seoTitulo: 'Plano controle 2 linhas ou família: quanto fica por mês · i9c'
 resumo: 'Duas linhas na mesma casa: compartilhar a internet num plano família ou dar a cada um o seu plano controle? Veja a diferença, os preços da i9c e como decidir.'
 publicado: 2026-11-20
+atualizado: 2026-11-27
 categoria: planos
 pilar: '/planos-familia.html'
 relacionados: ['como-trazer-seu-numero-para-a-i9c', 'chip-so-whatsapp']
@@ -51,6 +52,18 @@ Preços do site da i9c, conferidos em 20/11/2026:
 | Controle 30GB | 1 | 30GB só dela | R$ 81,99/mês |
 
 Quem procura "plano controle 2 linhas" normalmente quer as duas coisas: valor fixo no mês e duas linhas. O família entrega isso numa conta só; dois controles entregam com duas contas e duas franquias separadas.
+
+## Plano controle 2 linhas: quanto fica por mês, lado a lado
+
+Somando os preços da tabela acima, a diferença para duas pessoas fica assim:
+
+| Opção para 2 linhas | Internet no mês | Contas | Total a partir de |
+|---|---|---|---|
+| Família 15GB +1 linha | 15GB divididos entre as duas | 1 | R$ 49,99/mês |
+| 2 × Controle 15GB | 15GB para cada uma (30GB no total) | 2 | R$ 111,98/mês |
+| Controle 15GB + Controle 30GB | 15GB para uma e 30GB para a outra | 2 | R$ 137,98/mês |
+
+Ou seja: dois controles custam mais do que o dobro do família, mas entregam o dobro de internet e franquias que não se misturam. Se as duas linhas juntas usam até 15GB por mês, o [plano família](/planos-familia.html) é o caminho mais barato para ter duas linhas. Se cada pessoa precisa da sua franquia garantida, os [planos controle](/planos-controle.html) são o caminho.
 
 ## Como decidir em 3 perguntas
 
