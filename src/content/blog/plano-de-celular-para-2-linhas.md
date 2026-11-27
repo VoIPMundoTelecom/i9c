@@ -20,7 +20,7 @@ faq:
   - q: 'Qual o plano de celular para 2 linhas da i9c?'
     a: 'É o Família 15GB +1 linha: o titular e mais uma linha dividem 15GB de internet, com ligações ilimitadas e WhatsApp, Facebook e Instagram inclusos (sem direct e messenger). Sai a partir de R$ 49,99 por mês, sem fidelidade.'
   - q: 'Existe plano controle para 2 linhas?'
-    a: 'Na i9c, cada plano controle é de uma linha, com a franquia só dela: 15GB a partir de R$ 55,99, 30GB a partir de R$ 81,99 e 80GB a partir de R$ 194,99 por mês. Para duas linhas na mesma conta, com a internet dividida, o plano é o família.'
+    a: 'Na i9c, cada plano controle é de uma linha, com a franquia só dela: 15GB a partir de R$ 40,90 (ligações ilimitadas e 100 SMS), 30GB a partir de R$ 57,90 (ligações ilimitadas e 200 SMS) e 80GB a partir de R$ 194,99 por mês. Para duas linhas na mesma conta, com a internet dividida, o plano é o família.'
   - q: 'O que acontece quando a internet compartilhada acaba?'
     a: 'A velocidade é reduzida, sem cobrança extra. As ligações continuam ilimitadas e os apps inclusos seguem sem descontar da franquia.'
   - q: 'Posso trazer os dois números que já uso?'
@@ -29,7 +29,7 @@ faq:
     a: 'Não. Nenhum plano i9c tem fidelidade nem multa por cancelamento, então dá para trocar de família para controle (ou o contrário) quando o uso mudar.'
 ---
 
-**Resposta curta:** um plano de celular para 2 linhas pode funcionar de dois jeitos. No **plano família**, as duas linhas ficam na mesma conta e dividem a mesma internet: na i9c, o Família 15GB +1 linha sai a partir de R$ 49,99 por mês. No outro jeito, cada pessoa tem o **seu próprio plano controle**, com a franquia só dela: o Controle 15GB sai a partir de R$ 55,99 por mês por linha. A conta é simples: se as duas pessoas usam pouca internet, ou se uma usa bem mais que a outra, o família costuma resolver com uma conta só. Se as duas usam muito e não querem que o consumo de uma acabe com a internet da outra, dois controles evitam briga. Nos dois casos, as ligações são ilimitadas, WhatsApp, Facebook e Instagram vêm inclusos (sem direct e messenger) e não há fidelidade. Compare os [planos família](/planos-familia.html) e os [planos controle](/planos-controle.html).
+**Resposta curta:** um plano de celular para 2 linhas pode funcionar de dois jeitos. No **plano família**, as duas linhas ficam na mesma conta e dividem a mesma internet: na i9c, o Família 15GB +1 linha sai a partir de R$ 49,99 por mês. No outro jeito, cada pessoa tem o **seu próprio plano controle**, com a franquia só dela: o Controle 15GB sai a partir de R$ 40,90 por mês por linha, com ligações ilimitadas e 100 SMS. A conta é simples: se as duas pessoas usam pouca internet, ou se uma usa bem mais que a outra, o família costuma resolver com uma conta só. Se as duas usam muito e não querem que o consumo de uma acabe com a internet da outra, dois controles evitam briga. Nos dois casos, WhatsApp, Facebook e Instagram vêm inclusos (sem direct e messenger) e não há fidelidade. Compare os [planos família](/planos-familia.html) e os [planos controle](/planos-controle.html).
 
 ## Plano família ou plano controle: qual a diferença?
 
@@ -38,18 +38,18 @@ A diferença está em quem é dono da internet.
 - **Família:** a franquia é uma só e fica compartilhada entre o titular e a linha adicional. Uma conta, um vencimento.
 - **Controle:** cada linha tem a sua franquia mensal, de 15GB a 80GB. Se uma pessoa gastar tudo no dia 10, a outra continua com a dela.
 
-O resto é igual: ligações ilimitadas, WhatsApp, Facebook e Instagram sem descontar dos dados (sem direct e messenger), velocidade reduzida depois da franquia (sem cobrança extra) e 5G onde houver cobertura.
+Nos dois jeitos as ligações são ilimitadas para qualquer operadora; nos controles de 15GB e 30GB vêm também 100 e 200 SMS por mês. O resto é igual: WhatsApp, Facebook e Instagram sem descontar dos dados (sem direct e messenger), velocidade reduzida depois da franquia (sem cobrança extra) e 5G onde houver cobertura.
 
 ## Quanto custa cada opção na i9c?
 
-Preços do site da i9c, conferidos em 20/11/2026:
+Preços do site da i9c (família conferidos em 20/11/2026; controle com os valores de 26/11/2026):
 
 | Plano | Linhas | Internet | A partir de |
 |---|---|---|---|
 | Família 15GB +1 linha | 2 (titular + 1) | 15GB compartilhados | R$ 49,99/mês |
 | Família 40GB +2 linhas | 3 (titular + 2) | 40GB compartilhados | R$ 79,99/mês |
-| Controle 15GB | 1 | 15GB só dela | R$ 55,99/mês |
-| Controle 30GB | 1 | 30GB só dela | R$ 81,99/mês |
+| Controle 15GB | 1 | 15GB só dela | R$ 40,90/mês |
+| Controle 30GB | 1 | 30GB só dela | R$ 57,90/mês |
 
 Quem procura "plano controle 2 linhas" normalmente quer as duas coisas: valor fixo no mês e duas linhas. O família entrega isso numa conta só; dois controles entregam com duas contas e duas franquias separadas.
 

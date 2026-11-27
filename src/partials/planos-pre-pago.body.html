@@ -10,7 +10,7 @@
 <div class="font-mono text-xs font-semibold uppercase tracking-widest text-laranja">Planos pré-pago</div>
 <h1 class="font-display font-bold text-5xl lg:text-7xl tracking-tightest leading-[0.95] mt-3 text-ivm-azul">Pré-pago i9c: recarga simples, sem conta mensal.</h1>
 </div>
-<p class="text-cinza max-w-md text-lg">Do plano só-WhatsApp de R$ 13,99 ao pacote de 30GB. Você recarrega quando quiser, sem fatura e sem fidelidade — ideal para segunda linha, idosos, crianças ou quem quer controlar o gasto.</p>
+<p class="text-cinza max-w-md text-lg">Do plano só-WhatsApp de {{plano:prepago-whatsapp:preco}} ao pacote de 30GB. Você recarrega quando quiser, sem fatura e sem fidelidade — ideal para segunda linha, idosos, crianças ou quem quer controlar o gasto.</p>
 </div>
 <!-- Tab selector -->
 
@@ -20,8 +20,8 @@
 <div class="plan-panel grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" data-panel="prepago">
 <article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col">
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest text-ivm-azul">WA</span><span class="text-xs text-cinza font-mono uppercase tracking-wider">30 dias</span></div>
-<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">só WhatsApp</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">R$ 13,99</div></div>
-<ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Mensagens de texto WhatsApp</li></ul>
+<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">só WhatsApp</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">{{plano:prepago-whatsapp:preco-card}}</div></div>
+<ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> 0,5 GB para mensagens de texto no WhatsApp</li></ul>
 <a class="mt-6 inline-flex items-center justify-center bg-ivm-azul text-white font-semibold py-3 rounded-full hover:bg-i9c-azul transition-colors" data-lead="contratar" data-plano="prepago-whatsapp" href="{{contratar:prepago-whatsapp}}" rel="noopener" target="_blank">Contratar</a>
 <a class="mt-3 text-center text-sm font-semibold underline underline-offset-4 opacity-80 hover:opacity-100" data-lead="consultor" data-plano="prepago-whatsapp" href="{{consultor:prepago-whatsapp}}" rel="noopener" target="_blank">Falar com um consultor</a>
 </article>
@@ -41,8 +41,8 @@
 </article>
 <article class="plan-card bg-white border-2 border-cinza-200 rounded-3xl p-7 flex flex-col">
 <div class="flex items-baseline justify-between"><span class="font-display font-bold text-5xl tracking-tightest num text-ivm-azul">30<span class="text-2xl text-cinza">GB</span></span><span class="text-xs text-cinza font-mono uppercase tracking-wider">30 dias</span></div>
-<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">mensal</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">R$ 81,99</div></div>
-<ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> WhatsApp texto</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Facebook (sem messenger)</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Instagram (sem direct)</li></ul>
+<div class="mt-6 pb-6 border-b border-cinza-200"><div class="text-xs text-cinza font-semibold font-mono uppercase tracking-wider">mensal</div><div class="font-display font-bold text-3xl tracking-tightest num text-ivm-azul">{{plano:prepago-30gb:preco-card}}</div></div>
+<ul class="mt-5 space-y-2.5 text-sm text-cinza flex-1"><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Ligações ilimitadas* · 200 SMS</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> WhatsApp texto</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Facebook (sem messenger)</li><li class="flex gap-2"><span class="text-laranja font-bold">→</span> Instagram (sem direct)</li></ul>
 <a class="mt-6 inline-flex items-center justify-center bg-ivm-azul text-white font-semibold py-3 rounded-full hover:bg-i9c-azul transition-colors" data-lead="contratar" data-plano="prepago-30gb" href="{{contratar:prepago-30gb}}" rel="noopener" target="_blank">Contratar</a>
 <a class="mt-3 text-center text-sm font-semibold underline underline-offset-4 opacity-80 hover:opacity-100" data-lead="consultor" data-plano="prepago-30gb" href="{{consultor:prepago-30gb}}" rel="noopener" target="_blank">Falar com um consultor</a>
 </article>
@@ -57,7 +57,8 @@
         Apps inclusos: WhatsApp, Facebook e Instagram — sem direct e messenger.
         Velocidade reduzida após franquia. Sem fidelidade contratual.
       </p>
-<div class="mt-16 max-w-3xl"><h2 class="font-display font-bold text-3xl tracking-tightest text-ivm-azul mb-4">Perguntas frequentes</h2><details class="border-b border-cinza-200 py-4"><summary class="cursor-pointer font-semibold text-ivm-azul">Para quem serve o plano só-WhatsApp?</summary><p class="mt-2 text-cinza">Para quem precisa de uma linha só para mensagens de texto no WhatsApp: segunda linha, idosos, crianças ou aparelhos de uso pontual. Custa R$ 13,99 por 30 dias.</p></details><details class="border-b border-cinza-200 py-4"><summary class="cursor-pointer font-semibold text-ivm-azul">Como faço a recarga?</summary><p class="mt-2 text-cinza">Pela página de recargas do site, com Pix ou boleto.</p></details><details class="border-b border-cinza-200 py-4"><summary class="cursor-pointer font-semibold text-ivm-azul">O pré-pago tem fidelidade?</summary><p class="mt-2 text-cinza">Não. Nenhum plano i9c tem fidelidade nem multa por cancelamento.</p></details><p class="mt-4 text-sm"><a class="text-laranja font-semibold hover:underline" href="/perguntas-frequentes.html">Ver todas as perguntas →</a></p></div></div>
+<p class="text-xs text-cinza text-center mt-3 max-w-4xl mx-auto" data-nota-ligacoes>{{nota-ligacoes:pt-br}}</p>
+<div class="mt-16 max-w-3xl"><h2 class="font-display font-bold text-3xl tracking-tightest text-ivm-azul mb-4">Perguntas frequentes</h2><details class="border-b border-cinza-200 py-4"><summary class="cursor-pointer font-semibold text-ivm-azul">Para quem serve o plano só-WhatsApp?</summary><p class="mt-2 text-cinza">Para quem precisa de uma linha só para mensagens de texto no WhatsApp: segunda linha, idosos, crianças ou aparelhos de uso pontual. Custa {{plano:prepago-whatsapp:preco}} por 30 dias, com 0,5 GB para o WhatsApp.</p></details><details class="border-b border-cinza-200 py-4"><summary class="cursor-pointer font-semibold text-ivm-azul">Como faço a recarga?</summary><p class="mt-2 text-cinza">Pela página de recargas do site, com Pix ou boleto.</p></details><details class="border-b border-cinza-200 py-4"><summary class="cursor-pointer font-semibold text-ivm-azul">O pré-pago tem fidelidade?</summary><p class="mt-2 text-cinza">Não. Nenhum plano i9c tem fidelidade nem multa por cancelamento.</p></details><p class="mt-4 text-sm"><a class="text-laranja font-semibold hover:underline" href="/perguntas-frequentes.html">Ver todas as perguntas →</a></p></div></div>
 </section>
 <!-- COBERTURA -->
 
@@ -84,7 +85,7 @@
 <div>
 <label class="text-xs text-white/60 font-semibold uppercase tracking-wider font-mono">Plano de interesse</label>
 <select class="w-full mt-1 bg-transparent border-b border-white/20 text-white py-2 focus:outline-none focus:border-laranja" aria-label="Plano de interesse">
-<option class="bg-ivm-azul">Black 10GB · R$ 41,99</option>
+<option class="bg-ivm-azul">Black 10GB · {{plano:black-10gb:preco}}</option>
 <option class="bg-ivm-azul">Controle 30GB · {{plano:controle-30gb:preco}}</option>
 <option class="bg-ivm-azul">Família 100GB · {{plano:familia-100gb:preco}}</option>
 <option class="bg-ivm-azul">Outro</option>

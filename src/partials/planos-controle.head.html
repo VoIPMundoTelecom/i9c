@@ -2,7 +2,7 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "i9c Controle",
-  "description": "Planos controle i9c de 15GB a 80GB com ligações ilimitadas, WhatsApp grátis e 5G onde houver cobertura. Valor fixo por mês e sem fidelidade.",
+  "description": "Planos controle i9c de 15GB a 80GB com ligações ilimitadas e pacote de SMS, WhatsApp grátis e 5G onde houver cobertura. Valor fixo por mês e sem fidelidade.",
   "brand": {
     "@type": "Brand",
     "name": "i9c"
@@ -10,14 +10,14 @@
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "BRL",
-    "lowPrice": "55.99",
+    "lowPrice": "40.90",
     "highPrice": "194.99",
     "offerCount": 3,
     "offers": [
       {
         "@type": "Offer",
         "name": "15GB · 30 dias",
-        "price": "55.99",
+        "price": "{{plano:controle-15gb:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/planos-controle.html"
@@ -33,7 +33,7 @@
       {
         "@type": "Offer",
         "name": "80GB · 30 dias",
-        "price": "194.99",
+        "price": "{{plano:controle-80gb:valor}}",
         "priceCurrency": "BRL",
         "availability": "https://schema.org/InStock",
         "url": "https://i9c.net.br/planos-controle.html"
@@ -74,7 +74,7 @@
       "name": "O plano controle i9c é ilimitado?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "As ligações são ilimitadas para todo o Brasil. A internet tem franquia mensal, de 15GB a 80GB conforme o plano, e WhatsApp, Facebook e Instagram não descontam dos dados (sem direct e messenger). Quando a franquia acaba, a velocidade é reduzida, sem cobrança extra."
+        "text": "As ligações, sim: são ilimitadas para qualquer operadora. SMS e internet têm franquia mensal: o Controle 15GB vem com 100 SMS e o 30GB com 200 SMS (veja o de cada plano no card). A internet tem franquia mensal, de 15GB a 80GB conforme o plano, e WhatsApp, Facebook e Instagram não descontam dos dados (sem direct e messenger). Quando a franquia acaba, a velocidade é reduzida, sem cobrança extra."
       }
     }
   ]

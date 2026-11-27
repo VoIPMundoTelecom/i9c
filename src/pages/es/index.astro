@@ -2,12 +2,13 @@
 // Tradução (es) de src/pages/index.astro. Conteúdo em src/partials/es/index.*.html
 import Base from '../../layouts/Base.astro';
 import { aplicarI18n } from '../../i18n/aplicar';
+import { formatarPreco, menorPreco } from '../../data/planos';
 import head from '../../partials/es/index.head.html?raw';
 import body from '../../partials/es/index.body.html?raw';
 import end from '../../partials/es/index.end.html?raw';
 
-const title = "Planes 5G en Brasil sin permanencia desde R$ 13,99 | i9c";
-const description = "Planes prepago, Control, familiares y para empresas para líneas en Brasil: 5G donde haya cobertura, llamadas ilimitadas y sin permanencia. Autorizado por ANATEL.";
+const title = `Planes 5G en Brasil sin permanencia desde ${formatarPreco(menorPreco('todos'))} | i9c`;
+const description = "Planes prepago, Control, familiares y para empresas para líneas en Brasil: 5G donde haya cobertura, llamadas ilimitadas, paquete de SMS y sin permanencia. Autorizado por ANATEL.";
 ---
 
 <Base title={title} description={description} rota="home" active="planos">
