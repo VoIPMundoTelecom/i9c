@@ -196,10 +196,24 @@ export const GIVM_I9C = {
   'empresas-50gb': givm('I9C-12', '+Black 50GB', 50, 2000, 1000),
 } satisfies Partial<Record<ContratarId, PlanoGivm & { nomeGivm: string }>>;
 
-/** SMS do givm por plano (tabela de 26/11, #58): a rota pública não traz SMS. Fora daqui = card sem linha de SMS. */
-export const SMS_GIVM: Record<string, number> = Object.fromEntries(
-  Object.values(GIVM_I9C).filter((g) => g.sms != null).map((g) => [g.nomeGivm, g.sms as number]),
-);
+/**
+ * SMS dos 6 Black que só existem na página Black (sem card em outra família). A rota pública não traz SMS: valores
+ * do givm passados pela HUB em 27/11 (fallback até a rota devolver o campo).
+ */
+const SMS_BLACK_NOVOS: Record<string, number> = {
+  '+Black 06GB': 100, // I9C-9
+  '+Black 12GB': 100, // I9C-4
+  '+Black 20GB': 300, // I9C-17
+  '+Black 24GB': 100, // I9C-1
+  '+Black 40GB': 200, // I9C-16
+  '+Black 60GB': 50, // I9C-22
+};
+
+/** SMS do givm por plano (tabela de 26/11, #58, + Black novos de 27/11): a rota pública não traz SMS. Fora daqui = card sem linha de SMS. */
+export const SMS_GIVM: Record<string, number> = {
+  ...Object.fromEntries(Object.values(GIVM_I9C).filter((g) => g.sms != null).map((g) => [g.nomeGivm, g.sms as number])),
+  ...SMS_BLACK_NOVOS,
+};
 
 /** Cards Black e Flex da página Black: um por plano do catálogo (menos o WhatsApp, que é o card do pré-pago). */
 export const CARDS_CATALOGO = CATALOGO.filter((p) => p.familia !== 'whatsapp')

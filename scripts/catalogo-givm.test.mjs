@@ -70,7 +70,7 @@ test('Black = "Ligações ilimitadas*"; Flex sem nenhum texto de ligação nem "
   }
 });
 
-test('SMS só onde o givm informa a quantidade (tabela de 26/11); nos outros, nenhuma linha de SMS', () => {
+test('SMS só onde o givm informa a quantidade (tabela de 26/11 + Black novos de 27/11); nos outros, nenhuma linha de SMS', () => {
   for (const f of PAGINAS_BLACK) {
     for (const c of cards(ler(f)).filter((c) => c.givm)) {
       const sms = SMS_GIVM[c.givm];
