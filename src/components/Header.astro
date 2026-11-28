@@ -53,7 +53,7 @@ const CONTRATAR = contratarUrl(undefined, h.contratarMsg); // msg traduzida só 
           hreflang={l.pt ? 'pt-BR' : undefined}
           class={l.id === active ? 'text-i9c-azul font-semibold' : 'hover:text-i9c-azul transition-colors'}
           aria-current={l.id === active ? 'page' : undefined}
-        >{l.label}{l.pt && <span class="ml-1 font-mono text-[10px] text-cinza/80" title={t.emPortugues}>PT<span class="sr-only"> ({t.emPortugues})</span></span>}</a>
+        >{l.label}{l.pt && <span class="ml-1 font-mono text-[10px] text-cinza" title={t.emPortugues}>PT<span class="sr-only"> ({t.emPortugues})</span></span>}</a>
       ))}
     </nav>
     <div class="flex items-center gap-1">
